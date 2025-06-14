@@ -1,0 +1,48 @@
+name: Build and Serve Monorepo
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build-and-serve:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies (root)
+        run: npm install
+
+      - name: Build frontend
+        working-directory: ./frontend
+        run: |
+          npm install
+          npm run build
+
+      - name: Build backend
+        working-directory: ./backend
+        run: |
+          npm install
+          npm run build
+
+      - name: Cleanup
+        run: |
+          rm -rf ./frontend/node_modules
+          rm -rf ./backend/node_modules
+
+      - name: Serve frontend and backend
+        run: |
+          echo "Frontend and backend built successfully. Ready for deployment."
