@@ -1,6 +1,6 @@
 # Ochio Club Frontend
 
-![Typing Animation](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&duration=4000&pause=1000&color=0078D7&center=true&vCenter=true&width=435&lines=Interfaz+de+Usuario+de+Ochio+Club)
+![Typing Animation](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&duration=4000&pause=1000&color=0078D7&center=true&vCenter=true&width=435&lines=Interfaz+Usuarios+Ochio+Club)
 
 Este directorio contiene el proyecto frontend de Ochio Club, desarrollado con React y Next.js.
 
