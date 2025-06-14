@@ -1,6 +1,6 @@
 # Ochio Club Monorepo
 
-![Typing Animation](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&duration=4000&pause=1000&color=F70000&center=true&vCenter=true&width=435&lines=Bienvenido+al+Monorepo+de+Ochio+Club)
+![Typing Animation](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&duration=4000&pause=1000&color=F70000&center=true&vCenter=true&width=435&lines=Ochio+Club+es+la+cultura+de+Jaen)
 
 Este repositorio contiene los proyectos **frontend** y **backend** de Ochio Club, organizados en un monorepo para facilitar el desarrollo y la colaboración.
 
