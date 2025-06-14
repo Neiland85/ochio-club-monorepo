@@ -1,0 +1,27 @@
+openapi: 3.0.0
+info:
+  title: OchioClub API
+  version: 1.0.0
+tags:
+  - name: users
+    description: Operaciones de usuario
+paths:
+  /users:
+    post:
+      tags:
+        - users
+      summary: Crear usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: Usuario creado

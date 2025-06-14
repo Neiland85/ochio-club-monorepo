@@ -1,0 +1,33 @@
+{
+  "name": "ochio-club-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:all": "concurrently \"npm run dev\" \"npm run dev --prefix ../backend\"",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
+    "axios": "^1.9.0",
+    "lucide-react": "^0.513.0",
+    "next": "15.2.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-hook-form": "^7.56.4",
+    "swr": "^2.3.3",
+    "zod": "^3.25.28"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.0.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "15.2.3",
+    "typescript": "^5.0.0"
+  }
+}
