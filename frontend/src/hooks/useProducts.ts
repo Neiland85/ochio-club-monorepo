@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { getProducts } from "@/src/services/products";
+import { getProducts } from "../services/products";
 
 export function useProducts() {
   const { data, error, isLoading } = useSWR("products", getProducts);

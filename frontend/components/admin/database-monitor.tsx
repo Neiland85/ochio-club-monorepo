@@ -1,12 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "../ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
+import { Progress } from "../ui/progress"
+import { Badge } from "../ui/badge"
 import { RefreshCw, Database, Activity, HardDrive, Zap, AlertTriangle, CheckCircle, XCircle, Users } from "lucide-react"
-import type { DatabaseMonitorProps } from "@/types/admin-settings"
+import type { DatabaseMonitorProps } from "../../types/admin-settings"
 
 export default function DatabaseMonitor({ metrics, onRefresh, isLoading }: DatabaseMonitorProps) {
   const [refreshing, setRefreshing] = useState(false)
@@ -14,7 +14,13 @@ export default function DatabaseMonitor({ metrics, onRefresh, isLoading }: Datab
   const handleRefresh = async () => {
     setRefreshing(true)
     try {
-      await onRefresh()
+      const response = await onRefresh()
+      if (!response.ok) {
+        throw new Error("Error al refrescar las métricas de la base de datos")
+      }
+    } catch (error) {
+      console.error(error)
+      alert("No se pudieron refrescar las métricas de la base de datos.")
     } finally {
       setRefreshing(false)
     }

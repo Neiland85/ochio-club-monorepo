@@ -1,11 +1,11 @@
 "use client"
 
-import UserLoginForm from "@/components/user-login-form"
-import AppLayout from "@/components/layout/app-layout"
-import { useAuth } from "@/hooks/use-auth"
+import UserLoginForm from "../../components/user-login-form"; // Ruta corregida
+import AppLayout from "../../components/layout/app-layout"; // Ruta corregida
+import { useAuth } from "../../hooks/use-auth"; // Ruta corregida
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import type { NavigationItem } from "@/types/layout"
+import type { NavigationItem } from "../../types/layout"; // Ruta corregida
 
 // Elementos de navegación para usuarios no logueados
 const publicNavItems: NavigationItem[] = [

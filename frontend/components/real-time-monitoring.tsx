@@ -1,9 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Progress } from "../ui/progress";
+import { Badge } from "../ui/badge";
 import { Activity, Database, Server, Users, Zap, AlertTriangle, CheckCircle, Clock, TrendingUp } from "lucide-react"
 
 interface SystemMetrics {
@@ -31,7 +31,26 @@ export default function RealTimeMonitoring() {
 
   const [lastUpdate, setLastUpdate] = useState(new Date())
 
-  // Simular datos en tiempo real
+  // Obtener métricas de sistema desde el servidor
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        const response = await fetch('/api/system-metrics')
+        if (!response.ok) {
+          throw new Error('Error al cargar las métricas del sistema')
+        }
+        const data = await response.json()
+        setMetrics(data)
+      } catch (error) {
+        console.error(error)
+        alert('No se pudieron cargar las métricas del sistema.')
+      }
+    }
+
+    fetchMetrics()
+  }, [])
+
+  // Simular datos en tiempo real (comentar al usar datos reales)
   useEffect(() => {
     const interval = setInterval(() => {
       setMetrics((prev) => ({

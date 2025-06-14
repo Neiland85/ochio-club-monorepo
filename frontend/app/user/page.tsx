@@ -2,14 +2,14 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/hooks/use-auth"
-import AppLayout from "@/components/layout/app-layout"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useAuth } from "../../hooks/use-auth"
+import AppLayout from "../../components/layout/app-layout"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs"
 import ShoppingCartExample from "../shopping-cart-example"
-import UserProfile from "@/components/user-profile"
-import { Button } from "@/components/ui/button"
+import UserProfile from "../../components/user-profile"
+import { Button } from "../../components/ui/button"
 import { LogOut } from "lucide-react"
-import type { NavigationItem } from "@/types/layout"
+import type { NavigationItem } from "../../types/layout"
 
 export default function UserPage() {
   const { user, isLoading, isAuthenticated, logout } = useAuth()
@@ -75,18 +75,16 @@ export default function UserPage() {
   return (
     <AppLayout
       navigationItems={userNavItems}
-      rightContent={
-        <div className="flex items-center gap-4">
-          <div className="text-sm">
-            <span className="block font-medium">Hola, {user?.name?.split(" ")[0] || "Usuario"}</span>
-          </div>
-          <Button variant="outline" size="sm" onClick={() => logout()} className="flex items-center gap-2">
-            <LogOut className="h-4 w-4" />
-            <span>Salir</span>
-          </Button>
-        </div>
-      }
     >
+      <div className="flex items-center gap-4">
+        <div className="text-sm">
+          <span className="block font-medium">Hola, {user?.name?.split(" ")[0] || "Usuario"}</span>
+        </div>
+        <Button variant="outline" size="sm" onClick={() => logout()} className="flex items-center gap-2">
+          <LogOut className="h-4 w-4" />
+          <span>Salir</span>
+        </Button>
+      </div>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">Mi Cuenta</h1>
 
@@ -133,4 +131,4 @@ export default function UserPage() {
       </div>
     </AppLayout>
   )
-}
+} 

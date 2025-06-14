@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "../ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Badge } from "@/components/ui/badge"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Badge } from "../ui/badge"
+import { Alert, AlertDescription } from "../ui/alert"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import {
   MapPin,
@@ -43,7 +43,7 @@ export default function AddressSelector({
   const handleAddAddress = async (data: AddressFormData) => {
     setIsSubmitting(true)
     try {
-      await onAddAddress({
+      const response = await onAddAddress({
         name: data.name,
         street: data.street,
         city: data.city,
@@ -55,9 +55,13 @@ export default function AddressSelector({
         instructions: data.instructions,
         isDefault: data.isDefault,
       })
+      if (!response.ok) {
+        throw new Error("Error al agregar la dirección")
+      }
       setShowAddForm(false)
     } catch (error) {
-      console.error("Error adding address:", error)
+      console.error(error)
+      alert("No se pudo agregar la dirección.")
     } finally {
       setIsSubmitting(false)
     }

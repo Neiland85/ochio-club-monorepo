@@ -26,3 +26,13 @@ const Progress = React.forwardRef<
 Progress.displayName = ProgressPrimitive.Root.displayName
 
 export { Progress }
+
+import React from "react"
+
+interface ProgressProps {
+  value: number
+  className?: string
+}
+
+export const Progress: React.FC<ProgressProps> = ({ value, className }) => {
+  return (

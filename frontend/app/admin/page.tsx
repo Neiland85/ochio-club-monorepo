@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/hooks/use-auth"
-import AdminDashboardPanel from "@/components/admin-dashboard-panel"
+import { useAuth } from "../../hooks/use-auth" // Ruta corregida
+import AdminDashboardPanel from "../../components/admin/admin-dashboard-panel" // Ruta corregida
 import { Shield, Lock, LogOut, Home } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Button } from "../../components/ui/button" // Ruta corregida
 
 export default function AdminPage() {
   const { user, isLoading, isAuthenticated } = useAuth()
