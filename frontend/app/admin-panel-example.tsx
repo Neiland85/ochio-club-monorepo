@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { toast } from "../components/ui/use-toast"; // Ruta corregida
-import AdminPanel from "../components/admin/admin-panel"; // Ruta corregida
+import { toast } from "../components/ui/use-toast";
+import AdminPanel from "../components/admin/admin-panel";
+
 import type {
   AdminUser,
   AdminBakery,
@@ -12,44 +13,7 @@ import type {
   BakeryStatus,
   ProductStatus,
   AdminOrderStatus,
-} from "../types/admin-panel"; // Ruta corregida
-
-// Asegúrate de que el tipo AdminOrder incluya la propiedad customerName en el archivo "../types/admin-panel"
-// Ejemplo de cómo debería verse el tipo AdminOrder en ese archivo:
-// type AdminOrder = {
-//   id: string;
-//   customerName: string; // Agregar esta propiedad
-//   customerEmail: string;
-//   customerPhone: string;
-//   bakeryId: string;
-//   bakeryName: string;
-//   items: Array<{ id: string; productId: string; productName: string; quantity: number; unitPrice: number; total: number }>;
-//   total: number;
-//   status: AdminOrderStatus;
-//   createdAt: Date;
-//   deliveryAddress: string;
-//   notes?: string;
-// };
-
-// Asegúrate de que el tipo AdminProduct incluya la propiedad isFeatured en el archivo "../types/admin-panel"
-// Ejemplo de cómo debería verse el tipo AdminProduct en ese archivo:
-// type AdminProduct = {
-//   id: string;
-//   name: string;
-//   description: string;
-//   price: number;
-//   category: string;
-//   bakeryId: string;
-//   bakeryName: string;
-//   status: ProductStatus;
-//   stock: number;
-//   isOutOfStock: boolean;
-//   isFeatured: boolean; // Agregar esta propiedad
-//   createdAt: Date;
-//   updatedAt: Date;
-//   imageUrl: string;
-//   totalSales: number;
-// };
+} from "../types/admin-panel";
 
 // Datos de ejemplo
 const mockUsers: AdminUser[] = [
@@ -292,7 +256,7 @@ const mockOrders: AdminOrder[] = [
       { id: "i5", productId: "p2", productName: "Ochío de Chocolate", quantity: 6, unitPrice: 1.5, total: 9.0 },
     ],
     total: 23.4,
-    status: "delivered",
+    status: "delivered" as AdminOrderStatus,
     createdAt: new Date(2024, 4, 14, 16, 45),
     deliveryAddress: "Plaza del Ayuntamiento 3, 23400 Úbeda, Jaén",
   },

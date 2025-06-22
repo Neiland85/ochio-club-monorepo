@@ -1,0 +1,36 @@
+import { useState, useEffect } from 'react';
+import { supabase } from '../config/supabase';
+
+export const useAuth = () => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const session = supabase.auth.session();
+    setUser(session?.user || null);
+    setLoading(false);
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+      setLoading(false);
+    });
+
+    return () => {
+      authListener.unsubscribe();
+    };
+  }, []);
+
+  const signIn = async (email, password) => {
+    const { user, error } = await supabase.auth.signIn({ email, password });
+    if (error) throw error;
+    setUser(user);
+  };
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+    setUser(null);
+  };
+
+  return { user, loading, signIn, signOut };
+};

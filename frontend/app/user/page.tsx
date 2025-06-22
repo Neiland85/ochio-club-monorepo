@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
+<<<<<<< HEAD
 import { useAuth } from "../../hooks/use-auth"
 import AppLayout from "../../components/layout/app-layout"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs"
@@ -10,6 +11,16 @@ import UserProfile from "../../components/user-profile"
 import { Button } from "../../components/ui/button"
 import { LogOut } from "lucide-react"
 import type { NavigationItem } from "../../types/layout"
+=======
+import { useAuth } from "../hooks/use-auth.js"
+import AppLayout from "../components/layout/app-layout.jsx"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs.jsx"
+import ShoppingCartExample from "../shopping-cart-example.jsx"
+import UserProfile from "../components/user-profile.jsx"
+import { Button } from "../components/ui/button.jsx"
+import { LogOut } from "lucide-react"
+import type { NavigationItem } from "../types/layout.d.ts"
+>>>>>>> dev
 
 export default function UserPage() {
   const { user, isLoading, isAuthenticated, logout } = useAuth()
@@ -98,13 +109,13 @@ export default function UserPage() {
           <TabsContent value="profile">
             <UserProfile
               initialUserData={userProfileData}
-              onUpdateProfile={async (data) => {
+              onUpdateProfile={async (data: Record<string, unknown>) => {
                 console.log("Actualizando perfil:", data)
                 // Aquí iría la lógica para actualizar el perfil
                 await new Promise((resolve) => setTimeout(resolve, 1000))
                 return Promise.resolve()
               }}
-              onChangePassword={async (data) => {
+              onChangePassword={async (data: Record<string, unknown>) => {
                 console.log("Cambiando contraseña:", data)
                 // Aquí iría la lógica para cambiar la contraseña
                 await new Promise((resolve) => setTimeout(resolve, 1000))

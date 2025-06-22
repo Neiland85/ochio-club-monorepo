@@ -474,3 +474,45 @@ export default function AdminPanelExample() {
     </div>
   );
 }
+
+export type AdminUser = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+};
+
+export type AdminBakery = {
+  id: string;
+  name: string;
+  location: string;
+  status: BakeryStatus;
+};
+
+export type AdminProduct = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  isFeatured: boolean;
+};
+
+export type AdminOrder = {
+  id: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  bakeryId: string;
+  bakeryName: string;
+  items: Array<{ id: string; productId: string; productName: string; quantity: number; unitPrice: number; total: number }>;
+  total: number;
+  status: AdminOrderStatus;
+  createdAt: Date;
+  deliveryAddress: string;
+  notes?: string;
+};
+
+export type UserStatus = "active" | "inactive";
+export type BakeryStatus = "open" | "closed";
+export type ProductStatus = "available" | "out_of_stock";
+export type AdminOrderStatus = "pending" | "completed" | "cancelled";

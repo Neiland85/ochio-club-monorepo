@@ -1,19 +1,10 @@
 {
-  "name": "ochio-club",
   "version": "1.0.0",
   "description": "Backend escalable para OchioClub",
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "test": "jest --coverage",
-    "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage",
-    "lint": "eslint . --ext .ts --fix",
-    "copilot:test": "gh copilot suggest 'Escribe tests para src/**/*.ts con Jest y Supertest'",
-    "copilot:refactor": "gh copilot suggest 'Refactoriza el servicio de autenticación para mayor legibilidad'",
-    "copilot:explain": "gh copilot explain ./src"
+    "test": "jest"
   },
   "keywords": [
     "ochio",
@@ -24,15 +15,6 @@
   ],
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "express-validator": "^7.0.1",
-    "helmet": "^7.0.0",
-    "jsonwebtoken": "^9.0.0"
-  },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.18",
@@ -40,15 +22,34 @@
     "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^20.0.0",
+    "@types/qs": "^6.14.0",
     "@types/supertest": "^6.0.3",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.3.4",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.8.3",
     "eslint": "^8.57.0",
-    "prettier": "^3.3.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
-    "supertest": "^7.0.0"
+    "jest": "^29.7.0",
+    "jest-extended": "^6.0.0",
+    "prettier": "^3.3.1",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.3.4",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "next/core-web-vitals"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "no-unused-vars": "warn"
+    }
+  },
+  "openapi": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Ochio Club API",
+      "description": "Documentación de la API para Ochio Club",
+      "version": "1.0.0"
+    }
   }
 }

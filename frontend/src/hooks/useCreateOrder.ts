@@ -1,6 +1,12 @@
+"use client";
+
 // src/hooks/useCreateOrder.ts
 import { useState } from "react";
+<<<<<<< HEAD
 import { createOrder } from "@/services/orders";
+=======
+import { createOrder } from "@/services/orders"; // Ruta corregida
+>>>>>>> dev
 
 export function useCreateOrder() {
   const [isLoading, setIsLoading] = useState(false);
