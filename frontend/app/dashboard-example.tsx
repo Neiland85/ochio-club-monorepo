@@ -1,9 +1,6 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { toast } from "@/hooks/use-toast"
-import BakeryDashboard from "@/components/bakery-dashboard"
-import type { BakeryProduct, BakeryOrder, OrderStatus } from "@/types/bakery-dashboard"
+import { useState } from "react";
 
 // Datos de ejemplo
 const initialSalesSummary = {
@@ -13,7 +10,7 @@ const initialSalesSummary = {
   monthSales: 9875.3,
   percentageChange: 12.5,
   currency: "€",
-}
+};
 
 const initialOrdersSummary = {
   totalOrders: 156,
@@ -21,16 +18,16 @@ const initialOrdersSummary = {
   completedOrders: 142,
   cancelledOrders: 6,
   percentageChange: 8.2,
-}
+};
 
 const initialProductsSummary = {
   totalProducts: 24,
   activeProducts: 20,
   outOfStockProducts: 2,
   featuredProducts: 5,
-}
+};
 
-const initialOrders: BakeryOrder[] = [
+const initialOrders = [
   {
     id: "OCH-1001",
     customerName: "María García",
@@ -98,9 +95,9 @@ const initialOrders: BakeryOrder[] = [
     date: new Date(2023, 4, 15, 12, 10),
     deliveryAddress: "Calle Rastro 15, Úbeda",
   },
-]
+];
 
-const initialProducts: BakeryProduct[] = [
+const initialProducts = [
   {
     id: "p1",
     name: "Ochío Tradicional",
@@ -252,55 +249,55 @@ const initialProducts: BakeryProduct[] = [
       fat: 5,
     },
   },
-]
+];
 
 export default function DashboardExample() {
-  const [orders, setOrders] = useState<BakeryOrder[]>(initialOrders)
-  const [products, setProducts] = useState<BakeryProduct[]>(initialProducts)
-  const [salesSummary, setSalesSummary] = useState(initialSalesSummary)
-  const [ordersSummary, setOrdersSummary] = useState(initialOrdersSummary)
-  const [productsSummary, setProductsSummary] = useState(initialProductsSummary)
+  const [orders, setOrders] = useState(initialOrders);
+  const [products, setProducts] = useState(initialProducts);
+  const [salesSummary, setSalesSummary] = useState(initialSalesSummary);
+  const [ordersSummary, setOrdersSummary] = useState(initialOrdersSummary);
+  const [productsSummary, setProductsSummary] = useState(initialProductsSummary);
 
   // Handlers
   const handleAddProduct = () => {
     toast({
       title: "Añadir producto",
       description: "Funcionalidad para añadir un nuevo producto",
-    })
-  }
+    });
+  };
 
-  const handleEditProduct = (product: BakeryProduct) => {
+  const handleEditProduct = (product) => {
     toast({
       title: "Editar producto",
       description: `Editando: ${product.name}`,
-    })
-  }
+    });
+  };
 
-  const handleDeleteProduct = (productId: string) => {
+  const handleDeleteProduct = (productId) => {
     toast({
       title: "Eliminar producto",
       description: `¿Estás seguro de que deseas eliminar este producto?`,
       variant: "destructive",
-    })
-  }
+    });
+  };
 
-  const handleUpdateOrderStatus = (orderId: string, status: OrderStatus) => {
+  const handleUpdateOrderStatus = (orderId, status) => {
     // Actualizar el estado del pedido
-    const updatedOrders = orders.map((order) => (order.id === orderId ? { ...order, status } : order))
-    setOrders(updatedOrders)
+    const updatedOrders = orders.map((order) => (order.id === orderId ? { ...order, status } : order));
+    setOrders(updatedOrders);
 
     toast({
       title: "Estado actualizado",
       description: `Pedido ${orderId} actualizado a: ${status}`,
-    })
-  }
+    });
+  };
 
-  const handleViewOrderDetails = (orderId: string) => {
+  const handleViewOrderDetails = (orderId) => {
     toast({
       title: "Ver detalles del pedido",
       description: `Viendo detalles del pedido: ${orderId}`,
-    })
-  }
+    });
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -317,5 +314,5 @@ export default function DashboardExample() {
         onViewOrderDetails={handleViewOrderDetails}
       />
     </div>
-  )
+  );
 }

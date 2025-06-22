@@ -4,5 +4,4 @@ dotenv.config();
 export const config = {
   port: process.env.PORT || 3000,
   jwtSecret: process.env.JWT_SECRET || 'ochio_secret',
-  dbUri: process.env.DB_URI || '',
 };

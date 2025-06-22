@@ -8,11 +8,27 @@
     "frontend"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix backend\" \"npm start --prefix frontend\"",
-    "build": "npm run build --prefix backend && npm run build --prefix frontend",
-    "start": "npm start --prefix backend"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
-    "concurrently": "^7.0.0"
+    "@supabase/supabase-js": "^2.50.0",
+    "@types/next": "^8.0.7",
+    "class-variance-authority": "0.7.1",
+    "clsx": "^1.0.0",
+    "concurrently": "^7.0.0",
+    "eslint-plugin-prettier": "^5.5.0",
+    "next": "^15.3.4",
+    "pg": "^8.16.2",
+    "tailwind-merge": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/serve-static": "^1.15.8",
+    "jest": "^30.0.2",
+    "ts-jest": "^29.4.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
   }
 }

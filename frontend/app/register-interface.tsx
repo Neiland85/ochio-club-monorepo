@@ -1,23 +1,23 @@
-"use client"
+"use client";
 
-import { useAuth } from "@/hooks/use-auth"
-import RegisterExample from "./register-example"
-import AppLayout from "@/components/layout/app-layout"
-import { useRouter } from "next/navigation"
-import type { NavigationItem } from "@/types/layout"
+import { useAuth } from "../hooks/use-auth";
+import RegisterExample from "./register-example";
+import AppLayout from "../components/layout/app-layout";
+import { useRouter } from "next/navigation";
+import type { NavigationItem } from "../types/layout";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+import { Button } from "../components/ui/button";
+import { Badge } from "../components/ui/badge";
 
 export default function RegisterInterface() {
-  const { user } = useAuth()
-  const router = useRouter()
+  const { user } = useAuth();
+  const router = useRouter();
 
-  // Si ya hay un usuario logueado, redirigir a su interfaz correspondiente
+  // Redirigir si el usuario ya está logueado
   if (user) {
-    if (user.role === "admin" || user.role === "baker") {
-      router.push("/admin")
-    } else {
-      router.push("/user")
-    }
-    return null
+    const targetPath = user.role === "admin" || user.role === "baker" ? "/admin" : "/user";
+    router.push(targetPath);
+    return null;
   }
 
   // Elementos de navegación para usuarios no logueados
@@ -27,7 +27,7 @@ export default function RegisterInterface() {
     { label: "Sobre Nosotros", href: "/nosotros", isActive: false },
     { label: "Contacto", href: "/contacto", isActive: false },
     { label: "Iniciar Sesión", href: "/login", isActive: false },
-  ]
+  ];
 
   return (
     <AppLayout navigationItems={publicNavItems}>
@@ -35,5 +35,5 @@ export default function RegisterInterface() {
         <RegisterExample />
       </div>
     </AppLayout>
-  )
+  );
 }

@@ -1,62 +1,62 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import UserLoginForm from "@/components/user-login-form"
-import type { UserLoginData } from "@/types/user-login"
+import { useState } from "react";
+import UserLoginForm from "@/components/user-login-form";
+import type { UserLoginData } from "@/types/user-login";
 
 export default function LoginFormExample() {
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string>("")
-  const [loginSuccess, setLoginSuccess] = useState(false)
+  const [state, setState] = useState({
+    isLoading: false,
+    error: "",
+    loginSuccess: false,
+  });
 
   const handleLogin = async (data: UserLoginData) => {
-    setIsLoading(true)
-    setError("")
+    setState((prev) => ({ ...prev, isLoading: true, error: "" }));
 
     try {
       // Simular llamada a API
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       // Simular validación de credenciales
-      if (data.email === "admin@ochio.com" && data.password === "admin123") {
-        console.log("Login exitoso:", data)
-        setLoginSuccess(true)
-      } else if (data.email === "user@ochio.com" && data.password === "user123") {
-        console.log("Login de usuario exitoso:", data)
-        setLoginSuccess(true)
+      if (
+        (data.email === "admin@ochio.com" && data.password === "admin123") ||
+        (data.email === "user@ochio.com" && data.password === "user123")
+      ) {
+        setState((prev) => ({ ...prev, loginSuccess: true }));
       } else {
-        setError("Email o contraseña incorrectos")
+        setState((prev) => ({ ...prev, error: "Email o contraseña incorrectos" }));
       }
-    } catch (err) {
-      setError("Error de conexión. Inténtalo de nuevo.")
+    } catch {
+      setState((prev) => ({ ...prev, error: "Error de conexión. Inténtalo de nuevo." }));
     } finally {
-      setIsLoading(false)
+      setState((prev) => ({ ...prev, isLoading: false }));
     }
-  }
+  };
 
   const handleForgotPassword = () => {
-    alert("Funcionalidad de recuperación de contraseña")
-  }
+    alert("Funcionalidad de recuperación de contraseña");
+  };
 
   const handleRegisterRedirect = () => {
-    alert("Redireccionar a página de registro")
-  }
+    alert("Redireccionar a página de registro");
+  };
 
-  if (loginSuccess) {
+  if (state.loginSuccess) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="bg-white p-8 rounded-lg shadow-md text-center">
           <h2 className="text-2xl font-bold text-green-600 mb-4">¡Login Exitoso!</h2>
           <p className="text-gray-600 mb-4">Has iniciado sesión correctamente.</p>
           <button
-            onClick={() => setLoginSuccess(false)}
+            onClick={() => setState((prev) => ({ ...prev, loginSuccess: false }))}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
           >
             Volver al formulario
           </button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -64,8 +64,8 @@ export default function LoginFormExample() {
       <div className="w-full max-w-md">
         <UserLoginForm
           onSubmit={handleLogin}
-          isLoading={isLoading}
-          error={error}
+          isLoading={state.isLoading}
+          error={state.error}
           onForgotPassword={handleForgotPassword}
           onRegisterRedirect={handleRegisterRedirect}
         />
@@ -83,5 +83,5 @@ export default function LoginFormExample() {
         </div>
       </div>
     </div>
-  )
+  );
 }

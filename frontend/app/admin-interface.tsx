@@ -1,37 +1,35 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useAuth } from "@/hooks/use-auth"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import AdminPanelExample from "./admin-panel-example"
-import BakeryDashboardExample from "./bakery-dashboard-example"
-import GlovoOrderStatusExample from "./example-usage"
-import AppLayout from "@/components/layout/app-layout"
-import { useRouter } from "next/navigation"
-import type { NavigationItem } from "@/types/layout"
+import { useState } from "react";
+import { useAuth } from "../hooks/use-auth";
+import { useRouter } from "next/navigation";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+import { Button } from "../components/ui/button";
+import { Badge } from "../components/ui/badge";
+import AdminPanelExample from "./admin-panel-example";
+import BakeryDashboardExample from "./bakery-dashboard-example";
+import GlovoOrderStatusExample from "./example-usage";
+import AppLayout from "../components/layout/app-layout";
 
-export default function AdminInterface() {
-  const { user, logout } = useAuth()
-  const router = useRouter()
-  const [activeTab, setActiveTab] = useState("admin-panel")
+const AdminInterface = () => {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState("admin-panel");
 
   // Si no hay usuario o no es admin/baker, redirigir
   if (!user || (user.role !== "admin" && user.role !== "baker")) {
-    router.push("/login")
-    return null
+    router.push("/login");
+    return null;
   }
 
   // Elementos de navegación para administradores
-  const adminNavItems: NavigationItem[] = [
-    { label: "Panel Principal", href: "/admin", isActive: activeTab === "admin-panel" },
-    { label: "Control de Stock", href: "/admin/stock", isActive: activeTab === "control-stock" },
-    { label: "Estados de Pedidos", href: "/admin/pedidos", isActive: activeTab === "orders" },
+  const adminNavItems = [
     { label: "Salir", href: "#", isActive: false, onClick: () => logout() },
-  ]
+  ];
 
   const handleTabChange = (value: string) => {
-    setActiveTab(value)
-  }
+    setActiveTab(value);
+  };
 
   return (
     <AppLayout user={user} navigationItems={adminNavItems} onLogout={logout}>
@@ -57,5 +55,23 @@ export default function AdminInterface() {
         </Tabs>
       </div>
     </AppLayout>
-  )
+  );
+};
+
+// Cambiar el tipo de NavigationItem para incluir onClick
+interface NavigationItem {
+  label: string;
+  href: string;
+  isActive: boolean;
+  onClick?: () => void;
 }
+
+// Ajustar AppLayoutProps para incluir user
+interface AppLayoutProps {
+  children: React.ReactNode;
+  user: any;
+  navigationItems: NavigationItem[];
+  onLogout: () => void;
+}
+
+export default AdminInterface;

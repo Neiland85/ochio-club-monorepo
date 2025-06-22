@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { toast } from "@/hooks/use-toast"
-import BakeryDashboard from "@/components/bakery-dashboard"
-import type { DashboardStats, DashboardOrder, DashboardProduct, OrderStatus } from "@/types/bakery-dashboard"
+import { useState, useEffect } from "react";
+import { toast } from "../components/ui/use-toast";
+import BakeryDashboard from "../components/bakery-dashboard";
+import type { DashboardStats, DashboardOrder, DashboardProduct, OrderStatus } from "../src/types/bakery-dashboard";
 
 // Datos de ejemplo
 const mockStats: DashboardStats = {
@@ -28,7 +28,7 @@ const mockStats: DashboardStats = {
     outOfStock: 3,
     featured: 6,
   },
-}
+};
 
 const mockOrders: DashboardOrder[] = [
   {
@@ -99,7 +99,7 @@ const mockOrders: DashboardOrder[] = [
     createdAt: new Date(2024, 4, 15, 12, 10),
     deliveryAddress: "Calle Rastro 15, 23400 Úbeda, Jaén",
   },
-]
+];
 
 const mockProducts: DashboardProduct[] = [
   {
@@ -214,68 +214,68 @@ const mockProducts: DashboardProduct[] = [
     createdAt: new Date(2024, 2, 20),
     updatedAt: new Date(2024, 4, 5),
   },
-]
+];
 
-export default function BakeryDashboardExample() {
-  const [stats, setStats] = useState<DashboardStats | null>(null)
-  const [orders, setOrders] = useState<DashboardOrder[]>([])
-  const [products, setProducts] = useState<DashboardProduct[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+const BakeryDashboardExample = () => {
+  const [stats, setStats] = useState(mockStats);
+  const [orders, setOrders] = useState<DashboardOrder[]>([]);
+  const [products, setProducts] = useState<DashboardProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Simular carga de datos
   useEffect(() => {
     const loadData = async () => {
       // Simular una carga de datos con un pequeño retraso
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      setStats(mockStats)
-      setOrders(mockOrders)
-      setProducts(mockProducts)
-      setIsLoading(false)
-    }
+      setStats(mockStats);
+      setOrders(mockOrders);
+      setProducts(mockProducts);
+      setIsLoading(false);
+    };
 
-    loadData()
-  }, [])
+    loadData();
+  }, []);
 
   // Manejadores de eventos
   const handleAddProduct = () => {
     toast({
       title: "Añadir Producto",
       description: "Abriendo formulario para añadir un nuevo ochío al catálogo",
-    })
-  }
+    });
+  };
 
   const handleEditProduct = (product: DashboardProduct) => {
     toast({
       title: "Editar Producto",
       description: `Editando: ${product.name}`,
-    })
-  }
+    });
+  };
 
   const handleDeleteProduct = (productId: string) => {
-    const product = products.find((p) => p.id === productId)
+    const product = products.find((p) => p.id === productId);
     toast({
       title: "Eliminar Producto",
       description: `¿Estás seguro de que deseas eliminar "${product?.name}"?`,
       variant: "destructive",
-    })
-  }
+    });
+  };
 
   const handleUpdateOrderStatus = (orderId: string, status: OrderStatus) => {
-    setOrders((prevOrders) => prevOrders.map((order) => (order.id === orderId ? { ...order, status } : order)))
+    setOrders((prevOrders) => prevOrders.map((order) => (order.id === orderId ? { ...order, status } : order)));
 
     toast({
       title: "Estado Actualizado",
       description: `Pedido ${orderId} actualizado a: ${status}`,
-    })
-  }
+    });
+  };
 
   const handleViewOrderDetails = (order: DashboardOrder) => {
     toast({
       title: "Detalles del Pedido",
       description: `Viendo detalles del pedido ${order.id} de ${order.customerName}`,
-    })
-  }
+    });
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -291,5 +291,7 @@ export default function BakeryDashboardExample() {
         isLoading={isLoading}
       />
     </div>
-  )
-}
+  );
+};
+
+export default BakeryDashboardExample;

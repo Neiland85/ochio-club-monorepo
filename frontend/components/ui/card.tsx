@@ -8,8 +8,8 @@ export const CardHeader = ({ children, className = "" }: { children: React.React
   <div className={`p-4 border-b ${className}`}>{children}</div>
 );
 
-export const CardTitle = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-lg font-bold">{children}</h2>
+export const CardTitle = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+  <h2 className={`text-lg font-bold ${className}`}>{children}</h2>
 );
 
 export const CardDescription = ({ children }: { children: React.ReactNode }) => (
