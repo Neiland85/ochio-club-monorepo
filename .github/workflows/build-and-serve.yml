@@ -43,11 +43,54 @@ jobs:
           npm install
           npm run build
 
+      - name: Validate OpenAPI files
+        run: |
+          npm install -g swagger-cli
+          swagger-cli validate ./backend/docs/openapi.yaml
+          swagger-cli validate ./frontend/openapi.json
+
+      - name: Run tests
+        working-directory: ./backend
+        run: |
+          npm install
+          npm test
+
+      - name: Run frontend tests
+        working-directory: ./frontend
+        run: |
+          npm install
+          npm test
+
+      - name: Generate audit report
+        run: |
+          npm audit --omit=dev --audit-level=high > audit-report.txt || true
+          echo "Audit report generated: audit-report.txt"
+
       - name: Cleanup
         run: |
           rm -rf ./frontend/node_modules
           rm -rf ./backend/node_modules
 
+      - name: Cleanup temporary files
+        run: |
+          rm -rf ./frontend/.next
+          rm -rf ./backend/dist
+          rm -rf ./backend/coverage
+          echo "Temporary files cleaned up."
+
+      - name: Build Docker image
+        run: |
+          docker build -t ochio-club-monorepo:latest .
+
+      - name: Run Docker container
+        run: |
+          docker run -d -p 3000:3000 ochio-club-monorepo:latest
+
       - name: Serve frontend and backend
         run: |
           echo "Frontend and backend built successfully. Ready for deployment."
+
+      - name: Configure act for Docker
+        run: |
+          echo "Configuring act to use Docker without authentication..."
+          act -j build-and-serve --container-options "--auth none"

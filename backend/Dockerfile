@@ -12,12 +12,12 @@ RUN npm install -g typescript
 # Copy the rest of the application code
 COPY . .
 
+# Consolidar instrucciones RUN y fijar versiones específicas correctamente
+RUN npm install --production@18.16.0 && npm install -g typescript@5.1.3 && npm install --legacy-peer-deps@18.16.0 || exit 1
+
 # Ajuste para copiar archivos del backend correctamente
 WORKDIR /app/backend
 COPY backend/package.json backend/package-lock.json ./
-RUN npm install --production --legacy-peer-deps || exit 1
-
-# Copiar el resto de los archivos del backend
 COPY backend/. .
 
 # Ejecutar el build del backend
