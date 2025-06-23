@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "../components/ui/use-toast";
 import AdminPanel from "../components/admin/admin-panel";
-import type {
+import {
   AdminUser,
   AdminBakery,
   AdminProduct,

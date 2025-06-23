@@ -9,7 +9,7 @@ export interface AdminUser {
   id: string;
   name: string;
   email: string;
-  phone: string;
+  phone?: string; // Propiedad opcional agregada
   role: string;
   status: UserStatus;
   createdAt: Date;
@@ -21,7 +21,7 @@ export interface AdminUser {
 export interface AdminBakery {
   id: string;
   name: string;
-  description: string;
+  description?: string; // Propiedad opcional agregada
   address: string;
   city: string;
   phone: string;
@@ -39,7 +39,7 @@ export interface AdminBakery {
 export interface AdminProduct {
   id: string;
   name: string;
-  description: string;
+  description?: string; // Propiedad opcional agregada
   price: number;
   category: string;
   bakeryId: string;
@@ -57,7 +57,7 @@ export interface AdminProduct {
 export interface AdminOrder {
   id: string;
   customerName: string;
-  customerEmail: string;
+  customerEmail?: string; // Propiedad opcional agregada
   customerPhone: string;
   bakeryId: string;
   bakeryName: string;

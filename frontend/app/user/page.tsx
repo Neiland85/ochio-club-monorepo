@@ -2,14 +2,14 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "../../hooks/use-auth";
-import AppLayout from "../../components/layout/app-layout";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
-import ShoppingCartExample from "../shopping-cart-example";
-import UserProfile from "../../components/user-profile";
-import { Button } from "../../components/ui/button";
+import { useAuth } from "@hooks/use-auth";
+import AppLayout from "@components/layout/app-layout";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs";
+import ShoppingCartExample from "@components/shopping-cart-example";
+import UserProfile from "@components/user-profile";
+import { Button } from "@components/ui/button";
 import { LogOut } from "lucide-react";
-import type { NavigationItem } from "../../types/layout";
+import type { NavigationItem } from "@types/layout";
 
 export default function UserPage() {
   const { user, isLoading, isAuthenticated, logout } = useAuth();
