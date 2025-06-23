@@ -1,46 +1,25 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import AdminDashboardPanel from "@/components/admin/
-import { useAuth } from "@/src/app/hooks/use-auth"import {
-  LayoutDashboard,
-  Users,
-  Store,
-  ShoppingBag,
-  Package,
-  BarChart2,
-  Activity,
-  FileText,
-  Settings,
-  LogOut,
-  Menu,
-  X,
-  Shield,
-  ScrollText,
-  TrendingUp,
-  AlertTriangle,
-  Clock,
-  Ban,
-  MessageSquare,
-  Eye,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../../hooks/use-auth";
+import { Button } from "../../components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
+import { Progress } from "../../components/ui/progress";
+import { Badge } from "../../components/ui/badge";
+import { Input } from "../../components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
+import { Users, Store, ScrollText, LayoutDashboard, ShoppingBag } from "lucide-react";
 
 // Importar componentes de secciones existentes
-import UsersSection from "./admin/sections/users-section"
-import BakeriesSection from "./admin/sections/bakeries-section"
-import ProductsSection from "./admin/sections/products-section"
-import OrdersSection from "./admin/sections/orders-section"
-import StatsSection from "./admin/sections/stats-section"
-import MonitoringSection from "./admin/sections/monitoring-section"
-import LogsSection from "./admin/sections/logs-section"
-import SettingsSection from "./admin/sections/settings-section"
+import UsersSection from "./sections/users-section";
+import BakeriesSection from "./sections/bakeries-section"; // Definir BakeriesSection
+import ProductsSection from "./sections/products-section";
+import OrdersSection from "./sections/orders-section";
+import StatsSection from "./sections/stats-section";
+import MonitoringSection from "./sections/monitoring-section";
+import LogsSection from "./sections/logs-section";
+import SettingsSection from "./sections/settings-section";
 
 type SectionType =
   | "dashboard"
@@ -57,15 +36,15 @@ type SectionType =
   | "demand-supply"
 
 export default function AdminDashboardPanel() {
-  const { user, logout } = useAuth()
-  const router = useRouter()
-  const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [activeSection, setActiveSection] = useState<SectionType>("dashboard")
+  const { user, logout } = useAuth();
+  const router = useRouter();
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [activeSection, setActiveSection] = useState<SectionType>("dashboard");
 
   const handleLogout = () => {
-    logout()
-    router.push("/login")
-  }
+    logout();
+    router.push("/login");
+  };
 
   const menuItems = [
     { id: "dashboard" as SectionType, icon: <LayoutDashboard size={20} />, label: "Dashboard" },
@@ -73,11 +52,8 @@ export default function AdminDashboardPanel() {
     { id: "bakeries" as SectionType, icon: <Store size={20} />, label: "Panaderías" },
     { id: "products" as SectionType, icon: <ShoppingBag size={20} />, label: "Productos" },
     { id: "orders" as SectionType, icon: <Package size={20} />, label: "Pedidos" },
-    { id: "moderation" as SectionType, icon: <Shield size={20} />, label: "Moderación" },
     { id: "stats" as SectionType, icon: <BarChart2 size={20} />, label: "Estadísticas" },
-    { id: "demand-supply" as SectionType, icon: <TrendingUp size={20} />, label: "Demanda/Oferta" },
     { id: "monitoring" as SectionType, icon: <Activity size={20} />, label: "Monitoreo" },
-    { id: "realtime-logs" as SectionType, icon: <ScrollText size={20} />, label: "Logs Tiempo Real" },
     { id: "logs" as SectionType, icon: <FileText size={20} />, label: "Logs Sistema" },
     { id: "settings" as SectionType, icon: <Settings size={20} />, label: "Configuración" },
   ]
@@ -89,30 +65,26 @@ export default function AdminDashboardPanel() {
 
   const renderContent = () => {
     switch (activeSection) {
+      case "dashboard":
+        return <DashboardContent />;
       case "users":
-        return <UsersSection />
+        return <UsersSection />;
       case "bakeries":
-        return <BakeriesSection />
+        return <BakeriesSection />;
       case "products":
-        return <ProductsSection />
+        return <ProductsSection />;
       case "orders":
-        return <OrdersSection />
-      case "moderation":
-        return <ModerationSection />
+        return <OrdersSection />;
       case "stats":
-        return <StatsSection />
-      case "demand-supply":
-        return <DemandSupplyStatsSection />
+        return <StatsSection />;
       case "monitoring":
-        return <MonitoringSection />
-      case "realtime-logs":
-        return <RealTimeLogsSection />
+        return <MonitoringSection />;
       case "logs":
-        return <LogsSection />
+        return <LogsSection />;
       case "settings":
-        return <SettingsSection />
+        return <SettingsSection />;
       default:
-        return <DashboardContent />
+        return null;
     }
   }
 

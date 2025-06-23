@@ -28,6 +28,28 @@ Desde la raíz del proyecto, puedes ejecutar los siguientes comandos:
 
 3. Configura las variables de entorno en los archivos `.env` dentro de los directorios `frontend` y `backend`.
 
+## Información adicional
+
+Este proyecto utiliza las siguientes tecnologías:
+
+- **Frontend**: React, Next.js, TailwindCSS.
+- **Backend**: Node.js, Express, MongoDB.
+- **Docker**: Contenedores para facilitar el despliegue.
+- **Pruebas**: Jest para pruebas unitarias e integración.
+
+## Contribución
+
+Si deseas contribuir a este proyecto, por favor sigue los pasos:
+
+1. Haz un fork del repositorio.
+2. Crea una nueva rama para tus cambios.
+3. Realiza tus modificaciones y asegúrate de que las pruebas pasen.
+4. Envía un pull request para revisión.
+
+## Licencia
+
+Este proyecto está licenciado bajo la [Licencia Apache 2.0](LICENSE).
+
 ## Contacto
 
 Este proyecto es privado y no está disponible como open source. Para más información, contacta al equipo de desarrollo.

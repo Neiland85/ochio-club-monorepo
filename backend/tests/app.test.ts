@@ -26,4 +26,27 @@ describe('POST /api/users', () => {
     expect(res.body).toHaveProperty('email', 'test@ochio.club');
     expect(res.body).toHaveProperty('role', 'artesano');
   });
+
+  it('debe devolver un error si falta el token de autorización', async () => {
+    const res = await request(app)
+      .post('/api/users')
+      .send({ email: 'test@ochio.club', password: '123456' });
+    expect(res.statusCode).toBe(401);
+    expect(res.body).toHaveProperty('error', 'No autorizado');
+  });
+
+  it('debe devolver un error si los datos del usuario son inválidos', async () => {
+    const loginRes = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'admin@ochio.club', password: '123456', role: 'admin' });
+    expect(loginRes.statusCode).toBe(200);
+    const token = loginRes.body.token;
+
+    const res = await request(app)
+      .post('/api/users')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ email: 'invalid-email', password: '' });
+    expect(res.statusCode).toBe(400);
+    expect(res.body).toHaveProperty('error', 'Datos inválidos');
+  });
 });

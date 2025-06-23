@@ -1,24 +1,43 @@
 "use client"
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { useState, useEffect } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Download, Search, Shield, AlertTriangle, Lock, Eye, Cookie, Activity } from "lucide-react"
-import type { SecurityLog } from "@/types/security-dashboard"
+import type { SecurityLog } from "../../types/security-dashboard"
+import { Badge } from "/Users/estudio/Projects/GitHub/NODE/ochio-club-monorepo/frontend/components/ui/badge";
 
 interface SecurityLogsTableProps {
   logs: SecurityLog[]
   onExportLogs?: () => void
 }
 
-export function SecurityLogsTable({ logs, onExportLogs }: SecurityLogsTableProps) {
+export function SecurityLogsTable({ logs: initialLogs, onExportLogs }: SecurityLogsTableProps) {
+  const [logs, setLogs] = useState<SecurityLog[]>(initialLogs)
   const [searchTerm, setSearchTerm] = useState("")
   const [typeFilter, setTypeFilter] = useState<string>("all")
   const [severityFilter, setSeverityFilter] = useState<string>("all")
+
+  useEffect(() => {
+    const fetchLogs = async () => {
+      try {
+        const response = await fetch('/api/security-logs');
+        if (!response.ok) {
+          throw new Error('Error al cargar los logs de seguridad');
+        }
+        const data = await response.json();
+        setLogs(data);
+      } catch (error) {
+        console.error(error);
+        alert('No se pudieron cargar los logs de seguridad.');
+      }
+    };
+
+    fetchLogs();
+  }, []);
 
   const filteredLogs = logs.filter((log) => {
     const matchesSearch =

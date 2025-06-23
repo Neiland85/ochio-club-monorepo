@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { fetchOrders } from "@/src/services/orders";
+import { fetchOrders } from "../services/orders";
 
 export function useOrders() {
   const { data, error, mutate, isLoading } = useSWR("/orders", fetchOrders);

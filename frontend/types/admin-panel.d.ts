@@ -1,18 +1,24 @@
-// Refactorización para asegurar consistencia con las dependencias
-export type AdminUser = {
+export interface AdminPanelProps {
+  users: AdminUser[];
+  bakeries: AdminBakery[];
+  products: AdminProduct[];
+  orders: AdminOrder[];
+}
+
+export interface AdminUser {
   id: string;
   name: string;
   email: string;
   phone: string;
   role: string;
-  status: string;
+  status: UserStatus;
   createdAt: Date;
   lastLogin?: Date;
   avatar?: string;
   bakeryId?: string;
-};
+}
 
-export type AdminBakery = {
+export interface AdminBakery {
   id: string;
   name: string;
   description: string;
@@ -20,7 +26,7 @@ export type AdminBakery = {
   city: string;
   phone: string;
   email: string;
-  status: string;
+  status: BakeryStatus;
   ownerId: string;
   ownerName: string;
   createdAt: Date;
@@ -28,9 +34,9 @@ export type AdminBakery = {
   totalOrders: number;
   rating: number;
   imageUrl?: string;
-};
+}
 
-export type AdminProduct = {
+export interface AdminProduct {
   id: string;
   name: string;
   description: string;
@@ -38,7 +44,7 @@ export type AdminProduct = {
   category: string;
   bakeryId: string;
   bakeryName: string;
-  status: string;
+  status: ProductStatus;
   stock: number;
   isOutOfStock: boolean;
   isFeatured: boolean;
@@ -46,9 +52,9 @@ export type AdminProduct = {
   updatedAt: Date;
   imageUrl?: string;
   totalSales: number;
-};
+}
 
-export type AdminOrder = {
+export interface AdminOrder {
   id: string;
   customerName: string;
   customerEmail: string;
@@ -64,11 +70,11 @@ export type AdminOrder = {
     total: number;
   }>;
   total: number;
-  status: string;
+  status: AdminOrderStatus;
   createdAt: Date;
   deliveryAddress: string;
   notes?: string;
-};
+}
 
 export type UserStatus = "active" | "inactive";
 export type BakeryStatus = "active" | "pending" | "inactive";
