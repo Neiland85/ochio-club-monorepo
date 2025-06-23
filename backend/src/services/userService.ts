@@ -1,7 +1,7 @@
 // Aquí irán los servicios de negocio (ejemplo de usuario)
 import { User, UserRole } from '../models/user';
 import bcrypt from 'bcryptjs';
-import { supabase } from '../config/supabase';
+import { supabase, supabaseClient } from '../config/supabase';
 
 const adminUser: User = {
   id: 'admin-1',
@@ -16,8 +16,16 @@ const users: User[] = [adminUser];
 
 export class UserService {
   async getAllUsers(): Promise<User[]> {
+    const { data, error } = await supabaseClient
+      .from('users')
+      .select('*');
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
     // Devuelve todos los usuarios sin password hash por seguridad
-    return users.map(user => ({
+    return data.map((user: User) => ({
       id: user.id,
       email: user.email,
       passwordHash: '', // No exponer hash en listados
@@ -76,4 +84,28 @@ export const getUserByEmail = async (email: string) => {
   }
 
   return user;
+};
+
+export const getUsers = async () => {
+  const { data, error } = await supabaseClient
+    .from('users')
+    .select('*');
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
+export const addUser = async (user: { name: string; email: string }) => {
+  const { data, error } = await supabaseClient
+    .from('users')
+    .insert([user]);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
 };

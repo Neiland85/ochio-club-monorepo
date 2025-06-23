@@ -1,0 +1,66 @@
+{
+  "info": {
+    "name": "Ochio Club Backend",
+    "description": "Colección de endpoints para el backend de Ochio Club",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Obtener lista de productos",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:4000/products",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "products"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Crear un nuevo producto",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{apiKey}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Product Name\",\n  \"price\": 100\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/products",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "products"
+          ]
+        }
+      }
+    }
+  ]
+}
