@@ -1,7 +1,7 @@
 // src/routes/userRoutes.ts
 import { Router } from 'express';
 import { UserService } from '../services/userService';
-import { getAllUsers, createUser } from '../controllers/userController';
+import * as userController from '../controllers/userController';
 import { body } from 'express-validator';
 
 const router = Router();
@@ -22,7 +22,6 @@ const validateUserCreation = [
     .withMessage('Role debe ser admin o artesano')
 ];
 
-router.get('/', getAllUsers(userService));
-router.post('/', validateUserCreation, createUser(userService));
+router.get('/', userController.getAllUsers(userService));
 
 export default router;

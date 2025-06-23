@@ -1,0 +1,51 @@
+paths:
+  /users:
+    get:
+      operationId: "getUsers"
+      summary: "Obtener lista de usuarios"
+      responses:
+        "200":
+          description: "Lista de usuarios"
+          content:
+            application/json:
+              example:
+                - id: "1"
+                  name: "Juan Pérez"
+                  email: "juan.perez@example.com"
+                - id: "2"
+                  name: "Ana López"
+                  email: "ana.lopez@example.com"
+        "400":
+          description: "Solicitud inválida"
+          content:
+            application/json:
+              example:
+                error: "Parámetros inválidos"
+  /products:
+    post:
+      operationId: "createProduct"
+      summary: "Crear un nuevo producto"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: "Producto de prueba"
+              price: 100
+              stock: 50
+      responses:
+        "201":
+          description: "Producto creado"
+          content:
+            application/json:
+              example:
+                id: "1"
+                name: "Producto de prueba"
+                price: 100
+                stock: 50
+        "400":
+          description: "Datos inválidos"
+          content:
+            application/json:
+              example:
+                error: "Datos del producto inválidos"

@@ -41,4 +41,27 @@ describe('POST /api/products', () => {
     const res = await request(app).post('/api/products').send({});
     expect(res.statusCode).toBe(400);
   });
+  it('debe crear un nuevo producto', async () => {
+    const newProduct = {
+      name: 'Producto de prueba',
+      price: 100,
+      stock: 50
+    };
+    const res = await request(app).post('/api/products').send(newProduct);
+    expect(res.statusCode).toBe(201);
+    expect(res.body).toHaveProperty('id');
+    expect(res.body).toHaveProperty('name', newProduct.name);
+    expect(res.body).toHaveProperty('price', newProduct.price);
+    expect(res.body).toHaveProperty('stock', newProduct.stock);
+  });
+  it('debe devolver 400 si los datos son inválidos', async () => {
+    const invalidProduct = {
+      name: '',
+      price: -10,
+      stock: -5
+    };
+    const res = await request(app).post('/api/products').send(invalidProduct);
+    expect(res.statusCode).toBe(400);
+    expect(res.body).toHaveProperty('error');
+  });
 });

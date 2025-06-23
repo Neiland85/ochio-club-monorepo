@@ -11,4 +11,8 @@ module.exports = {
       isolatedModules: true,
     },
   },
+  extensionsToTreatAsEsm: ['.ts'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!supertest)',
+  ],
 };
