@@ -13,6 +13,10 @@ export class ProductService {
     return products.find(p => p.id === id);
   }
   async createProduct(data: Omit<Product, 'id' | 'createdAt'>): Promise<Product> {
+    if (products.some(p => p.name === data.name)) {
+      throw new Error('El producto ya existe');
+    }
+
     const newProduct: Product = {
       ...data,
       id: (products.length + 1).toString(),

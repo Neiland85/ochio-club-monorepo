@@ -1,50 +1,45 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { useAuth } from "../../hooks/use-auth"
-import AppLayout from "../../components/layout/app-layout"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs"
-import ShoppingCartExample from "../shopping-cart-example"
-import UserProfile from "../../components/user-profile"
-import { Button } from "../../components/ui/button"
-import { LogOut } from "lucide-react"
-import type { NavigationItem } from "../../types/layout"
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@hooks/use-auth";
+import AppLayout from "@components/layout/app-layout";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs";
+import ShoppingCartExample from "@components/shopping-cart-example";
+import UserProfile from "@components/user-profile";
+import { Button } from "@components/ui/button";
+import { LogOut } from "lucide-react";
+import type { NavigationItem } from "@types/layout";
 
 export default function UserPage() {
-  const { user, isLoading, isAuthenticated, logout } = useAuth()
-  const router = useRouter()
+  const { user, isLoading, isAuthenticated, logout } = useAuth();
+  const router = useRouter();
 
-  // Redirigir si no está autenticado
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push("/login")
+      router.push("/login");
     }
-  }, [isLoading, isAuthenticated, router])
+  }, [isLoading, isAuthenticated, router]);
 
-  // Elementos de navegación para usuarios logueados
   const userNavItems: NavigationItem[] = [
     { label: "Productos", href: "/productos", isActive: false },
     { label: "Mis Pedidos", href: "/user", isActive: true },
     { label: "Sobre Nosotros", href: "/nosotros", isActive: false },
     { label: "Contacto", href: "/contacto", isActive: false },
-  ]
+  ];
 
-  // Mostrar pantalla de carga mientras se verifica la autenticación
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
-    )
+    );
   }
 
-  // Si no está autenticado, no mostrar nada (la redirección se encargará)
   if (!isAuthenticated || !user) {
-    return null
+    return null;
   }
 
-  // Datos de usuario para el perfil
   const userProfileData = {
     name: user.name || "Usuario",
     email: user.email || "usuario@example.com",
@@ -70,12 +65,10 @@ export default function UserPage() {
       createdAt: "2023-01-15",
       lastLogin: "2024-01-20",
     },
-  }
+  };
 
   return (
-    <AppLayout
-      navigationItems={userNavItems}
-    >
+    <AppLayout navigationItems={userNavItems}>
       <div className="flex items-center gap-4">
         <div className="text-sm">
           <span className="block font-medium">Hola, {user?.name?.split(" ")[0] || "Usuario"}</span>
@@ -98,17 +91,15 @@ export default function UserPage() {
           <TabsContent value="profile">
             <UserProfile
               initialUserData={userProfileData}
-              onUpdateProfile={async (data) => {
-                console.log("Actualizando perfil:", data)
-                // Aquí iría la lógica para actualizar el perfil
-                await new Promise((resolve) => setTimeout(resolve, 1000))
-                return Promise.resolve()
+              onUpdateProfile={async (data: Record<string, unknown>) => {
+                console.log("Actualizando perfil:", data);
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                return Promise.resolve();
               }}
-              onChangePassword={async (data) => {
-                console.log("Cambiando contraseña:", data)
-                // Aquí iría la lógica para cambiar la contraseña
-                await new Promise((resolve) => setTimeout(resolve, 1000))
-                return Promise.resolve()
+              onChangePassword={async (data: Record<string, unknown>) => {
+                console.log("Cambiando contraseña:", data);
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                return Promise.resolve();
               }}
             />
           </TabsContent>
@@ -117,7 +108,6 @@ export default function UserPage() {
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h2 className="text-xl font-semibold mb-4">Historial de Pedidos</h2>
               <p className="text-muted-foreground">Aquí podrás ver todos tus pedidos anteriores y su estado actual.</p>
-              {/* Aquí iría el componente de historial de pedidos */}
               <div className="mt-4 p-8 border border-dashed border-gray-300 rounded-md text-center">
                 <p className="text-muted-foreground">Componente de Historial de Pedidos</p>
               </div>
@@ -130,5 +120,5 @@ export default function UserPage() {
         </Tabs>
       </div>
     </AppLayout>
-  )
-} 
+  );
+}

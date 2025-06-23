@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { toast } from "../components/ui/use-toast"; // Ruta corregida
-import AdminPanel from "../components/admin/admin-panel"; // Ruta corregida
-import type {
+import { toast } from "../components/ui/use-toast";
+import AdminPanel from "../components/admin/admin-panel";
+import {
   AdminUser,
   AdminBakery,
   AdminProduct,
@@ -12,46 +12,8 @@ import type {
   BakeryStatus,
   ProductStatus,
   AdminOrderStatus,
-} from "../types/admin-panel"; // Ruta corregida
+} from "../types/admin-panel";
 
-// Asegúrate de que el tipo AdminOrder incluya la propiedad customerName en el archivo "../types/admin-panel"
-// Ejemplo de cómo debería verse el tipo AdminOrder en ese archivo:
-// type AdminOrder = {
-//   id: string;
-//   customerName: string; // Agregar esta propiedad
-//   customerEmail: string;
-//   customerPhone: string;
-//   bakeryId: string;
-//   bakeryName: string;
-//   items: Array<{ id: string; productId: string; productName: string; quantity: number; unitPrice: number; total: number }>;
-//   total: number;
-//   status: AdminOrderStatus;
-//   createdAt: Date;
-//   deliveryAddress: string;
-//   notes?: string;
-// };
-
-// Asegúrate de que el tipo AdminProduct incluya la propiedad isFeatured en el archivo "../types/admin-panel"
-// Ejemplo de cómo debería verse el tipo AdminProduct en ese archivo:
-// type AdminProduct = {
-//   id: string;
-//   name: string;
-//   description: string;
-//   price: number;
-//   category: string;
-//   bakeryId: string;
-//   bakeryName: string;
-//   status: ProductStatus;
-//   stock: number;
-//   isOutOfStock: boolean;
-//   isFeatured: boolean; // Agregar esta propiedad
-//   createdAt: Date;
-//   updatedAt: Date;
-//   imageUrl: string;
-//   totalSales: number;
-// };
-
-// Datos de ejemplo
 const mockUsers: AdminUser[] = [
   {
     id: "u1",
@@ -117,7 +79,7 @@ const mockBakeries: AdminBakery[] = [
     city: "Úbeda",
     phone: "953123456",
     email: "info@panaderiasanisidro.com",
-    status: "active" as BakeryStatus, // Aseguramos que el valor sea del tipo correcto
+    status: "active" as BakeryStatus,
     ownerId: "u2",
     ownerName: "Carlos Rodríguez López",
     createdAt: new Date(2024, 1, 10),
@@ -172,7 +134,7 @@ const mockProducts: AdminProduct[] = [
     bakeryName: "Horno Tradicional San Isidro",
     status: "active",
     stock: 45,
-    isOutOfStock: false, 
+    isOutOfStock: false,
     isFeatured: true,
     createdAt: new Date(2024, 1, 15),
     updatedAt: new Date(2024, 4, 10),
@@ -319,134 +281,75 @@ export default function AdminPanelExample() {
   const [orders, setOrders] = useState<AdminOrder[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Simular carga de datos
   useEffect(() => {
     const loadData = async () => {
-      // Simular una carga de datos con un pequeño retraso
       await new Promise((resolve) => setTimeout(resolve, 1500));
-
       setUsers(mockUsers);
       setBakeries(mockBakeries);
       setProducts(mockProducts);
       setOrders(mockOrders);
       setIsLoading(false);
     };
-
     loadData();
   }, []);
 
-  // Manejadores para usuarios
   const handleUserEdit = (user: AdminUser) => {
-    toast({
-      title: "Editar Usuario",
-      description: `Editando usuario: ${user.name}`,
-    });
+    toast({ title: "Editar Usuario", description: `Editando usuario: ${user.name}` });
   };
 
   const handleUserDelete = (userId: string) => {
     const user = users.find((u) => u.id === userId);
-    toast({
-      title: "Eliminar Usuario",
-      description: `¿Estás seguro de que deseas eliminar a "${user?.name}"?`,
-      variant: "destructive",
-    });
+    toast({ title: "Eliminar Usuario", description: `¿Estás seguro de que deseas eliminar a "${user?.name}"?`, variant: "destructive" });
   };
 
   const handleUserStatusChange = (userId: string, status: UserStatus) => {
     setUsers((prevUsers) => prevUsers.map((user) => (user.id === userId ? { ...user, status } : user)));
-
-    toast({
-      title: "Estado de Usuario Actualizado",
-      description: `Usuario actualizado a: ${status}`,
-    });
+    toast({ title: "Estado de Usuario Actualizado", description: `Usuario actualizado a: ${status}` });
   };
 
-  // Manejadores para panaderías
   const handleBakeryEdit = (bakery: AdminBakery) => {
-    toast({
-      title: "Editar Panadería",
-      description: `Editando panadería: ${bakery.name}`,
-    });
+    toast({ title: "Editar Panadería", description: `Editando panadería: ${bakery.name}` });
   };
 
   const handleBakeryDelete = (bakeryId: string) => {
     const bakery = bakeries.find((b) => b.id === bakeryId);
-    toast({
-      title: "Eliminar Panadería",
-      description: `¿Estás seguro de que deseas eliminar "${bakery?.name}"?`,
-      variant: "destructive",
-    });
+    toast({ title: "Eliminar Panadería", description: `¿Estás seguro de que deseas eliminar "${bakery?.name}"?`, variant: "destructive" });
   };
 
   const handleBakeryStatusChange = (bakeryId: string, status: BakeryStatus) => {
-    setBakeries((prevBakeries) =>
-      prevBakeries.map((bakery) => (bakery.id === bakeryId ? { ...bakery, status } : bakery)),
-    );
-
-    toast({
-      title: "Estado de Panadería Actualizado",
-      description: `Panadería actualizada a: ${status}`,
-    });
+    setBakeries((prevBakeries) => prevBakeries.map((bakery) => (bakery.id === bakeryId ? { ...bakery, status } : bakery)));
+    toast({ title: "Estado de Panadería Actualizado", description: `Panadería actualizada a: ${status}` });
   };
 
-  // Manejadores para productos
   const handleProductEdit = (product: AdminProduct) => {
-    toast({
-      title: "Editar Producto",
-      description: `Editando producto: ${product.name}`,
-    });
+    toast({ title: "Editar Producto", description: `Editando producto: ${product.name}` });
   };
 
   const handleProductDelete = (productId: string) => {
     const product = products.find((p) => p.id === productId);
-    toast({
-      title: "Eliminar Producto",
-      description: `¿Estás seguro de que deseas eliminar "${product?.name}"?`,
-      variant: "destructive",
-    });
+    toast({ title: "Eliminar Producto", description: `¿Estás seguro de que deseas eliminar "${product?.name}"?`, variant: "destructive" });
   };
 
   const handleProductStatusChange = (productId: string, status: ProductStatus) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) => (product.id === productId ? { ...product, status } : product)),
-    );
-
-    toast({
-      title: "Estado de Producto Actualizado",
-      description: `Producto actualizado a: ${status}`,
-    });
+    setProducts((prevProducts) => prevProducts.map((product) => (product.id === productId ? { ...product, status } : product)));
+    toast({ title: "Estado de Producto Actualizado", description: `Producto actualizado a: ${status}` });
   };
 
-  // Manejadores para pedidos
   const handleOrderEdit = (order: AdminOrder) => {
-    toast({
-      title: "Editar Pedido",
-      description: `Editando pedido: ${order.id}`,
-    });
+    toast({ title: "Editar Pedido", description: `Editando pedido: ${order.id}` });
   };
 
   const handleOrderDelete = (orderId: string) => {
-    toast({
-      title: "Eliminar Pedido",
-      description: `¿Estás seguro de que deseas eliminar el pedido ${orderId}?`,
-      variant: "destructive",
-    });
+    toast({ title: "Eliminar Pedido", description: `¿Estás seguro de que deseas eliminar el pedido ${orderId}?`, variant: "destructive" });
   };
 
   const handleOrderStatusChange = (orderId: string, status: AdminOrderStatus) => {
     setOrders((prevOrders) => prevOrders.map((order) => (order.id === orderId ? { ...order, status } : order)));
-
-    toast({
-      title: "Estado de Pedido Actualizado",
-      description: `Pedido ${orderId} actualizado a: ${status}`,
-    });
+    toast({ title: "Estado de Pedido Actualizado", description: `Pedido ${orderId} actualizado a: ${status}` });
   };
 
   const handleOrderViewDetails = (order: AdminOrder) => {
-    toast({
-      title: "Detalles del Pedido",
-      description: `Viendo detalles del pedido ${order.id} de ${order.customerName}`,
-    });
+    toast({ title: "Detalles del Pedido", description: `Viendo detalles del pedido ${order.id} de ${order.customerName}` });
   };
 
   return (

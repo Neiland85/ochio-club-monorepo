@@ -1,0 +1,76 @@
+openapi: 3.1.0
+info:
+  title: "API de Ochio Club"
+  version: "1.0.0"
+  description: "API para gestionar usuarios y productos en Ochio Club"
+  license:
+    name: "MIT"
+    url: "https://opensource.org/licenses/MIT"
+servers:
+  - url: "https://api.ochio-club.com"
+    description: "Servidor principal de producción"
+  - url: "https://api.staging.ochio-club.com"
+    description: "Servidor de pruebas"
+paths:
+  /users:
+    get:
+      operationId: "getUsers"
+      summary: "Obtener lista de usuarios"
+      responses:
+        "200":
+          description: "Lista de usuarios"
+          content:
+            application/json:
+              example:
+                - id: "1"
+                  name: "Juan Pérez"
+                  email: "juan.perez@example.com"
+                - id: "2"
+                  name: "Ana López"
+                  email: "ana.lopez@example.com"
+        "400":
+          description: "Solicitud inválida"
+          content:
+            application/json:
+              example:
+                error: "Parámetros inválidos"
+      security:
+        - bearerAuth: []
+  /products:
+    post:
+      operationId: "createProduct"
+      summary: "Crear un nuevo producto"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: "Producto de prueba"
+              price: 100
+              stock: 50
+              category: "Electrónica"
+      responses:
+        "201":
+          description: "Producto creado"
+          content:
+            application/json:
+              example:
+                id: "1"
+                name: "Producto de prueba"
+                price: 100
+                stock: 50
+                category: "Electrónica"
+        "400":
+          description: "Datos inválidos"
+          content:
+            application/json:
+              example:
+                error: "Datos del producto inválidos"
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

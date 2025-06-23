@@ -1,8 +1,10 @@
 // src/routes/userRoutes.ts
 import { Router } from 'express';
 import { UserService } from '../services/userService';
-import { getAllUsers, createUser } from '../controllers/userController';
+import * as userController from '../controllers/userController';
 import { body } from 'express-validator';
+import express from 'express';
+import { login } from '../controllers/authController';
 
 const router = Router();
 const userService = new UserService();
@@ -22,7 +24,22 @@ const validateUserCreation = [
     .withMessage('Role debe ser admin o artesano')
 ];
 
-router.get('/', getAllUsers(userService));
-router.post('/', validateUserCreation, createUser(userService));
+router.get('/', (req, res) => userController.getAllUsers(req, res));
 
 export default router;
+
+function createUser(userService: UserService): express.RequestHandler {
+  return async (req, res) => {
+    try {
+      const { email, password, role } = req.body;
+      const newUser = await userService.createUser(email, password, role);
+      res.status(201).json({ message: 'Usuario creado exitosamente', user: newUser });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).json({ message: 'Error al crear usuario', error: error.message });
+      } else {
+        res.status(500).json({ message: 'Error al crear usuario', error: 'Error desconocido' });
+      }
+    }
+  };
+}

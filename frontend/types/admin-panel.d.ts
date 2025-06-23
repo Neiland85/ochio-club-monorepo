@@ -1,12 +1,19 @@
+export interface AdminPanelProps {
+  users: AdminUser[];
+  bakeries: AdminBakery[];
+  products: AdminProduct[];
+  orders: AdminOrder[];
+}
+
 export interface AdminUser {
   id: string;
   name: string;
   email: string;
-  phone: string;
+  phone?: string; // Propiedad opcional agregada
   role: string;
-  status: string;
+  status: UserStatus;
   createdAt: Date;
-  lastLogin: Date;
+  lastLogin?: Date;
   avatar?: string;
   bakeryId?: string;
 }
@@ -14,7 +21,7 @@ export interface AdminUser {
 export interface AdminBakery {
   id: string;
   name: string;
-  description: string; // Agregar esta línea
+  description?: string; // Propiedad opcional agregada
   address: string;
   city: string;
   phone: string;
@@ -32,25 +39,44 @@ export interface AdminBakery {
 export interface AdminProduct {
   id: string;
   name: string;
+  description?: string; // Propiedad opcional agregada
   price: number;
-  status: string;
-  description?: string;
-  category?: string; // Agregar esta línea
-  bakeryId?: string; // Agregar esta línea
-  bakeryName?: string; // Agregar esta línea
-  stock?: number; // Agregar esta línea
-  isOutOfStock?: boolean; // Agregar esta línea
+  category: string;
+  bakeryId: string;
+  bakeryName: string;
+  status: ProductStatus;
+  stock: number;
+  isOutOfStock: boolean;
+  isFeatured: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  imageUrl?: string;
+  totalSales: number;
 }
 
 export interface AdminOrder {
   id: string;
-  userId: string;
+  customerName: string;
+  customerEmail?: string; // Propiedad opcional agregada
+  customerPhone: string;
   bakeryId: string;
-  productId: string;
-  status: string;
+  bakeryName: string;
+  items: Array<{
+    id: string;
+    productId: string;
+    productName: string;
+    quantity: number;
+    unitPrice: number;
+    total: number;
+  }>;
+  total: number;
+  status: AdminOrderStatus;
+  createdAt: Date;
+  deliveryAddress: string;
+  notes?: string;
 }
 
 export type UserStatus = "active" | "inactive";
-export type BakeryStatus = "open" | "closed";
-export type ProductStatus = "available" | "unavailable";
-export type AdminOrderStatus = "pending" | "completed" | "cancelled";
+export type BakeryStatus = "active" | "pending" | "inactive";
+export type ProductStatus = "active" | "discontinued";
+export type AdminOrderStatus = "confirmed" | "preparing" | "delivered" | "cancelled";

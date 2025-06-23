@@ -1,32 +1,29 @@
 {
   "name": "ochio-club-monorepo",
   "version": "1.0.0",
-  "description": "Monorepo para el proyecto Ochio Club",
+  "description": "Monorepo que agrupa un backend en Node.js/TypeScript (Express + MongoDB) y un frontend en Next.js/React/TypeScript + Tailwind CSS. Configuración de workspaces, linting, CI/CD y despliegue Docker.",
   "private": true,
   "workspaces": [
     "backend",
-    "frontend"
+    "frontend",
+    "packages/common"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix backend\" \"npm start --prefix frontend\"",
-    "build": "npm run build --prefix backend && npm run build --prefix frontend",
-    "start": "npm start --prefix backend"
-  },
-  "dependencies": {
-    "autoprefixer": "^10.4.21",
-    "clsx": "^2.1.1",
-    "concurrently": "^7.0.0",
-    "postcss": "^8.5.5",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.10"
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm --workspace backend run dev",
+    "dev:frontend": "npm --workspace frontend run dev",
+    "lint": "eslint . --ext .ts,.tsx,.js"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.10",
-    "braces": "^3.0.3",
-    "eslint": "^9.29.0",
-    "glob": "^11.0.3",
-    "micromatch": "^4.0.8",
-    "next": "^15.2.3",
-    "rimraf": "^6.0.1"
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^8.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^8.0.0",
+    "postcss": "^8.5.6",
+    "prettier": "^2.0.0",
+    "tailwindcss": "^3.3.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0"
   }
 }

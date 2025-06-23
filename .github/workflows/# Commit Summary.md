@@ -8,13 +8,15 @@ Add `workflow_dispatch` trigger and audit step to CI workflow
 
 Introduced a manual trigger (`workflow_dispatch`) and added a dependency audit step to enhance the CI pipeline's flexibility and security.
 
-### Changes
-- Added `workflow_dispatch` to the `on` section of `.github/workflows/build-and-serve.yml`, enabling manual triggering of the workflow.
-- Introduced a new step named "Audit dependencies" in the `build-and-serve` job to run `npm audit --production`.
-
 ### Impact
 
 - **Behavioral changes**: The workflow can now be manually triggered, and a security audit of production dependencies is performed during the build process.
 - **Dependencies affected**: Relies on `npm` for auditing, which assumes `npm` is properly configured and available.
 - **Breaking changes**: None identified.
 - **Performance implications**: Minimal impact; adds a small overhead from running `npm audit`.
+
+### Changes
+
+- Added `workflow_dispatch` to the `on` section of `.github/workflows/build-and-serve.yml`, enabling manual triggering of the workflow.
+
+- Introduced a new step named "Audit dependencies" in the `build-and-serve` job to run `npm audit --production`.

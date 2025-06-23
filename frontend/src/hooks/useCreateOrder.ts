@@ -1,4 +1,5 @@
-// src/hooks/useCreateOrder.ts
+"use client";
+
 import { useState } from "react";
 import { createOrder } from "@/services/orders";
 

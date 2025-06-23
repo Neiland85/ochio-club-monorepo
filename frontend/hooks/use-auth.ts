@@ -1,18 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+interface User {
+  id: string;
+  name: string;
+  role: string;
+}
 
 export function useAuth() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    // Simular una llamada a la API para verificar la autenticación
+    const mockUser: User = {
+      id: "u1",
+      name: "Admin User",
+      role: "admin",
+    };
     setTimeout(() => {
+      setUser(mockUser);
+      setIsAuthenticated(true);
       setIsLoading(false);
     }, 1000);
   }, []);
 
-  const login = (userData: any) => {
+  const login = (userData: User) => {
     setIsAuthenticated(true);
     setUser(userData);
   };
@@ -20,7 +34,8 @@ export function useAuth() {
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
+    router.push("/login");
   };
 
-  return { isAuthenticated, user, isLoading, login, logout };
+  return { user, isLoading, isAuthenticated, login, logout };
 }

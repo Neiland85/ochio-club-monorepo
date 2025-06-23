@@ -13,6 +13,7 @@ import { authorizeRoles } from "./middlewares/authorizeRoles";
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
 import productRoutes from './routes/productRoutes';
+import stockRoutes from './routes/stockRoutes';
 
 // Crea la app de Express
 const app: Application = express();
@@ -39,10 +40,13 @@ app.use('/api/auth', authRoutes);
 app.use(authenticateJWT);
 
 // Rutas protegidas
-app.use('/api/users', authorizeRoles(['admin']), userRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/stock', stockRoutes);
 
-// Middleware de manejo de errores (debe ir al final)
+// Middleware de manejo de errores
 app.use(errorHandler);
 
+// Elimina la inicialización del servidor
+// exporta solo la aplicación
 export default app;

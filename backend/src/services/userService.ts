@@ -1,6 +1,7 @@
 // Aquí irán los servicios de negocio (ejemplo de usuario)
 import { User, UserRole } from '../models/user';
 import bcrypt from 'bcryptjs';
+import { supabase } from '../config/supabase';
 
 const adminUser: User = {
   id: 'admin-1',
@@ -27,11 +28,19 @@ export class UserService {
 
   async findByEmail(email: string): Promise<User | null> {
     const user = users.find(u => u.email === email);
+    console.log('Buscando usuario por email:', email);
+    console.log('Usuario encontrado:', user);
+    if (!user) {
+      console.error('Usuario no encontrado:', email);
+    }
     return user || null;
   }
 
   async validatePassword(user: User, password: string): Promise<boolean> {
-    return bcrypt.compare(password, user.passwordHash);
+    console.log('Validando contraseña para el usuario:', user.email);
+    const isValid = await bcrypt.compare(password, user.passwordHash);
+    console.log('Resultado de la validación de contraseña:', isValid);
+    return isValid;
   }
 
   async createUser(email: string, password: string, role: UserRole = 'artesano'): Promise<User> {
@@ -40,21 +49,31 @@ export class UserService {
     }
     
     // Check if user already exists
-    const existingUser = await this.findByEmail(email);
-    if (existingUser) {
-      throw new Error('El usuario ya existe');
+    if (users.some(u => u.email === email)) {
+      throw new Error('El email ya está registrado');
     }
-    
-    const passwordHash = await bcrypt.hash(password, 10);
     const newUser: User = {
-      id: Math.random().toString(36).substring(2, 10),
+      id: (users.length + 1).toString(),
       email,
-      passwordHash,
+      passwordHash: bcrypt.hashSync(password, 10),
       role,
-      createdAt: new Date(),
+      createdAt: new Date()
     };
-    
     users.push(newUser);
     return newUser;
   }
 }
+
+export const getUserByEmail = async (email: string) => {
+  const { data: user, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', email)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return user;
+};

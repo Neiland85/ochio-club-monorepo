@@ -1,33 +1,30 @@
 // src/controllers/authController.ts
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { config } from '../config';
-import { UserService } from '../services/userService';
-import { validationResult } from 'express-validator';
+import { supabase } from '../config/supabase';
 
-// Ahora login es una función que recibe el servicio y retorna el handler
-export const login = (userService: UserService) => async (req: Request, res: Response) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const user = await userService.findByEmail(email);
-  if (!user) {
-    return res.status(401).json({ error: 'Credenciales inválidas' });
+
+  const { data: user, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', email)
+    .single();
+
+  if (error || !user || user.password !== password) {
+    return res.status(401).json({ message: 'Invalid credentials' });
   }
-  const isValid = await userService.validatePassword(user, password);
-  if (!isValid) {
-    return res.status(401).json({ error: 'Credenciales inválidas' });
+
+  const secret = process.env.SUPABASE_JWT_SECRET;
+
+  if (!secret) {
+    throw new Error('SUPABASE_JWT_SECRET no está definido en las variables de entorno');
   }
-  try {
-    const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.role },
-      config.jwtSecret,
-      { expiresIn: '1h' }
-    );
-    res.json({ token, user: { id: user.id, email: user.email, role: user.role } });
-  } catch (err: any) {
-    res.status(500).json({ error: err.message || 'Error al iniciar sesión' });
-  }
-}; 
+
+  const token = jwt.sign({ id: user.id }, secret, {
+    expiresIn: '1h',
+  });
+
+  res.json({ token });
+};
