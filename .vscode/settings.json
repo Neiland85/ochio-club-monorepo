@@ -1,0 +1,14 @@
+{
+  "postman.settings.dotenv-detection-notification-visibility": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.formatOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "typescriptreact"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "true"
+  },
+  "github.copilot.enable": true
+}
