@@ -1,5 +1,4 @@
 {
-  "postman.settings.dotenv-detection-notification-visibility": false,
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.formatOnSave": true,
   "eslint.validate": [
@@ -8,7 +7,10 @@
     "typescriptreact"
   ],
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "true"
+    "source.fixAll.eslint": "always"
   },
-  "github.copilot.enable": true
+  "github.copilot.enable": true,
+  "cSpell.words": [
+    "Archivo"
+  ]
 }
