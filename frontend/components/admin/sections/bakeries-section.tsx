@@ -4,4 +4,4 @@
   onDelete={handleDelete}
   onStatusChange={handleStatusChange}
   isLoading={isLoading}
-/>
+/>;

@@ -1,5 +1,5 @@
 // src/types/bakery-dashboard.ts
-export type BakeryStatus = "active" | "inactive" | "pending" | "suspended";
+export type BakeryStatus = 'active' | 'inactive' | 'pending' | 'suspended';
 
 export interface Bakery {
   id: string;
@@ -75,11 +75,11 @@ export interface DashboardProduct {
 }
 
 export type OrderStatus =
-  | "pending"
-  | "confirmed"
-  | "preparing"
-  | "ready"
-  | "picked_up"
-  | "on_the_way"
-  | "delivered"
-  | "cancelled";
+  | 'pending'
+  | 'confirmed'
+  | 'preparing'
+  | 'ready'
+  | 'picked_up'
+  | 'on_the_way'
+  | 'delivered'
+  | 'cancelled';

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface User {
   id: string;
@@ -14,9 +14,9 @@ export function useAuth() {
 
   useEffect(() => {
     const mockUser: User = {
-      id: "u1",
-      name: "Admin User",
-      role: "admin",
+      id: 'u1',
+      name: 'Admin User',
+      role: 'admin',
     };
     setTimeout(() => {
       setUser(mockUser);
@@ -26,7 +26,7 @@ export function useAuth() {
 
   const logout = () => {
     setUser(null);
-    router.push("/login");
+    router.push('/login');
   };
 
   return { user, isLoading, logout };

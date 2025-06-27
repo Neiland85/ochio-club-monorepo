@@ -1,0 +1,30 @@
+{
+  "swagger": {
+    "swagger": "2.0",
+    "info": {
+      "title": "Ochio Club API",
+      "description": "Documentación de la API para Ochio Club",
+      "version": "1.0.0"
+    },
+    "paths": {}
+  },
+  "openapi": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Ochio Club API",
+      "description": "Documentación de la API para Ochio Club",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://api.ochio-club.com",
+        "description": "Servidor de producción"
+      },
+      {
+        "url": "https://api.staging.ochio-club.com",
+        "description": "Servidor de pruebas"
+      }
+    ],
+    "paths": {}
+  }
+}

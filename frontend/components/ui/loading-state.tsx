@@ -1,19 +1,19 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import Loader from "./loader"
-import ErrorMessage from "./error-message"
-import type { LoaderProps, ErrorMessageProps } from "@/types/ui-components"
+import Loader from './loader';
+import ErrorMessage from './error-message';
+import type { LoaderProps, ErrorMessageProps } from '@/types/ui-components';
 
 interface LoadingStateProps {
-  isLoading: boolean
-  error?: string | null
-  children: React.ReactNode
-  loaderProps?: Partial<LoaderProps>
-  errorProps?: Partial<Omit<ErrorMessageProps, "message">>
-  loadingText?: string
-  errorTitle?: string
+  isLoading: boolean;
+  error?: string | null;
+  children: React.ReactNode;
+  loaderProps?: Partial<LoaderProps>;
+  errorProps?: Partial<Omit<ErrorMessageProps, 'message'>>;
+  loadingText?: string;
+  errorTitle?: string;
 }
 
 export default function LoadingState({
@@ -22,16 +22,16 @@ export default function LoadingState({
   children,
   loaderProps = {},
   errorProps = {},
-  loadingText = "Cargando...",
-  errorTitle = "Error",
+  loadingText = 'Cargando...',
+  errorTitle = 'Error',
 }: LoadingStateProps) {
   if (isLoading) {
-    return <Loader text={loadingText} {...loaderProps} />
+    return <Loader text={loadingText} {...loaderProps} />;
   }
 
   if (error) {
-    return <ErrorMessage message={error} title={errorTitle} {...errorProps} />
+    return <ErrorMessage message={error} title={errorTitle} {...errorProps} />;
   }
 
-  return <>{children}</>
+  return <>{children}</>;
 }

@@ -1,11 +1,11 @@
-"use client"
+'use client';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Skeleton } from "@/components/ui/skeleton"
-import StatsCards from "./dashboard/stats-cards"
-import OrdersTable from "./dashboard/orders-table"
-import ProductsSection from "./dashboard/products-section"
-import type { BakeryDashboardProps } from "@/types/bakery-dashboard"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Skeleton } from '@/components/ui/skeleton';
+import StatsCards from './dashboard/stats-cards';
+import OrdersTable from './dashboard/orders-table';
+import ProductsSection from './dashboard/products-section';
+import type { BakeryDashboardProps } from '@/types/bakery-dashboard';
 
 export default function BakeryDashboard({
   stats,
@@ -17,7 +17,7 @@ export default function BakeryDashboard({
   onUpdateOrderStatus = () => {},
   onViewOrderDetails = () => {},
   isLoading = false,
-  className = "",
+  className = '',
 }: BakeryDashboardProps) {
   if (isLoading || !stats) {
     return (
@@ -33,16 +33,19 @@ export default function BakeryDashboard({
         </div>
         <Skeleton className="h-96" />
       </div>
-    )
+    );
   }
 
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Encabezado */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">Control de Stock - Ochío Club</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Control de Stock - Ochío Club
+        </h1>
         <p className="text-muted-foreground">
-          Gestiona tu panadería artesanal de ochíos desde Úbeda con amor y tradición
+          Gestiona tu panadería artesanal de ochíos desde Úbeda con amor y
+          tradición
         </p>
       </div>
 
@@ -57,7 +60,11 @@ export default function BakeryDashboard({
         </TabsList>
 
         <TabsContent value="orders" className="space-y-4">
-          <OrdersTable orders={recentOrders} onUpdateStatus={onUpdateOrderStatus} onViewDetails={onViewOrderDetails} />
+          <OrdersTable
+            orders={recentOrders}
+            onUpdateStatus={onUpdateOrderStatus}
+            onViewDetails={onViewOrderDetails}
+          />
         </TabsContent>
 
         <TabsContent value="products" className="space-y-4">
@@ -70,5 +77,5 @@ export default function BakeryDashboard({
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

@@ -1,13 +1,26 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { Edit, Trash2, MoreHorizontal } from "lucide-react"
-import type { Bakery, BakeryStatus } from "@/types/bakery-dashboard"
+import { useState } from 'react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { Edit, Trash2, MoreHorizontal } from 'lucide-react';
+import type { Bakery, BakeryStatus } from '@/types/bakery-dashboard';
 
 interface BakeriesTableProps {
   bakeries: Bakery[];
@@ -18,11 +31,23 @@ interface BakeriesTableProps {
 }
 
 const statusConfig = {
-  active: { label: "Activa", className: "bg-green-100 text-green-800 border-green-200" },
-  inactive: { label: "Inactiva", className: "bg-gray-100 text-gray-800 border-gray-200" },
-  pending: { label: "Pendiente", className: "bg-yellow-100 text-yellow-800 border-yellow-200" },
-  suspended: { label: "Suspendida", className: "bg-red-100 text-red-800 border-red-200" },
-}
+  active: {
+    label: 'Activa',
+    className: 'bg-green-100 text-green-800 border-green-200',
+  },
+  inactive: {
+    label: 'Inactiva',
+    className: 'bg-gray-100 text-gray-800 border-gray-200',
+  },
+  pending: {
+    label: 'Pendiente',
+    className: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+  },
+  suspended: {
+    label: 'Suspendida',
+    className: 'bg-red-100 text-red-800 border-red-200',
+  },
+};
 
 export default function BakeriesTable({
   bakeries,
@@ -31,24 +56,25 @@ export default function BakeriesTable({
   onStatusChange,
   isLoading = false,
 }: BakeriesTableProps) {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [statusFilter, setStatusFilter] = useState<string>("all")
-  const [cityFilter, setCityFilter] = useState<string>("all")
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [cityFilter, setCityFilter] = useState<string>('all');
 
   // Obtener ciudades únicas
-  const cities = ["all", ...new Set(bakeries.map((bakery) => bakery.city))]
+  const cities = ['all', ...new Set(bakeries.map((bakery) => bakery.city))];
 
   // Filtrar panaderías
   const filteredBakeries = bakeries.filter((bakery) => {
     const matchesSearch =
       bakery.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       bakery.owner.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      bakery.address.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesStatus = statusFilter === "all" || bakery.status === statusFilter
-    const matchesCity = cityFilter === "all" || bakery.city === cityFilter
+      bakery.address.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus =
+      statusFilter === 'all' || bakery.status === statusFilter;
+    const matchesCity = cityFilter === 'all' || bakery.city === cityFilter;
 
-    return matchesSearch && matchesStatus && matchesCity
-  })
+    return matchesSearch && matchesStatus && matchesCity;
+  });
 
   const LoadingSkeleton = () => (
     <>
@@ -77,13 +103,15 @@ export default function BakeriesTable({
         </TableRow>
       ))}
     </>
-  )
+  );
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Gestión de Panaderías</CardTitle>
-        <CardDescription>Administra todas las panaderías registradas</CardDescription>
+        <CardDescription>
+          Administra todas las panaderías registradas
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Filtros */}
@@ -97,16 +125,26 @@ export default function BakeriesTable({
             />
           </div>
           <div className="flex gap-2">
-            <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="border rounded px-2">
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="border rounded px-2"
+            >
               <option value="all">Todos los estados</option>
               <option value="active">Activa</option>
               <option value="inactive">Inactiva</option>
               <option value="pending">Pendiente</option>
               <option value="suspended">Suspendida</option>
             </select>
-            <select value={cityFilter} onChange={e => setCityFilter(e.target.value)} className="border rounded px-2">
-              {cities.map(city => (
-                <option key={city} value={city}>{city === "all" ? "Todas las ciudades" : city}</option>
+            <select
+              value={cityFilter}
+              onChange={(e) => setCityFilter(e.target.value)}
+              className="border rounded px-2"
+            >
+              {cities.map((city) => (
+                <option key={city} value={city}>
+                  {city === 'all' ? 'Todas las ciudades' : city}
+                </option>
               ))}
             </select>
           </div>
@@ -130,7 +168,10 @@ export default function BakeriesTable({
                 <LoadingSkeleton />
               ) : filteredBakeries.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                  <TableCell
+                    colSpan={6}
+                    className="text-center py-8 text-muted-foreground"
+                  >
                     No se encontraron panaderías
                   </TableCell>
                 </TableRow>
@@ -147,10 +188,18 @@ export default function BakeriesTable({
                     </TableCell>
                     <TableCell>{bakery.totalOrders}</TableCell>
                     <TableCell className="text-right">
-                      <Button size="icon" variant="ghost" onClick={() => onEdit(bakery)}>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        onClick={() => onEdit(bakery)}
+                      >
                         <Edit className="h-4 w-4" />
                       </Button>
-                      <Button size="icon" variant="ghost" onClick={() => onDelete(bakery.id)}>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        onClick={() => onDelete(bakery.id)}
+                      >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </TableCell>
@@ -165,5 +214,5 @@ export default function BakeriesTable({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

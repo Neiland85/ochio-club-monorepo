@@ -1,28 +1,67 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Search, Filter, Calendar, ArrowUpDown } from "lucide-react"
+import { useState } from 'react';
+import { Search, Filter, Calendar, ArrowUpDown } from 'lucide-react';
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { Skeleton } from "@/components/ui/skeleton"
-import OrderHistoryItem from "./order-history-item"
-import type { OrderHistoryProps, OrderFilterOptions } from "@/types/order-history"
-import type { OrderStatus } from "@/types/order-status"
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
+import OrderHistoryItem from './order-history-item';
+import type {
+  OrderHistoryProps,
+  OrderFilterOptions,
+} from '@/types/order-history';
+import type { OrderStatus } from '@/types/order-status';
 
 const statusConfig = {
-  pending: { label: "Pendiente", className: "bg-yellow-100 text-yellow-800 border-yellow-200" },
-  confirmed: { label: "Confirmado", className: "bg-blue-100 text-blue-800 border-blue-200" },
-  preparing: { label: "Preparando", className: "bg-orange-100 text-orange-800 border-orange-200" },
-  ready: { label: "Listo", className: "bg-purple-100 text-purple-800 border-purple-200" },
-  picked_up: { label: "Recogido", className: "bg-indigo-100 text-indigo-800 border-indigo-200" },
-  on_the_way: { label: "En camino", className: "bg-blue-100 text-blue-800 border-blue-200" },
-  delivered: { label: "Entregado", className: "bg-green-100 text-green-800 border-green-200" },
-  cancelled: { label: "Cancelado", className: "bg-red-100 text-red-800 border-red-200" },
-}
+  pending: {
+    label: 'Pendiente',
+    className: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+  },
+  confirmed: {
+    label: 'Confirmado',
+    className: 'bg-blue-100 text-blue-800 border-blue-200',
+  },
+  preparing: {
+    label: 'Preparando',
+    className: 'bg-orange-100 text-orange-800 border-orange-200',
+  },
+  ready: {
+    label: 'Listo',
+    className: 'bg-purple-100 text-purple-800 border-purple-200',
+  },
+  picked_up: {
+    label: 'Recogido',
+    className: 'bg-indigo-100 text-indigo-800 border-indigo-200',
+  },
+  on_the_way: {
+    label: 'En camino',
+    className: 'bg-blue-100 text-blue-800 border-blue-200',
+  },
+  delivered: {
+    label: 'Entregado',
+    className: 'bg-green-100 text-green-800 border-green-200',
+  },
+  cancelled: {
+    label: 'Cancelado',
+    className: 'bg-red-100 text-red-800 border-red-200',
+  },
+};
 
 export default function OrderHistory({
   orders,
@@ -31,15 +70,15 @@ export default function OrderHistory({
   onReorder,
   onCancelOrder,
   onTrackOrder,
-  className = "",
+  className = '',
 }: OrderHistoryProps) {
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState('');
   const [filterOptions, setFilterOptions] = useState<OrderFilterOptions>({
-    status: "all",
-    sortBy: "date",
-    sortOrder: "desc",
-  })
-  const [expandedOrder, setExpandedOrder] = useState<string | null>(null)
+    status: 'all',
+    sortBy: 'date',
+    sortOrder: 'desc',
+  });
+  const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
 
   // Filtrar y ordenar pedidos
   const filteredOrders = orders
@@ -48,65 +87,71 @@ export default function OrderHistory({
       const matchesSearch =
         order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.bakeryName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.items.some((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        order.items.some((item) =>
+          item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
 
       // Filtrar por estado
-      const matchesStatus = filterOptions.status === "all" || order.status === filterOptions.status
+      const matchesStatus =
+        filterOptions.status === 'all' || order.status === filterOptions.status;
 
       // Filtrar por rango de fechas
-      let matchesDateRange = true
+      let matchesDateRange = true;
       if (filterOptions.dateRange) {
-        if (filterOptions.dateRange.from && order.date < filterOptions.dateRange.from) {
-          matchesDateRange = false
+        if (
+          filterOptions.dateRange.from &&
+          order.date < filterOptions.dateRange.from
+        ) {
+          matchesDateRange = false;
         }
         if (filterOptions.dateRange.to) {
-          const toDate = new Date(filterOptions.dateRange.to)
-          toDate.setHours(23, 59, 59, 999) // Final del día
+          const toDate = new Date(filterOptions.dateRange.to);
+          toDate.setHours(23, 59, 59, 999); // Final del día
           if (order.date > toDate) {
-            matchesDateRange = false
+            matchesDateRange = false;
           }
         }
       }
 
-      return matchesSearch && matchesStatus && matchesDateRange
+      return matchesSearch && matchesStatus && matchesDateRange;
     })
     .sort((a, b) => {
       // Ordenar por el campo seleccionado
-      const sortBy = filterOptions.sortBy || "date"
-      const sortOrder = filterOptions.sortOrder === "asc" ? 1 : -1
+      const sortBy = filterOptions.sortBy || 'date';
+      const sortOrder = filterOptions.sortOrder === 'asc' ? 1 : -1;
 
-      if (sortBy === "date") {
-        return sortOrder * (a.date.getTime() - b.date.getTime())
-      } else if (sortBy === "total") {
-        return sortOrder * (a.total - b.total)
-      } else if (sortBy === "status") {
-        return sortOrder * a.status.localeCompare(b.status)
+      if (sortBy === 'date') {
+        return sortOrder * (a.date.getTime() - b.date.getTime());
+      } else if (sortBy === 'total') {
+        return sortOrder * (a.total - b.total);
+      } else if (sortBy === 'status') {
+        return sortOrder * a.status.localeCompare(b.status);
       }
-      return 0
-    })
+      return 0;
+    });
 
   const handleStatusFilterChange = (status: string) => {
     setFilterOptions((prev) => ({
       ...prev,
-      status: status as OrderStatus | "all",
-    }))
-  }
+      status: status as OrderStatus | 'all',
+    }));
+  };
 
   const handleSortChange = (sortBy: string) => {
     setFilterOptions((prev) => ({
       ...prev,
-      sortBy: sortBy as "date" | "status" | "total",
-    }))
-  }
+      sortBy: sortBy as 'date' | 'status' | 'total',
+    }));
+  };
 
   const handleSortOrderChange = () => {
     setFilterOptions((prev) => ({
       ...prev,
-      sortOrder: prev.sortOrder === "asc" ? "desc" : "asc",
-    }))
-  }
+      sortOrder: prev.sortOrder === 'asc' ? 'desc' : 'asc',
+    }));
+  };
 
-  const formatCurrency = (amount: number) => `${amount.toFixed(2)}€`
+  const formatCurrency = (amount: number) => `${amount.toFixed(2)}€`;
 
   if (isLoading) {
     return (
@@ -124,14 +169,16 @@ export default function OrderHistory({
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
     <Card className={className}>
       <CardHeader>
         <CardTitle className="text-xl">Historial de Pedidos</CardTitle>
-        <CardDescription>Consulta y gestiona tus pedidos anteriores</CardDescription>
+        <CardDescription>
+          Consulta y gestiona tus pedidos anteriores
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Filtros y búsqueda */}
@@ -146,7 +193,10 @@ export default function OrderHistory({
             />
           </div>
           <div className="flex gap-2">
-            <Select value={filterOptions.status} onValueChange={handleStatusFilterChange}>
+            <Select
+              value={filterOptions.status}
+              onValueChange={handleStatusFilterChange}
+            >
               <SelectTrigger className="w-[130px]">
                 <Filter className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="Estado" />
@@ -160,7 +210,10 @@ export default function OrderHistory({
                 ))}
               </SelectContent>
             </Select>
-            <Select value={filterOptions.sortBy} onValueChange={handleSortChange}>
+            <Select
+              value={filterOptions.sortBy}
+              onValueChange={handleSortChange}
+            >
               <SelectTrigger className="w-[130px]">
                 <Calendar className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="Ordenar por" />
@@ -176,7 +229,11 @@ export default function OrderHistory({
               size="icon"
               onClick={handleSortOrderChange}
               className="h-10 w-10"
-              title={filterOptions.sortOrder === "asc" ? "Orden ascendente" : "Orden descendente"}
+              title={
+                filterOptions.sortOrder === 'asc'
+                  ? 'Orden ascendente'
+                  : 'Orden descendente'
+              }
             >
               <ArrowUpDown className="h-4 w-4" />
             </Button>
@@ -187,12 +244,16 @@ export default function OrderHistory({
         {filteredOrders.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-muted-foreground">No se encontraron pedidos</p>
-            {searchTerm || filterOptions.status !== "all" ? (
+            {searchTerm || filterOptions.status !== 'all' ? (
               <Button
                 variant="link"
                 onClick={() => {
-                  setSearchTerm("")
-                  setFilterOptions({ status: "all", sortBy: "date", sortOrder: "desc" })
+                  setSearchTerm('');
+                  setFilterOptions({
+                    status: 'all',
+                    sortBy: 'date',
+                    sortOrder: 'desc',
+                  });
                 }}
               >
                 Limpiar filtros
@@ -206,16 +267,20 @@ export default function OrderHistory({
                 key={order.id}
                 order={order}
                 isExpanded={expandedOrder === order.id}
-                onToggleExpand={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
+                onToggleExpand={() =>
+                  setExpandedOrder(expandedOrder === order.id ? null : order.id)
+                }
                 onViewDetails={() => onViewOrderDetails(order.id)}
                 onReorder={onReorder ? () => onReorder(order.id) : undefined}
                 onCancelOrder={
-                  onCancelOrder && ["pending", "confirmed"].includes(order.status)
+                  onCancelOrder &&
+                  ['pending', 'confirmed'].includes(order.status)
                     ? () => onCancelOrder(order.id)
                     : undefined
                 }
                 onTrackOrder={
-                  onTrackOrder && ["on_the_way", "picked_up"].includes(order.status)
+                  onTrackOrder &&
+                  ['on_the_way', 'picked_up'].includes(order.status)
                     ? () => onTrackOrder(order.id, order.trackingCode)
                     : undefined
                 }
@@ -232,5 +297,5 @@ export default function OrderHistory({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

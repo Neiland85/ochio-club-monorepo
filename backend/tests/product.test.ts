@@ -1,49 +1,55 @@
-import request from 'supertest';
-import app from '../src/index';
+// Refactorización del archivo de pruebas
+import request from "supertest";
+import app from "../src/index";
+
+jest.setTimeout(30000); // Aumenta el tiempo de espera para evitar problemas de timeout
+
+// Configuración para limitar el número de procesos secundarios
+process.env.JEST_WORKERS = "2"; // Limita los workers a 2 para evitar excepciones
 
 let authToken: string;
 
 beforeAll(async () => {
   const loginRes = await request(app)
-    .post('/api/auth/login')
-    .send({ email: 'admin@ochio.club', password: '123456' });
+    .post("/api/auth/login")
+    .send({ email: "admin@ochio.club", password: "123456" });
   expect(loginRes.statusCode).toBe(200);
   authToken = loginRes.body.token;
 });
 
-describe('GET /api/products', () => {
-  it('debe devolver un array de productos o vacío', async () => {
+describe("GET /api/products", () => {
+  it("debe devolver un array de productos o vacío", async () => {
     const res = await request(app)
-      .get('/api/products')
-      .set('Authorization', `Bearer ${authToken}`);
+      .get("/api/products")
+      .set("Authorization", `Bearer ${authToken}`);
     expect(res.statusCode).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
   });
 });
 
-describe('GET /api/products/:id', () => {
-  it('debe devolver 404 si el producto no existe', async () => {
+describe("GET /api/products/:id", () => {
+  it("debe devolver 404 si el producto no existe", async () => {
     const res = await request(app)
-      .get('/api/products/999')
-      .set('Authorization', `Bearer ${authToken}`);
+      .get("/api/products/999")
+      .set("Authorization", `Bearer ${authToken}`);
     expect(res.statusCode).toBe(404);
   });
 });
 
-describe('POST /api/products', () => {
-  it('debe crear un producto y devolverlo', async () => {
+describe("POST /api/products", () => {
+  it("debe crear un producto y devolverlo", async () => {
     const newProduct = {
-      name: 'Producto Test',
-      description: 'Descripción test',
+      name: "Producto Test",
+      description: "Descripción test",
       price: 99.99,
       stock: 10,
     };
     const res = await request(app)
-      .post('/api/products')
-      .set('Authorization', `Bearer ${authToken}`)
+      .post("/api/products")
+      .set("Authorization", `Bearer ${authToken}`)
       .send(newProduct);
     expect(res.statusCode).toBe(201);
-    expect(res.body).toHaveProperty('id');
-    expect(res.body).toHaveProperty('name', 'Producto Test');
+    expect(res.body).toHaveProperty("id");
+    expect(res.body).toHaveProperty("name", "Producto Test");
   });
 });

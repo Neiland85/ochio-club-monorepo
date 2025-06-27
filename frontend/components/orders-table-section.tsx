@@ -1,19 +1,19 @@
-"use client"
+'use client';
 
-import { Download, RefreshCw } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import OrdersTable from "./orders-table"
-import type { OrdersTableProps } from "@/types/orders-table"
+import { Download, RefreshCw } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import OrdersTable from './orders-table';
+import type { OrdersTableProps } from '@/types/orders-table';
 
 interface OrdersTableSectionProps extends OrdersTableProps {
-  title?: string
-  onRefresh?: () => void
-  onExport?: () => void
-  showActions?: boolean
+  title?: string;
+  onRefresh?: () => void;
+  onExport?: () => void;
+  showActions?: boolean;
 }
 
 export default function OrdersTableSection({
-  title = "Gestión de Pedidos",
+  title = 'Gestión de Pedidos',
   onRefresh,
   onExport,
   showActions = true,
@@ -45,5 +45,5 @@ export default function OrdersTableSection({
       {/* Tabla */}
       <OrdersTable {...tableProps} />
     </div>
-  )
+  );
 }

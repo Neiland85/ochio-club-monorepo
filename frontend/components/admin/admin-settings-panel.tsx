@@ -1,9 +1,9 @@
-"use client"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Settings, Key, Database } from "lucide-react"
-import GlovoConfigForm from "./admin/glovo-config-form"
-import DatabaseMonitor from "./admin/database-monitor"
-import type { AdminSettingsPanelProps } from "@/types/admin-settings"
+'use client';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Settings, Key, Database } from 'lucide-react';
+import GlovoConfigForm from './admin/glovo-config-form';
+import DatabaseMonitor from './admin/database-monitor';
+import type { AdminSettingsPanelProps } from '@/types/admin-settings';
 
 export default function AdminSettingsPanel({
   glovoConfig,
@@ -43,9 +43,13 @@ export default function AdminSettingsPanel({
         </TabsContent>
 
         <TabsContent value="database">
-          <DatabaseMonitor metrics={databaseMetrics} onRefresh={onRefreshMetrics} isLoading={isLoading} />
+          <DatabaseMonitor
+            metrics={databaseMetrics}
+            onRefresh={onRefreshMetrics}
+            isLoading={isLoading}
+          />
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

@@ -1,117 +1,133 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Eye, EyeOff, User, Mail, Lock, AlertCircle } from "lucide-react"
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Eye, EyeOff, User, Mail, Lock, AlertCircle } from 'lucide-react';
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
   userRegisterSchema,
   type UserRegisterFormValues,
   type UserRegisterFormProps,
   type PasswordStrength,
   type PasswordStrengthInfo,
-} from "@/types/user-register"
+} from '@/types/user-register';
 
 // Función para evaluar la fortaleza de la contraseña
 function evaluatePasswordStrength(password: string): PasswordStrengthInfo {
-  let score = 0
-  const feedback: string[] = []
+  let score = 0;
+  const feedback: string[] = [];
 
-  if (password.length >= 8) score += 1
-  else feedback.push("Al menos 8 caracteres")
+  if (password.length >= 8) score += 1;
+  else feedback.push('Al menos 8 caracteres');
 
-  if (/[a-z]/.test(password)) score += 1
-  else feedback.push("Una letra minúscula")
+  if (/[a-z]/.test(password)) score += 1;
+  else feedback.push('Una letra minúscula');
 
-  if (/[A-Z]/.test(password)) score += 1
-  else feedback.push("Una letra mayúscula")
+  if (/[A-Z]/.test(password)) score += 1;
+  else feedback.push('Una letra mayúscula');
 
-  if (/\d/.test(password)) score += 1
-  else feedback.push("Un número")
+  if (/\d/.test(password)) score += 1;
+  else feedback.push('Un número');
 
-  if (/[^a-zA-Z\d]/.test(password)) score += 1
-  else feedback.push("Un carácter especial")
+  if (/[^a-zA-Z\d]/.test(password)) score += 1;
+  else feedback.push('Un carácter especial');
 
-  let strength: PasswordStrength
-  let color: string
-  let bgColor: string
+  let strength: PasswordStrength;
+  let color: string;
+  let bgColor: string;
 
   if (score <= 1) {
-    strength = "weak"
-    color = "text-red-600"
-    bgColor = "bg-red-100"
+    strength = 'weak';
+    color = 'text-red-600';
+    bgColor = 'bg-red-100';
   } else if (score <= 2) {
-    strength = "fair"
-    color = "text-orange-600"
-    bgColor = "bg-orange-100"
+    strength = 'fair';
+    color = 'text-orange-600';
+    bgColor = 'bg-orange-100';
   } else if (score <= 3) {
-    strength = "good"
-    color = "text-yellow-600"
-    bgColor = "bg-yellow-100"
+    strength = 'good';
+    color = 'text-yellow-600';
+    bgColor = 'bg-yellow-100';
   } else {
-    strength = "strong"
-    color = "text-green-600"
-    bgColor = "bg-green-100"
+    strength = 'strong';
+    color = 'text-green-600';
+    bgColor = 'bg-green-100';
   }
 
-  return { score, strength, feedback, color, bgColor }
+  return { score, strength, feedback, color, bgColor };
 }
 
 export default function UserRegisterForm({
   onSubmit,
   isSubmitting = false,
   defaultValues,
-  className = "",
+  className = '',
   showPasswordStrength = true,
   redirectToLogin,
 }: UserRegisterFormProps) {
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const form = useForm<UserRegisterFormValues>({
     resolver: zodResolver(userRegisterSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
       acceptTerms: false,
       ...defaultValues,
     },
-  })
+  });
 
   const handleSubmit = async (data: UserRegisterFormValues) => {
-    const { confirmPassword, acceptTerms, ...submitData } = data
-    await onSubmit(submitData)
-  }
+    const { confirmPassword, acceptTerms, ...submitData } = data;
+    await onSubmit(submitData);
+  };
 
   // Observar la contraseña para mostrar la fortaleza
-  const password = form.watch("password")
-  const passwordStrength = password ? evaluatePasswordStrength(password) : null
+  const password = form.watch('password');
+  const passwordStrength = password ? evaluatePasswordStrength(password) : null;
 
   const PasswordStrengthIndicator = () => {
-    if (!showPasswordStrength || !password || !passwordStrength) return null
+    if (!showPasswordStrength || !password || !passwordStrength) return null;
 
     const strengthLabels = {
-      weak: "Débil",
-      fair: "Regular",
-      good: "Buena",
-      strong: "Fuerte",
-    }
+      weak: 'Débil',
+      fair: 'Regular',
+      good: 'Buena',
+      strong: 'Fuerte',
+    };
 
     return (
       <div className="space-y-2">
         <div className="flex items-center justify-between text-sm">
           <span>Fortaleza de la contraseña:</span>
-          <span className={`font-medium ${passwordStrength.color}`}>{strengthLabels[passwordStrength.strength]}</span>
+          <span className={`font-medium ${passwordStrength.color}`}>
+            {strengthLabels[passwordStrength.strength]}
+          </span>
         </div>
         <Progress value={(passwordStrength.score / 5) * 100} className="h-2" />
         {passwordStrength.feedback.length > 0 && (
@@ -125,14 +141,16 @@ export default function UserRegisterForm({
           </div>
         )}
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <Card className={`w-full max-w-md mx-auto shadow-sm ${className}`}>
       <CardHeader className="text-center">
         <CardTitle className="text-2xl">Crear cuenta</CardTitle>
-        <CardDescription>Completa los datos para registrarte en Ochío Club</CardDescription>
+        <CardDescription>
+          Completa los datos para registrarte en Ochío Club
+        </CardDescription>
       </CardHeader>
 
       <Form {...form}>
@@ -148,7 +166,11 @@ export default function UserRegisterForm({
                   <FormControl>
                     <div className="relative">
                       <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input placeholder="Ingrese su nombre completo" className="pl-10" {...field} />
+                      <Input
+                        placeholder="Ingrese su nombre completo"
+                        className="pl-10"
+                        {...field}
+                      />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -166,7 +188,12 @@ export default function UserRegisterForm({
                   <FormControl>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input type="email" placeholder="su.email@ejemplo.com" className="pl-10" {...field} />
+                      <Input
+                        type="email"
+                        placeholder="su.email@ejemplo.com"
+                        className="pl-10"
+                        {...field}
+                      />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -185,7 +212,7 @@ export default function UserRegisterForm({
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                       <Input
-                        type={showPassword ? "text" : "password"}
+                        type={showPassword ? 'text' : 'password'}
                         placeholder="Ingrese su contraseña"
                         className="pl-10 pr-10"
                         {...field}
@@ -196,7 +223,11 @@ export default function UserRegisterForm({
                         size="icon"
                         className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
                         onClick={() => setShowPassword(!showPassword)}
-                        aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                        aria-label={
+                          showPassword
+                            ? 'Ocultar contraseña'
+                            : 'Mostrar contraseña'
+                        }
                       >
                         {showPassword ? (
                           <EyeOff className="h-4 w-4 text-muted-foreground" />
@@ -223,7 +254,7 @@ export default function UserRegisterForm({
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                       <Input
-                        type={showConfirmPassword ? "text" : "password"}
+                        type={showConfirmPassword ? 'text' : 'password'}
                         placeholder="Confirme su contraseña"
                         className="pl-10 pr-10"
                         {...field}
@@ -233,8 +264,14 @@ export default function UserRegisterForm({
                         variant="ghost"
                         size="icon"
                         className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                        aria-label={
+                          showConfirmPassword
+                            ? 'Ocultar contraseña'
+                            : 'Mostrar contraseña'
+                        }
                       >
                         {showConfirmPassword ? (
                           <EyeOff className="h-4 w-4 text-muted-foreground" />
@@ -256,11 +293,14 @@ export default function UserRegisterForm({
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                   <FormControl>
-                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormLabel className="text-sm font-normal">
-                      Acepto los{" "}
+                      Acepto los{' '}
                       <a
                         href="/terminos"
                         className="text-primary hover:underline"
@@ -268,8 +308,8 @@ export default function UserRegisterForm({
                         rel="noreferrer noopener"
                       >
                         términos y condiciones
-                      </a>{" "}
-                      y la{" "}
+                      </a>{' '}
+                      y la{' '}
                       <a
                         href="/privacidad"
                         className="text-primary hover:underline"
@@ -289,14 +329,19 @@ export default function UserRegisterForm({
             <Alert>
               <AlertCircle className="h-4 w-4" />
               <AlertDescription className="text-sm">
-                Tu información está protegida con encriptación de extremo a extremo. Nunca compartiremos tus datos
-                personales.
+                Tu información está protegida con encriptación de extremo a
+                extremo. Nunca compartiremos tus datos personales.
               </AlertDescription>
             </Alert>
           </CardContent>
 
           <CardFooter className="flex flex-col space-y-4">
-            <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              className="w-full"
+              size="lg"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? (
                 <>
                   <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-transparent" />
@@ -312,8 +357,12 @@ export default function UserRegisterForm({
 
             {redirectToLogin && (
               <div className="text-center text-sm text-muted-foreground">
-                ¿Ya tienes una cuenta?{" "}
-                <Button variant="link" className="p-0 h-auto font-normal" onClick={redirectToLogin}>
+                ¿Ya tienes una cuenta?{' '}
+                <Button
+                  variant="link"
+                  className="p-0 h-auto font-normal"
+                  onClick={redirectToLogin}
+                >
                   Inicia sesión aquí
                 </Button>
               </div>
@@ -322,5 +371,5 @@ export default function UserRegisterForm({
         </form>
       </Form>
     </Card>
-  )
+  );
 }

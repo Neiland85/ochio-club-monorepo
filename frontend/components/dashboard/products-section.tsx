@@ -1,24 +1,43 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { format } from "date-fns"
-import { es } from "date-fns/locale"
-import { Edit, Trash2, Plus, Search, Filter, Star } from "lucide-react"
+import { useState } from 'react';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
+import { Edit, Trash2, Plus, Search, Filter, Star } from 'lucide-react';
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import type { DashboardProduct } from "@/types/bakery-dashboard"
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import type { DashboardProduct } from '@/types/bakery-dashboard';
 
 interface ProductsSectionProps {
-  products: DashboardProduct[]
-  onAddProduct: () => void
-  onEditProduct: (product: DashboardProduct) => void
-  onDeleteProduct: (productId: string) => void
-  className?: string
+  products: DashboardProduct[];
+  onAddProduct: () => void;
+  onEditProduct: (product: DashboardProduct) => void;
+  onDeleteProduct: (productId: string) => void;
+  className?: string;
 }
 
 export default function ProductsSection({
@@ -26,32 +45,36 @@ export default function ProductsSection({
   onAddProduct,
   onEditProduct,
   onDeleteProduct,
-  className = "",
+  className = '',
 }: ProductsSectionProps) {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [categoryFilter, setCategoryFilter] = useState<string>("all")
-  const [statusFilter, setStatusFilter] = useState<string>("all")
+  const [searchTerm, setSearchTerm] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState<string>('all');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
 
   // Obtener categorías únicas
-  const categories = ["all", ...new Set(products.map((product) => product.category))]
+  const categories = [
+    'all',
+    ...new Set(products.map((product) => product.category)),
+  ];
 
   // Filtrar productos
   const filteredProducts = products.filter((product) => {
     const matchesSearch =
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = categoryFilter === "all" || product.category === categoryFilter
+      product.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      categoryFilter === 'all' || product.category === categoryFilter;
     const matchesStatus =
-      statusFilter === "all" ||
-      (statusFilter === "active" && product.isActive) ||
-      (statusFilter === "inactive" && !product.isActive) ||
-      (statusFilter === "outOfStock" && product.isOutOfStock) ||
-      (statusFilter === "featured" && product.isFeatured)
+      statusFilter === 'all' ||
+      (statusFilter === 'active' && product.isActive) ||
+      (statusFilter === 'inactive' && !product.isActive) ||
+      (statusFilter === 'outOfStock' && product.isOutOfStock) ||
+      (statusFilter === 'featured' && product.isFeatured);
 
-    return matchesSearch && matchesCategory && matchesStatus
-  })
+    return matchesSearch && matchesCategory && matchesStatus;
+  });
 
-  const formatCurrency = (amount: number) => `${amount.toFixed(2)}€`
+  const formatCurrency = (amount: number) => `${amount.toFixed(2)}€`;
 
   return (
     <Card className={className}>
@@ -59,7 +82,9 @@ export default function ProductsSection({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
           <div>
             <CardTitle>Gestión de Productos</CardTitle>
-            <CardDescription>Administra tu catálogo de ochíos artesanales</CardDescription>
+            <CardDescription>
+              Administra tu catálogo de ochíos artesanales
+            </CardDescription>
           </div>
           <Button onClick={onAddProduct}>
             <Plus className="h-4 w-4 mr-2" />
@@ -88,7 +113,7 @@ export default function ProductsSection({
               <SelectContent>
                 <SelectItem value="all">Todas las categorías</SelectItem>
                 {categories
-                  .filter((c) => c !== "all")
+                  .filter((c) => c !== 'all')
                   .map((category) => (
                     <SelectItem key={category} value={category}>
                       {category}
@@ -128,7 +153,10 @@ export default function ProductsSection({
             <TableBody>
               {filteredProducts.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                  <TableCell
+                    colSpan={7}
+                    className="text-center py-8 text-muted-foreground"
+                  >
                     No se encontraron productos
                   </TableCell>
                 </TableRow>
@@ -140,7 +168,7 @@ export default function ProductsSection({
                         <div className="h-10 w-10 rounded-md overflow-hidden bg-muted flex-shrink-0">
                           {product.imageUrl ? (
                             <img
-                              src={product.imageUrl || "/placeholder.svg"}
+                              src={product.imageUrl || '/placeholder.svg'}
                               alt={product.name}
                               className="h-full w-full object-cover"
                             />
@@ -150,18 +178,32 @@ export default function ProductsSection({
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-1">
-                            <div className="font-medium truncate">{product.name}</div>
-                            {product.isFeatured && <Star className="h-3 w-3 text-yellow-500 fill-current" />}
+                            <div className="font-medium truncate">
+                              {product.name}
+                            </div>
+                            {product.isFeatured && (
+                              <Star className="h-3 w-3 text-yellow-500 fill-current" />
+                            )}
                           </div>
-                          <div className="text-xs text-muted-foreground truncate">{product.description}</div>
+                          <div className="text-xs text-muted-foreground truncate">
+                            {product.description}
+                          </div>
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>{product.category}</TableCell>
-                    <TableCell className="text-right font-medium">{formatCurrency(product.price)}</TableCell>
+                    <TableCell className="text-right font-medium">
+                      {formatCurrency(product.price)}
+                    </TableCell>
                     <TableCell>
                       {product.stock !== undefined ? (
-                        <span className={product.stock <= 5 ? "text-red-600 font-medium" : ""}>{product.stock}</span>
+                        <span
+                          className={
+                            product.stock <= 5 ? 'text-red-600 font-medium' : ''
+                          }
+                        >
+                          {product.stock}
+                        </span>
                       ) : (
                         <span className="text-muted-foreground">N/A</span>
                       )}
@@ -169,16 +211,25 @@ export default function ProductsSection({
                     <TableCell>
                       <div className="flex flex-wrap gap-1">
                         {product.isActive ? (
-                          <Badge variant="outline" className="bg-green-100 text-green-800 border-green-200">
+                          <Badge
+                            variant="outline"
+                            className="bg-green-100 text-green-800 border-green-200"
+                          >
                             Activo
                           </Badge>
                         ) : (
-                          <Badge variant="outline" className="bg-gray-100 text-gray-800 border-gray-200">
+                          <Badge
+                            variant="outline"
+                            className="bg-gray-100 text-gray-800 border-gray-200"
+                          >
                             Inactivo
                           </Badge>
                         )}
                         {product.isOutOfStock && (
-                          <Badge variant="outline" className="bg-red-100 text-red-800 border-red-200">
+                          <Badge
+                            variant="outline"
+                            className="bg-red-100 text-red-800 border-red-200"
+                          >
                             Agotado
                           </Badge>
                         )}
@@ -186,12 +237,16 @@ export default function ProductsSection({
                     </TableCell>
                     <TableCell>
                       <div className="text-sm text-muted-foreground">
-                        {format(product.updatedAt, "dd/MM/yy", { locale: es })}
+                        {format(product.updatedAt, 'dd/MM/yy', { locale: es })}
                       </div>
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
-                        <Button variant="ghost" size="icon" onClick={() => onEditProduct(product)}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => onEditProduct(product)}
+                        >
                           <Edit className="h-4 w-4" />
                           <span className="sr-only">Editar</span>
                         </Button>
@@ -219,5 +274,5 @@ export default function ProductsSection({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

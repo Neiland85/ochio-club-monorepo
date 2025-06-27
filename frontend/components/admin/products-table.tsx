@@ -1,16 +1,44 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { format } from "date-fns"
-import { es } from "date-fns/locale"
-import { Search, Filter, Edit, Trash2, MoreHorizontal, Star, Package, TrendingUp } from "lucide-react"
+import { useState } from 'react';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
+import {
+  Search,
+  Filter,
+  Edit,
+  Trash2,
+  MoreHorizontal,
+  Star,
+  Package,
+  TrendingUp,
+} from 'lucide-react';
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,14 +46,23 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import type { ProductsTableProps, ProductStatus } from "@/types/admin-panel"
+} from '@/components/ui/dropdown-menu';
+import type { ProductsTableProps, ProductStatus } from '@/types/admin-panel';
 
 const statusConfig = {
-  active: { label: "Activo", className: "bg-green-100 text-green-800 border-green-200" },
-  inactive: { label: "Inactivo", className: "bg-gray-100 text-gray-800 border-gray-200" },
-  discontinued: { label: "Descontinuado", className: "bg-red-100 text-red-800 border-red-200" },
-}
+  active: {
+    label: 'Activo',
+    className: 'bg-green-100 text-green-800 border-green-200',
+  },
+  inactive: {
+    label: 'Inactivo',
+    className: 'bg-gray-100 text-gray-800 border-gray-200',
+  },
+  discontinued: {
+    label: 'Descontinuado',
+    className: 'bg-red-100 text-red-800 border-red-200',
+  },
+};
 
 export default function ProductsTable({
   products,
@@ -34,29 +71,38 @@ export default function ProductsTable({
   onStatusChange,
   isLoading = false,
 }: ProductsTableProps) {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [statusFilter, setStatusFilter] = useState<string>("all")
-  const [categoryFilter, setCategoryFilter] = useState<string>("all")
-  const [bakeryFilter, setBakeryFilter] = useState<string>("all")
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [categoryFilter, setCategoryFilter] = useState<string>('all');
+  const [bakeryFilter, setBakeryFilter] = useState<string>('all');
 
   // Obtener categorías y panaderías únicas
-  const categories = ["all", ...new Set(products.map((product) => product.category))]
-  const bakeries = ["all", ...new Set(products.map((product) => product.bakeryName))]
+  const categories = [
+    'all',
+    ...new Set(products.map((product) => product.category)),
+  ];
+  const bakeries = [
+    'all',
+    ...new Set(products.map((product) => product.bakeryName)),
+  ];
 
   // Filtrar productos
   const filteredProducts = products.filter((product) => {
     const matchesSearch =
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.bakeryName.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesStatus = statusFilter === "all" || product.status === statusFilter
-    const matchesCategory = categoryFilter === "all" || product.category === categoryFilter
-    const matchesBakery = bakeryFilter === "all" || product.bakeryName === bakeryFilter
+      product.bakeryName.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus =
+      statusFilter === 'all' || product.status === statusFilter;
+    const matchesCategory =
+      categoryFilter === 'all' || product.category === categoryFilter;
+    const matchesBakery =
+      bakeryFilter === 'all' || product.bakeryName === bakeryFilter;
 
-    return matchesSearch && matchesStatus && matchesCategory && matchesBakery
-  })
+    return matchesSearch && matchesStatus && matchesCategory && matchesBakery;
+  });
 
-  const formatCurrency = (amount: number) => `${amount.toFixed(2)}€`
+  const formatCurrency = (amount: number) => `${amount.toFixed(2)}€`;
 
   const LoadingSkeleton = () => (
     <>
@@ -95,13 +141,15 @@ export default function ProductsTable({
         </TableRow>
       ))}
     </>
-  )
+  );
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Gestión de Productos</CardTitle>
-        <CardDescription>Administra todos los productos del sistema</CardDescription>
+        <CardDescription>
+          Administra todos los productos del sistema
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Filtros */}
@@ -135,7 +183,7 @@ export default function ProductsTable({
               <SelectContent>
                 <SelectItem value="all">Todas</SelectItem>
                 {categories
-                  .filter((c) => c !== "all")
+                  .filter((c) => c !== 'all')
                   .map((category) => (
                     <SelectItem key={category} value={category}>
                       {category}
@@ -150,7 +198,7 @@ export default function ProductsTable({
               <SelectContent>
                 <SelectItem value="all">Todas</SelectItem>
                 {bakeries
-                  .filter((b) => b !== "all")
+                  .filter((b) => b !== 'all')
                   .map((bakery) => (
                     <SelectItem key={bakery} value={bakery}>
                       {bakery}
@@ -182,7 +230,10 @@ export default function ProductsTable({
                 <LoadingSkeleton />
               ) : filteredProducts.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={9} className="text-center py-8 text-muted-foreground">
+                  <TableCell
+                    colSpan={9}
+                    className="text-center py-8 text-muted-foreground"
+                  >
                     No se encontraron productos
                   </TableCell>
                 </TableRow>
@@ -194,7 +245,7 @@ export default function ProductsTable({
                         <div className="h-10 w-10 rounded-md overflow-hidden bg-muted flex-shrink-0">
                           {product.imageUrl ? (
                             <img
-                              src={product.imageUrl || "/placeholder.svg"}
+                              src={product.imageUrl || '/placeholder.svg'}
                               alt={product.name}
                               className="h-full w-full object-cover"
                             />
@@ -204,10 +255,16 @@ export default function ProductsTable({
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-1">
-                            <div className="font-medium truncate">{product.name}</div>
-                            {product.isFeatured && <Star className="h-3 w-3 text-yellow-500 fill-current" />}
+                            <div className="font-medium truncate">
+                              {product.name}
+                            </div>
+                            {product.isFeatured && (
+                              <Star className="h-3 w-3 text-yellow-500 fill-current" />
+                            )}
                           </div>
-                          <div className="text-xs text-muted-foreground truncate">{product.description}</div>
+                          <div className="text-xs text-muted-foreground truncate">
+                            {product.description}
+                          </div>
                         </div>
                       </div>
                     </TableCell>
@@ -215,31 +272,49 @@ export default function ProductsTable({
                       <div className="font-medium">{product.bakeryName}</div>
                     </TableCell>
                     <TableCell>{product.category}</TableCell>
-                    <TableCell className="text-right font-medium">{formatCurrency(product.price)}</TableCell>
+                    <TableCell className="text-right font-medium">
+                      {formatCurrency(product.price)}
+                    </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-1">
                         <Package className="h-3 w-3 text-muted-foreground" />
-                        <span className={product.stock <= 5 ? "text-red-600 font-medium" : ""}>{product.stock}</span>
+                        <span
+                          className={
+                            product.stock <= 5 ? 'text-red-600 font-medium' : ''
+                          }
+                        >
+                          {product.stock}
+                        </span>
                         {product.isOutOfStock && (
-                          <Badge variant="outline" className="bg-red-100 text-red-800 border-red-200 text-xs">
+                          <Badge
+                            variant="outline"
+                            className="bg-red-100 text-red-800 border-red-200 text-xs"
+                          >
                             Agotado
                           </Badge>
                         )}
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline" className={statusConfig[product.status].className}>
+                      <Badge
+                        variant="outline"
+                        className={statusConfig[product.status].className}
+                      >
                         {statusConfig[product.status].label}
                       </Badge>
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-1">
                         <TrendingUp className="h-3 w-3 text-muted-foreground" />
-                        <span className="font-medium">{product.totalSales}</span>
+                        <span className="font-medium">
+                          {product.totalSales}
+                        </span>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-sm">{format(product.updatedAt, "dd/MM/yy", { locale: es })}</div>
+                      <div className="text-sm">
+                        {format(product.updatedAt, 'dd/MM/yy', { locale: es })}
+                      </div>
                     </TableCell>
                     <TableCell className="text-right">
                       <DropdownMenu>
@@ -257,17 +332,27 @@ export default function ProductsTable({
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuLabel>Cambiar estado</DropdownMenuLabel>
-                          {Object.entries(statusConfig).map(([status, config]) => (
-                            <DropdownMenuItem
-                              key={status}
-                              onClick={() => onStatusChange(product.id, status as ProductStatus)}
-                              disabled={product.status === status}
-                            >
-                              {config.label}
-                            </DropdownMenuItem>
-                          ))}
+                          {Object.entries(statusConfig).map(
+                            ([status, config]) => (
+                              <DropdownMenuItem
+                                key={status}
+                                onClick={() =>
+                                  onStatusChange(
+                                    product.id,
+                                    status as ProductStatus
+                                  )
+                                }
+                                disabled={product.status === status}
+                              >
+                                {config.label}
+                              </DropdownMenuItem>
+                            )
+                          )}
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => onDelete(product.id)} className="text-red-600">
+                          <DropdownMenuItem
+                            onClick={() => onDelete(product.id)}
+                            className="text-red-600"
+                          >
                             <Trash2 className="h-4 w-4 mr-2" />
                             Eliminar
                           </DropdownMenuItem>
@@ -287,5 +372,5 @@ export default function ProductsTable({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

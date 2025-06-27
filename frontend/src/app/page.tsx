@@ -1,8 +1,8 @@
 'use client';
 
-import Image from "next/image";
-import styles from "./page.module.css";
-import { useProducts } from "../hooks/useProducts";
+import Image from 'next/image';
+import styles from './page.module.css';
+import { useProducts } from '../hooks/useProducts';
 
 interface Product {
   id: string;
@@ -106,9 +106,10 @@ export default function Home() {
         {isLoading && <p>Cargando...</p>}
         {isError && <p>Error al cargar productos</p>}
         <ul>
-          {products && (products as Product[]).map((product) => (
-            <li key={product.id}>{product.name}</li>
-          ))}
+          {products &&
+            (products as Product[]).map((product) => (
+              <li key={product.id}>{product.name}</li>
+            ))}
         </ul>
       </div>
     </div>

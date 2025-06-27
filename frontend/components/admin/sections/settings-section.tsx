@@ -1,7 +1,13 @@
-"use client"
+'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Settings } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Settings } from 'lucide-react';
 
 export default function SettingsSection() {
   return (
@@ -21,5 +27,5 @@ export default function SettingsSection() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

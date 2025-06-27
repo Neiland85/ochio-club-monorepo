@@ -1,105 +1,127 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { CreditCard, Lock } from "lucide-react"
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { CreditCard, Lock } from 'lucide-react';
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import CardTypeIcon from "./card-type-icon"
-import { paymentFormSchema, type PaymentFormValues, type PaymentFormProps, detectCardType } from "@/types/payment-form"
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import CardTypeIcon from './card-type-icon';
+import {
+  paymentFormSchema,
+  type PaymentFormValues,
+  type PaymentFormProps,
+  detectCardType,
+} from '@/types/payment-form';
 
 export default function PaymentForm({
   onSubmit,
   amount,
-  currency = "EUR",
+  currency = 'EUR',
   isSubmitting = false,
   defaultValues,
-  className = "",
+  className = '',
   showSaveCardOption = true,
 }: PaymentFormProps) {
-  const [cardType, setCardType] = useState("unknown")
+  const [cardType, setCardType] = useState('unknown');
 
   const form = useForm<PaymentFormValues>({
     resolver: zodResolver(paymentFormSchema),
     defaultValues: {
-      cardholderName: "",
-      cardNumber: "",
-      expiryDate: "",
-      cvc: "",
+      cardholderName: '',
+      cardNumber: '',
+      expiryDate: '',
+      cvc: '',
       saveCard: false,
       ...defaultValues,
     },
-  })
+  });
 
   const handleSubmit = (data: PaymentFormValues) => {
-    onSubmit(data)
-  }
+    onSubmit(data);
+  };
 
   // Formatear número de tarjeta mientras se escribe
   const formatCardNumber = (value: string) => {
-    const cleanValue = value.replace(/\D/g, "")
-    let formattedValue = ""
+    const cleanValue = value.replace(/\D/g, '');
+    let formattedValue = '';
 
     // Diferentes formatos según el tipo de tarjeta
-    if (cardType === "amex") {
+    if (cardType === 'amex') {
       // AMEX: XXXX XXXXXX XXXXX
       for (let i = 0; i < cleanValue.length; i++) {
-        if (i === 4 || i === 10) formattedValue += " "
-        formattedValue += cleanValue[i]
+        if (i === 4 || i === 10) formattedValue += ' ';
+        formattedValue += cleanValue[i];
       }
     } else {
       // Otros: XXXX XXXX XXXX XXXX
       for (let i = 0; i < cleanValue.length; i++) {
-        if (i > 0 && i % 4 === 0) formattedValue += " "
-        formattedValue += cleanValue[i]
+        if (i > 0 && i % 4 === 0) formattedValue += ' ';
+        formattedValue += cleanValue[i];
       }
     }
 
-    return formattedValue
-  }
+    return formattedValue;
+  };
 
   // Formatear fecha de expiración mientras se escribe
   const formatExpiryDate = (value: string) => {
-    const cleanValue = value.replace(/\D/g, "")
-    let formattedValue = ""
+    const cleanValue = value.replace(/\D/g, '');
+    let formattedValue = '';
 
     for (let i = 0; i < cleanValue.length; i++) {
-      if (i === 2) formattedValue += "/"
-      formattedValue += cleanValue[i]
+      if (i === 2) formattedValue += '/';
+      formattedValue += cleanValue[i];
     }
 
-    return formattedValue
-  }
+    return formattedValue;
+  };
 
   // Detectar tipo de tarjeta mientras se escribe
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    const cleanValue = value.replace(/\D/g, "")
-    const formattedValue = formatCardNumber(value)
+    const value = e.target.value;
+    const cleanValue = value.replace(/\D/g, '');
+    const formattedValue = formatCardNumber(value);
 
-    form.setValue("cardNumber", formattedValue, { shouldValidate: true })
-    setCardType(detectCardType(cleanValue))
-  }
+    form.setValue('cardNumber', formattedValue, { shouldValidate: true });
+    setCardType(detectCardType(cleanValue));
+  };
 
   // Manejar cambios en la fecha de expiración
   const handleExpiryDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    const formattedValue = formatExpiryDate(value)
-    form.setValue("expiryDate", formattedValue, { shouldValidate: true })
-  }
+    const value = e.target.value;
+    const formattedValue = formatExpiryDate(value);
+    form.setValue('expiryDate', formattedValue, { shouldValidate: true });
+  };
 
   return (
     <Card className={`w-full max-w-md mx-auto shadow-sm ${className}`}>
       <CardHeader>
         <CardTitle>Información de pago</CardTitle>
-        <CardDescription>Ingrese los datos de su tarjeta para completar el pago</CardDescription>
+        <CardDescription>
+          Ingrese los datos de su tarjeta para completar el pago
+        </CardDescription>
       </CardHeader>
 
       <Form {...form}>
@@ -110,7 +132,7 @@ export default function PaymentForm({
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium">Total a pagar:</span>
                 <span className="text-xl font-bold">
-                  {currency === "EUR" ? "€" : "$"}
+                  {currency === 'EUR' ? '€' : '$'}
                   {amount.toFixed(2)}
                 </span>
               </div>
@@ -124,7 +146,10 @@ export default function PaymentForm({
                 <FormItem>
                   <FormLabel>Nombre del titular</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nombre como aparece en la tarjeta" {...field} />
+                    <Input
+                      placeholder="Nombre como aparece en la tarjeta"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -142,7 +167,7 @@ export default function PaymentForm({
                     <div className="relative">
                       <Input
                         placeholder="1234 5678 9012 3456"
-                        maxLength={cardType === "amex" ? 18 : 19} // Incluye espacios
+                        maxLength={cardType === 'amex' ? 18 : 19} // Incluye espacios
                         {...fieldProps}
                         onChange={handleCardNumberChange}
                       />
@@ -165,7 +190,12 @@ export default function PaymentForm({
                   <FormItem>
                     <FormLabel>Fecha de expiración</FormLabel>
                     <FormControl>
-                      <Input placeholder="MM/YY" maxLength={5} {...fieldProps} onChange={handleExpiryDateChange} />
+                      <Input
+                        placeholder="MM/YY"
+                        maxLength={5}
+                        {...fieldProps}
+                        onChange={handleExpiryDateChange}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -180,8 +210,10 @@ export default function PaymentForm({
                     <FormLabel>CVC</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={cardType === "amex" ? "4 dígitos" : "3 dígitos"}
-                        maxLength={cardType === "amex" ? 4 : 3}
+                        placeholder={
+                          cardType === 'amex' ? '4 dígitos' : '3 dígitos'
+                        }
+                        maxLength={cardType === 'amex' ? 4 : 3}
                         type="password"
                         {...field}
                       />
@@ -200,12 +232,16 @@ export default function PaymentForm({
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                     <FormControl>
-                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
                     </FormControl>
                     <div className="space-y-1 leading-none">
                       <FormLabel>Guardar tarjeta para futuros pagos</FormLabel>
                       <FormDescription>
-                        Su información se almacenará de forma segura para facilitar compras futuras.
+                        Su información se almacenará de forma segura para
+                        facilitar compras futuras.
                       </FormDescription>
                     </div>
                   </FormItem>
@@ -216,12 +252,19 @@ export default function PaymentForm({
             {/* Nota de seguridad */}
             <div className="flex items-center justify-center text-xs text-muted-foreground">
               <Lock className="h-3 w-3 mr-1" />
-              <span>Sus datos están protegidos con encriptación SSL de 256 bits</span>
+              <span>
+                Sus datos están protegidos con encriptación SSL de 256 bits
+              </span>
             </div>
           </CardContent>
 
           <CardFooter>
-            <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              className="w-full"
+              size="lg"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? (
                 <>
                   <CreditCard className="mr-2 h-4 w-4 animate-pulse" />
@@ -230,7 +273,7 @@ export default function PaymentForm({
               ) : (
                 <>
                   <CreditCard className="mr-2 h-4 w-4" />
-                  Pagar {currency === "EUR" ? "€" : "$"}
+                  Pagar {currency === 'EUR' ? '€' : '$'}
                   {amount.toFixed(2)}
                 </>
               )}
@@ -239,5 +282,5 @@ export default function PaymentForm({
         </form>
       </Form>
     </Card>
-  )
+  );
 }

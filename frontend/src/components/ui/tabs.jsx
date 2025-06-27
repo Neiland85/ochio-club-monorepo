@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const Tabs = ({ tabs }) => {
-  const [activeTab, setActiveTab] = useState(tabs[0]?.id || "");
+  const [activeTab, setActiveTab] = useState(tabs[0]?.id || '');
 
   return (
     <div className="tabs">
@@ -9,7 +9,7 @@ const Tabs = ({ tabs }) => {
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            className={activeTab === tab.id ? "active" : ""}
+            className={activeTab === tab.id ? 'active' : ''}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.label}

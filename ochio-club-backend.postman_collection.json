@@ -19,13 +19,9 @@
         "url": {
           "raw": "http://localhost:4000/products",
           "protocol": "http",
-          "host": [
-            "localhost"
-          ],
+          "host": ["localhost"],
           "port": "4000",
-          "path": [
-            "products"
-          ]
+          "path": ["products"]
         }
       }
     },
@@ -52,13 +48,9 @@
         "url": {
           "raw": "http://localhost:4000/products",
           "protocol": "http",
-          "host": [
-            "localhost"
-          ],
+          "host": ["localhost"],
           "port": "4000",
-          "path": [
-            "products"
-          ]
+          "path": ["products"]
         }
       }
     }

@@ -1,5 +1,5 @@
-import express from 'express';
-import dotenv from 'dotenv';
+import express from "express";
+import dotenv from "dotenv";
 
 // Cargar variables de entorno
 dotenv.config();
@@ -11,8 +11,8 @@ const PORT = process.env.PORT || 4000;
 app.use(express.json());
 
 // Rutas
-app.get('/', (req, res) => {
-  res.send('Servidor funcionando correctamente');
+app.get("/", (req, res) => {
+  res.send("Servidor funcionando correctamente");
 });
 
 // Iniciar el servidor

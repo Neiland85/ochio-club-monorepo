@@ -1,12 +1,19 @@
-"use client"
+'use client';
 
-import { format } from "date-fns"
-import { es } from "date-fns/locale"
-import Image from "next/image"
-import { X, RefreshCw, MapPin, ArrowLeft, Printer, Download } from "lucide-react"
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
+import Image from 'next/image';
+import {
+  X,
+  RefreshCw,
+  MapPin,
+  ArrowLeft,
+  Printer,
+  Download,
+} from 'lucide-react';
 
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   Dialog,
   DialogContent,
@@ -14,21 +21,45 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Separator } from "@/components/ui/separator"
-import GlovoOrderStatus from "@/components/glovo-order-status"
-import type { OrderDetailsProps } from "@/types/order-history"
+} from '@/components/ui/dialog';
+import { Separator } from '@/components/ui/separator';
+import GlovoOrderStatus from '@/components/glovo-order-status';
+import type { OrderDetailsProps } from '@/types/order-history';
 
 const statusConfig = {
-  pending: { label: "Pendiente", className: "bg-yellow-100 text-yellow-800 border-yellow-200" },
-  confirmed: { label: "Confirmado", className: "bg-blue-100 text-blue-800 border-blue-200" },
-  preparing: { label: "Preparando", className: "bg-orange-100 text-orange-800 border-orange-200" },
-  ready: { label: "Listo", className: "bg-purple-100 text-purple-800 border-purple-200" },
-  picked_up: { label: "Recogido", className: "bg-indigo-100 text-indigo-800 border-indigo-200" },
-  on_the_way: { label: "En camino", className: "bg-blue-100 text-blue-800 border-blue-200" },
-  delivered: { label: "Entregado", className: "bg-green-100 text-green-800 border-green-200" },
-  cancelled: { label: "Cancelado", className: "bg-red-100 text-red-800 border-red-200" },
-}
+  pending: {
+    label: 'Pendiente',
+    className: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+  },
+  confirmed: {
+    label: 'Confirmado',
+    className: 'bg-blue-100 text-blue-800 border-blue-200',
+  },
+  preparing: {
+    label: 'Preparando',
+    className: 'bg-orange-100 text-orange-800 border-orange-200',
+  },
+  ready: {
+    label: 'Listo',
+    className: 'bg-purple-100 text-purple-800 border-purple-200',
+  },
+  picked_up: {
+    label: 'Recogido',
+    className: 'bg-indigo-100 text-indigo-800 border-indigo-200',
+  },
+  on_the_way: {
+    label: 'En camino',
+    className: 'bg-blue-100 text-blue-800 border-blue-200',
+  },
+  delivered: {
+    label: 'Entregado',
+    className: 'bg-green-100 text-green-800 border-green-200',
+  },
+  cancelled: {
+    label: 'Cancelado',
+    className: 'bg-red-100 text-red-800 border-red-200',
+  },
+};
 
 export default function OrderDetails({
   order,
@@ -37,31 +68,31 @@ export default function OrderDetails({
   onReorder,
   onCancelOrder,
   onTrackOrder,
-  className = "",
+  className = '',
 }: OrderDetailsProps) {
-  const formatCurrency = (amount: number) => `${amount.toFixed(2)}€`
+  const formatCurrency = (amount: number) => `${amount.toFixed(2)}€`;
 
   const getDeliveryOptionLabel = (option: string) => {
     switch (option) {
-      case "pickup":
-        return "Recoger en tienda"
-      case "delivery":
-        return "Entrega a domicilio"
-      case "express":
-        return "Entrega express"
+      case 'pickup':
+        return 'Recoger en tienda';
+      case 'delivery':
+        return 'Entrega a domicilio';
+      case 'express':
+        return 'Entrega express';
       default:
-        return option
+        return option;
     }
-  }
+  };
 
   const handlePrint = () => {
-    window.print()
-  }
+    window.print();
+  };
 
   const handleDownloadInvoice = () => {
     // En una implementación real, esto descargaría un PDF o generaría una factura
-    console.log("Downloading invoice for order:", order.id)
-  }
+    console.log('Downloading invoice for order:', order.id);
+  };
 
   return (
     <Dialog open={true} onOpenChange={() => onClose()}>
@@ -69,12 +100,16 @@ export default function OrderDetails({
         <DialogHeader>
           <DialogTitle className="flex items-center justify-between">
             <span>Detalles del Pedido #{order.id}</span>
-            <Badge variant="outline" className={statusConfig[order.status].className}>
+            <Badge
+              variant="outline"
+              className={statusConfig[order.status].className}
+            >
               {statusConfig[order.status].label}
             </Badge>
           </DialogTitle>
           <DialogDescription>
-            Realizado el {format(order.date, "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}
+            Realizado el{' '}
+            {format(order.date, "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}
           </DialogDescription>
         </DialogHeader>
 
@@ -86,8 +121,14 @@ export default function OrderDetails({
               status={order.status}
               orderId={order.id}
               estimatedTime={
-                ["pending", "confirmed", "preparing", "ready", "on_the_way"].includes(order.status)
-                  ? "15-30 min"
+                [
+                  'pending',
+                  'confirmed',
+                  'preparing',
+                  'ready',
+                  'on_the_way',
+                ].includes(order.status)
+                  ? '15-30 min'
                   : undefined
               }
               showProgress={true}
@@ -101,14 +142,18 @@ export default function OrderDetails({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div className="space-y-1">
                 <div>
-                  <span className="text-muted-foreground">Panadería:</span> {order.bakeryName}
+                  <span className="text-muted-foreground">Panadería:</span>{' '}
+                  {order.bakeryName}
                 </div>
                 <div>
-                  <span className="text-muted-foreground">Método de entrega:</span>{" "}
+                  <span className="text-muted-foreground">
+                    Método de entrega:
+                  </span>{' '}
                   {getDeliveryOptionLabel(order.deliveryOption)}
                 </div>
                 <div>
-                  <span className="text-muted-foreground">Método de pago:</span> {order.paymentMethod}
+                  <span className="text-muted-foreground">Método de pago:</span>{' '}
+                  {order.paymentMethod}
                 </div>
               </div>
               <div className="space-y-1">
@@ -120,20 +165,28 @@ export default function OrderDetails({
                 )}
                 {order.estimatedDelivery && (
                   <div>
-                    <span className="text-muted-foreground">Entrega estimada:</span>{" "}
-                    {format(order.estimatedDelivery, "d 'de' MMMM, HH:mm", { locale: es })}
+                    <span className="text-muted-foreground">
+                      Entrega estimada:
+                    </span>{' '}
+                    {format(order.estimatedDelivery, "d 'de' MMMM, HH:mm", {
+                      locale: es,
+                    })}
                   </div>
                 )}
                 {order.trackingCode && (
                   <div>
-                    <span className="text-muted-foreground">Código de seguimiento:</span> {order.trackingCode}
+                    <span className="text-muted-foreground">
+                      Código de seguimiento:
+                    </span>{' '}
+                    {order.trackingCode}
                   </div>
                 )}
               </div>
             </div>
             {order.notes && (
               <div className="mt-2 p-2 bg-muted rounded-md text-sm">
-                <span className="text-muted-foreground">Notas:</span> {order.notes}
+                <span className="text-muted-foreground">Notas:</span>{' '}
+                {order.notes}
               </div>
             )}
           </div>
@@ -148,7 +201,7 @@ export default function OrderDetails({
                 <div key={item.id} className="flex items-center gap-3">
                   <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-md bg-muted">
                     <Image
-                      src={item.imageUrl || "/placeholder.svg"}
+                      src={item.imageUrl || '/placeholder.svg'}
                       alt={item.name}
                       fill
                       className="object-cover"
@@ -161,7 +214,9 @@ export default function OrderDetails({
                       {item.quantity} x {formatCurrency(item.price)}
                     </div>
                   </div>
-                  <div className="text-right font-medium">{formatCurrency(item.quantity * item.price)}</div>
+                  <div className="text-right font-medium">
+                    {formatCurrency(item.quantity * item.price)}
+                  </div>
                 </div>
               ))}
             </div>
@@ -212,20 +267,30 @@ export default function OrderDetails({
               </Button>
             )}
             {onTrackOrder && (
-              <Button variant="outline" size="sm" onClick={() => onTrackOrder(order.trackingCode)}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onTrackOrder(order.trackingCode)}
+              >
                 <MapPin className="h-4 w-4 mr-2" />
                 Seguir pedido
               </Button>
             )}
-            {onCancelOrder && ["pending", "confirmed"].includes(order.status) && (
-              <Button variant="outline" size="sm" onClick={onCancelOrder} className="text-red-600">
-                <X className="h-4 w-4 mr-2" />
-                Cancelar pedido
-              </Button>
-            )}
+            {onCancelOrder &&
+              ['pending', 'confirmed'].includes(order.status) && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={onCancelOrder}
+                  className="text-red-600"
+                >
+                  <X className="h-4 w-4 mr-2" />
+                  Cancelar pedido
+                </Button>
+              )}
           </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

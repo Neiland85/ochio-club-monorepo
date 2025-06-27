@@ -9,6 +9,7 @@ Fix build and enhance authentication structure
 Updates dependencies, adds validation middleware, and refines authentication and user management routes/services to improve security and functionality.
 
 ### Changes
+
 - **Dependency Updates**: Updated development and runtime dependencies (e.g., `eslint`, `prettier`, `supertest`) and added `express-validator` for request validation.
 - **Route Refinements**: Changed route prefixes (`/auth` to `/api/auth`, `/users` to `/api/users`) for consistency.
 - **Middleware Enhancements**: Added validation middleware for login and user creation routes using `express-validator`.
@@ -16,6 +17,7 @@ Updates dependencies, adds validation middleware, and refines authentication and
 - **Controller Changes**: Refactored user-related handlers (`getAllUsers`, `createUser`) to use the updated service logic and validation.
 
 ### Impact
+
 - **Behavioral Changes**: Improved error handling and request validation in authentication and user management routes.
 - **Dependencies Affected**: Integration of `express-validator` and compatibility adjustments for updated dependencies.
 - **Breaking Changes**: Route prefixes changed; potential impact on API consumers.

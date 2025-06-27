@@ -76,7 +76,11 @@ export interface AdminOrder {
   notes?: string;
 }
 
-export type UserStatus = "active" | "inactive";
-export type BakeryStatus = "active" | "pending" | "inactive";
-export type ProductStatus = "active" | "discontinued";
-export type AdminOrderStatus = "confirmed" | "preparing" | "delivered" | "cancelled";
+export type UserStatus = 'active' | 'inactive';
+export type BakeryStatus = 'active' | 'pending' | 'inactive';
+export type ProductStatus = 'active' | 'discontinued';
+export type AdminOrderStatus =
+  | 'confirmed'
+  | 'preparing'
+  | 'delivered'
+  | 'cancelled';

@@ -1,44 +1,56 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Minus, Plus, ShoppingCart, CreditCard, Heart, Share2, Star } from "lucide-react"
+import { useState } from 'react';
+import {
+  Minus,
+  Plus,
+  ShoppingCart,
+  CreditCard,
+  Heart,
+  Share2,
+  Star,
+} from 'lucide-react';
 
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import ProductImageGallery from "./product-image-gallery"
-import type { ProductDetailProps } from "@/types/product-detail"
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import ProductImageGallery from './product-image-gallery';
+import type { ProductDetailProps } from '@/types/product-detail';
 
 export default function ProductDetail({
   product,
   onBuyNow,
   onAddToCart,
   isLoading = false,
-  className = "",
+  className = '',
 }: ProductDetailProps) {
-  const [quantity, setQuantity] = useState(1)
-  const [isFavorite, setIsFavorite] = useState(false)
+  const [quantity, setQuantity] = useState(1);
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  const hasDiscount = product.originalPrice && product.originalPrice > product.price
+  const hasDiscount =
+    product.originalPrice && product.originalPrice > product.price;
   const discountPercentage = hasDiscount
-    ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
-    : 0
+    ? Math.round(
+        ((product.originalPrice! - product.price) / product.originalPrice!) *
+          100
+      )
+    : 0;
 
   const handleQuantityChange = (change: number) => {
-    const newQuantity = quantity + change
+    const newQuantity = quantity + change;
     if (newQuantity >= 1 && newQuantity <= 99) {
-      setQuantity(newQuantity)
+      setQuantity(newQuantity);
     }
-  }
+  };
 
   const handleBuyNow = () => {
-    onBuyNow(product.id, quantity)
-  }
+    onBuyNow(product.id, quantity);
+  };
 
   const handleAddToCart = () => {
-    onAddToCart(product.id, quantity)
-  }
+    onAddToCart(product.id, quantity);
+  };
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -47,20 +59,20 @@ export default function ProductDetail({
           title: product.name,
           text: product.description,
           url: window.location.href,
-        })
+        });
       } catch (error) {
-        console.log("Error sharing:", error)
+        console.log('Error sharing:', error);
       }
     } else {
       // Fallback: copiar URL al portapapeles
       try {
-        await navigator.clipboard.writeText(window.location.href)
+        await navigator.clipboard.writeText(window.location.href);
         // Aquí podrías mostrar un toast de confirmación
       } catch (error) {
-        console.log("Error copying to clipboard:", error)
+        console.log('Error copying to clipboard:', error);
       }
     }
-  }
+  };
 
   // Preparar imágenes para la galería
   const productImages =
@@ -68,7 +80,7 @@ export default function ProductDetail({
       ? product.images
       : product.imageUrl
         ? [product.imageUrl]
-        : ["/placeholder.svg"]
+        : ['/placeholder.svg'];
 
   return (
     <div className={`max-w-6xl mx-auto ${className}`}>
@@ -91,7 +103,9 @@ export default function ProductDetail({
               </Badge>
             )}
 
-            <h1 className="text-3xl lg:text-4xl font-bold leading-tight">{product.name}</h1>
+            <h1 className="text-3xl lg:text-4xl font-bold leading-tight">
+              {product.name}
+            </h1>
 
             {/* Rating */}
             {product.rating && (
@@ -101,7 +115,9 @@ export default function ProductDetail({
                     <Star
                       key={i}
                       className={`h-4 w-4 ${
-                        i < Math.floor(product.rating!) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+                        i < Math.floor(product.rating!)
+                          ? 'fill-yellow-400 text-yellow-400'
+                          : 'text-gray-300'
                       }`}
                     />
                   ))}
@@ -114,9 +130,13 @@ export default function ProductDetail({
 
             {/* Precio */}
             <div className="flex items-center gap-3">
-              <span className="text-3xl lg:text-4xl font-bold text-primary">${product.price.toFixed(2)}</span>
+              <span className="text-3xl lg:text-4xl font-bold text-primary">
+                ${product.price.toFixed(2)}
+              </span>
               {hasDiscount && (
-                <span className="text-xl text-muted-foreground line-through">${product.originalPrice!.toFixed(2)}</span>
+                <span className="text-xl text-muted-foreground line-through">
+                  ${product.originalPrice!.toFixed(2)}
+                </span>
               )}
             </div>
           </div>
@@ -124,7 +144,9 @@ export default function ProductDetail({
           {/* Descripción */}
           <div className="space-y-2">
             <h2 className="text-lg font-semibold">Descripción</h2>
-            <p className="text-muted-foreground leading-relaxed">{product.description}</p>
+            <p className="text-muted-foreground leading-relaxed">
+              {product.description}
+            </p>
           </div>
 
           <Separator />
@@ -143,7 +165,9 @@ export default function ProductDetail({
                 >
                   <Minus className="h-4 w-4" />
                 </Button>
-                <div className="px-4 py-2 min-w-[3rem] text-center border-x">{quantity}</div>
+                <div className="px-4 py-2 min-w-[3rem] text-center border-x">
+                  {quantity}
+                </div>
                 <Button
                   variant="ghost"
                   size="icon"
@@ -158,9 +182,14 @@ export default function ProductDetail({
 
             {/* Botones de acción */}
             <div className="space-y-3">
-              <Button onClick={handleBuyNow} disabled={!product.inStock || isLoading} className="w-full" size="lg">
+              <Button
+                onClick={handleBuyNow}
+                disabled={!product.inStock || isLoading}
+                className="w-full"
+                size="lg"
+              >
                 <CreditCard className="h-4 w-4 mr-2" />
-                {isLoading ? "Procesando..." : "Comprar ahora"}
+                {isLoading ? 'Procesando...' : 'Comprar ahora'}
               </Button>
 
               <Button
@@ -177,10 +206,22 @@ export default function ProductDetail({
 
             {/* Acciones secundarias */}
             <div className="flex gap-2">
-              <Button variant="outline" size="icon" onClick={() => setIsFavorite(!isFavorite)} className="flex-1">
-                <Heart className={`h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setIsFavorite(!isFavorite)}
+                className="flex-1"
+              >
+                <Heart
+                  className={`h-4 w-4 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`}
+                />
               </Button>
-              <Button variant="outline" size="icon" onClick={handleShare} className="flex-1">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleShare}
+                className="flex-1"
+              >
                 <Share2 className="h-4 w-4" />
               </Button>
             </div>
@@ -195,8 +236,12 @@ export default function ProductDetail({
                   <span className="font-medium">{product.name}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Precio unitario:</span>
-                  <span className="font-medium">${product.price.toFixed(2)}</span>
+                  <span className="text-muted-foreground">
+                    Precio unitario:
+                  </span>
+                  <span className="font-medium">
+                    ${product.price.toFixed(2)}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Cantidad:</span>
@@ -205,7 +250,9 @@ export default function ProductDetail({
                 <Separator className="my-2" />
                 <div className="flex justify-between font-bold">
                   <span>Total:</span>
-                  <span className="text-primary">${(product.price * quantity).toFixed(2)}</span>
+                  <span className="text-primary">
+                    ${(product.price * quantity).toFixed(2)}
+                  </span>
                 </div>
               </div>
             </CardContent>
@@ -214,13 +261,17 @@ export default function ProductDetail({
           {/* Estado de stock */}
           <div className="text-center">
             {product.inStock ? (
-              <p className="text-sm text-green-600 font-medium">✓ En stock - Envío inmediato</p>
+              <p className="text-sm text-green-600 font-medium">
+                ✓ En stock - Envío inmediato
+              </p>
             ) : (
-              <p className="text-sm text-red-600 font-medium">✗ Producto agotado</p>
+              <p className="text-sm text-red-600 font-medium">
+                ✗ Producto agotado
+              </p>
             )}
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
