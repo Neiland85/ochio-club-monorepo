@@ -1,8 +1,14 @@
-"use client"
+'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Plus, ShoppingCart } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Plus, ShoppingCart } from 'lucide-react';
 
 export default function OrdersSection() {
   return (
@@ -47,7 +53,9 @@ export default function OrdersSection() {
           <div className="flex justify-between items-center">
             <div>
               <CardTitle>Gestión de Pedidos</CardTitle>
-              <CardDescription>Administra todos los pedidos del sistema</CardDescription>
+              <CardDescription>
+                Administra todos los pedidos del sistema
+              </CardDescription>
             </div>
             <Button>
               <Plus className="h-4 w-4 mr-2" />
@@ -65,5 +73,5 @@ export default function OrdersSection() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

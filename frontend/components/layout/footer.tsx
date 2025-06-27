@@ -1,39 +1,46 @@
-"use client"
+'use client';
 
-import Link from "next/link"
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react"
-import { Separator } from "@/components/ui/separator"
-import type { FooterProps } from "@/types/layout"
+import Link from 'next/link';
+import {
+  Facebook,
+  Instagram,
+  Twitter,
+  Mail,
+  Phone,
+  MapPin,
+} from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import type { FooterProps } from '@/types/layout';
 
-export default function Footer({ className = "" }: FooterProps) {
-  const currentYear = new Date().getFullYear()
+export default function Footer({ className = '' }: FooterProps) {
+  const currentYear = new Date().getFullYear();
 
   const footerLinks = {
     productos: [
-      { label: "Ochíos Tradicionales", href: "/productos/tradicionales" },
-      { label: "Ochíos Especiales", href: "/productos/especiales" },
-      { label: "Ochíos de Temporada", href: "/productos/temporada" },
-      { label: "Packs y Ofertas", href: "/productos/ofertas" },
+      { label: 'Ochíos Tradicionales', href: '/productos/tradicionales' },
+      { label: 'Ochíos Especiales', href: '/productos/especiales' },
+      { label: 'Ochíos de Temporada', href: '/productos/temporada' },
+      { label: 'Packs y Ofertas', href: '/productos/ofertas' },
     ],
     empresa: [
-      { label: "Sobre Nosotros", href: "/sobre-nosotros" },
-      { label: "Nuestra Historia", href: "/historia" },
-      { label: "Trabaja con Nosotros", href: "/empleos" },
-      { label: "Prensa", href: "/prensa" },
+      { label: 'Sobre Nosotros', href: '/sobre-nosotros' },
+      { label: 'Nuestra Historia', href: '/historia' },
+      { label: 'Trabaja con Nosotros', href: '/empleos' },
+      { label: 'Prensa', href: '/prensa' },
     ],
     soporte: [
-      { label: "Centro de Ayuda", href: "/ayuda" },
-      { label: "Política de Devoluciones", href: "/devoluciones" },
-      { label: "Términos y Condiciones", href: "/terminos" },
-      { label: "Política de Privacidad", href: "/privacidad" },
+      { label: 'Centro de Ayuda', href: '/ayuda' },
+      { label: 'Política de Devoluciones', href: '/devoluciones' },
+      { label: 'Términos y Condiciones', href: '/terminos' },
+      { label: 'Política de Privacidad', href: '/privacidad' },
     ],
-  }
+  };
 
   const socialLinks = [
-    { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
-    { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-    { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-  ]
+    { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
+    { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
+    { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
+  ];
 
   return (
     <footer className={`bg-muted/50 border-t ${className}`}>
@@ -44,7 +51,8 @@ export default function Footer({ className = "" }: FooterProps) {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Ochío Club</h3>
             <p className="text-sm text-muted-foreground">
-              Los mejores ochíos artesanales, hechos con amor y tradición desde 1985.
+              Los mejores ochíos artesanales, hechos con amor y tradición desde
+              1985.
             </p>
             <div className="space-y-2">
               <div className="flex items-center space-x-2 text-sm text-muted-foreground">
@@ -68,7 +76,10 @@ export default function Footer({ className = "" }: FooterProps) {
             <ul className="space-y-2">
               {footerLinks.productos.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <Link
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -82,7 +93,10 @@ export default function Footer({ className = "" }: FooterProps) {
             <ul className="space-y-2">
               {footerLinks.empresa.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <Link
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -96,7 +110,10 @@ export default function Footer({ className = "" }: FooterProps) {
             <ul className="space-y-2">
               {footerLinks.soporte.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <Link
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -129,5 +146,5 @@ export default function Footer({ className = "" }: FooterProps) {
         </div>
       </div>
     </footer>
-  )
+  );
 }

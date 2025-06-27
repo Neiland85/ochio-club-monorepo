@@ -21,6 +21,32 @@
         "name": "Authorization",
         "in": "header"
       }
+    },
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "error": "BadRequest",
+          "message": "Solicitud inválida"
+        }
+      }
+    },
+    "examples": {
+      "ProductExample": {
+        "value": {
+          "id": "3",
+          "name": "Producto Ejemplo",
+          "price": 99.99
+        }
+      }
     }
   },
   "security": [
@@ -33,6 +59,28 @@
       "get": {
         "operationId": "getProducts",
         "summary": "Obtener lista de productos",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número de página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Cantidad de productos por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Lista de productos",
@@ -54,12 +102,31 @@
                       }
                     }
                   }
-                }
+                },
+                "example": [
+                  {
+                    "id": "1",
+                    "name": "Producto 1",
+                    "price": 100
+                  },
+                  {
+                    "id": "2",
+                    "name": "Producto 2",
+                    "price": 200
+                  }
+                ]
               }
             }
           },
           "400": {
-            "description": "Solicitud inválida"
+            "description": "Solicitud inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -80,19 +147,33 @@
                     "type": "number"
                   }
                 },
-                "required": [
-                  "name",
-                  "price"
-                ]
+                "required": ["name", "price"]
+              },
+              "example": {
+                "$ref": "#/components/examples/ProductExample"
               }
             }
           },
           "responses": {
             "201": {
-              "description": "Producto creado exitosamente"
+              "description": "Producto creado exitosamente",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "$ref": "#/components/examples/ProductExample"
+                  }
+                }
+              }
             },
             "400": {
-              "description": "Solicitud inválida"
+              "description": "Solicitud inválida",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ErrorResponse"
+                  }
+                }
+              }
             }
           }
         }

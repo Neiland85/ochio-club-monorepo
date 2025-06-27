@@ -1,5 +1,5 @@
 export const NavigationItem = {
-  label: "",
-  href: "",
+  label: '',
+  href: '',
   isActive: false,
 };

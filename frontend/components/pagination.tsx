@@ -1,37 +1,46 @@
-"use client"
+'use client';
 
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import type { PaginationProps } from "@/types/orders-table"
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import type { PaginationProps } from '@/types/orders-table';
 
-export default function Pagination({ currentPage, totalPages, onPageChange, className = "" }: PaginationProps) {
+export default function Pagination({
+  currentPage,
+  totalPages,
+  onPageChange,
+  className = '',
+}: PaginationProps) {
   const getVisiblePages = () => {
-    const delta = 2
-    const range = []
-    const rangeWithDots = []
+    const delta = 2;
+    const range = [];
+    const rangeWithDots = [];
 
-    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
-      range.push(i)
+    for (
+      let i = Math.max(2, currentPage - delta);
+      i <= Math.min(totalPages - 1, currentPage + delta);
+      i++
+    ) {
+      range.push(i);
     }
 
     if (currentPage - delta > 2) {
-      rangeWithDots.push(1, "...")
+      rangeWithDots.push(1, '...');
     } else {
-      rangeWithDots.push(1)
+      rangeWithDots.push(1);
     }
 
-    rangeWithDots.push(...range)
+    rangeWithDots.push(...range);
 
     if (currentPage + delta < totalPages - 1) {
-      rangeWithDots.push("...", totalPages)
+      rangeWithDots.push('...', totalPages);
     } else if (totalPages > 1) {
-      rangeWithDots.push(totalPages)
+      rangeWithDots.push(totalPages);
     }
 
-    return rangeWithDots
-  }
+    return rangeWithDots;
+  };
 
-  if (totalPages <= 1) return null
+  if (totalPages <= 1) return null;
 
   return (
     <div className={`flex items-center justify-center gap-1 ${className}`}>
@@ -47,11 +56,11 @@ export default function Pagination({ currentPage, totalPages, onPageChange, clas
 
       {getVisiblePages().map((page, index) => (
         <div key={index}>
-          {page === "..." ? (
+          {page === '...' ? (
             <span className="px-2 py-1 text-sm text-muted-foreground">...</span>
           ) : (
             <Button
-              variant={currentPage === page ? "default" : "outline"}
+              variant={currentPage === page ? 'default' : 'outline'}
               size="sm"
               onClick={() => onPageChange(page as number)}
               className="h-8 w-8 p-0"
@@ -72,5 +81,5 @@ export default function Pagination({ currentPage, totalPages, onPageChange, clas
         <ChevronRight className="h-4 w-4" />
       </Button>
     </div>
-  )
+  );
 }

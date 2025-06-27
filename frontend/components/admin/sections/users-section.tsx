@@ -1,11 +1,24 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import {
   Dialog,
   DialogContent,
@@ -13,91 +26,103 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Search, Plus, Edit, Trash2, Eye } from "lucide-react"
+} from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Search, Plus, Edit, Trash2, Eye } from 'lucide-react';
 
 interface User {
-  id: string
-  name: string
-  email: string
-  role: "admin" | "baker" | "user"
-  status: "active" | "inactive" | "suspended"
-  createdAt: string
-  lastLogin: string
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'baker' | 'user';
+  status: 'active' | 'inactive' | 'suspended';
+  createdAt: string;
+  lastLogin: string;
 }
 
 export default function UsersSection() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedRole, setSelectedRole] = useState<string>("all")
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedRole, setSelectedRole] = useState<string>('all');
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
   // Datos de ejemplo
   const users: User[] = [
     {
-      id: "1",
-      name: "María García",
-      email: "maria@example.com",
-      role: "user",
-      status: "active",
-      createdAt: "2024-01-15",
-      lastLogin: "2024-01-20",
+      id: '1',
+      name: 'María García',
+      email: 'maria@example.com',
+      role: 'user',
+      status: 'active',
+      createdAt: '2024-01-15',
+      lastLogin: '2024-01-20',
     },
     {
-      id: "2",
-      name: "Juan Pérez",
-      email: "juan@panaderia.com",
-      role: "baker",
-      status: "active",
-      createdAt: "2024-01-10",
-      lastLogin: "2024-01-19",
+      id: '2',
+      name: 'Juan Pérez',
+      email: 'juan@panaderia.com',
+      role: 'baker',
+      status: 'active',
+      createdAt: '2024-01-10',
+      lastLogin: '2024-01-19',
     },
     {
-      id: "3",
-      name: "Admin Sistema",
-      email: "admin@ochio.com",
-      role: "admin",
-      status: "active",
-      createdAt: "2024-01-01",
-      lastLogin: "2024-01-20",
+      id: '3',
+      name: 'Admin Sistema',
+      email: 'admin@ochio.com',
+      role: 'admin',
+      status: 'active',
+      createdAt: '2024-01-01',
+      lastLogin: '2024-01-20',
     },
     {
-      id: "4",
-      name: "Ana López",
-      email: "ana@example.com",
-      role: "user",
-      status: "suspended",
-      createdAt: "2024-01-12",
-      lastLogin: "2024-01-18",
+      id: '4',
+      name: 'Ana López',
+      email: 'ana@example.com',
+      role: 'user',
+      status: 'suspended',
+      createdAt: '2024-01-12',
+      lastLogin: '2024-01-18',
     },
-  ]
+  ];
 
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesRole = selectedRole === "all" || user.role === selectedRole
-    return matchesSearch && matchesRole
-  })
+      user.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesRole = selectedRole === 'all' || user.role === selectedRole;
+    return matchesSearch && matchesRole;
+  });
 
   const getRoleBadge = (role: string) => {
     const variants = {
-      admin: "destructive",
-      baker: "default",
-      user: "secondary",
-    } as const
-    return <Badge variant={variants[role as keyof typeof variants]}>{role}</Badge>
-  }
+      admin: 'destructive',
+      baker: 'default',
+      user: 'secondary',
+    } as const;
+    return (
+      <Badge variant={variants[role as keyof typeof variants]}>{role}</Badge>
+    );
+  };
 
   const getStatusBadge = (status: string) => {
     const variants = {
-      active: "default",
-      inactive: "secondary",
-      suspended: "destructive",
-    } as const
-    return <Badge variant={variants[status as keyof typeof variants]}>{status}</Badge>
-  }
+      active: 'default',
+      inactive: 'secondary',
+      suspended: 'destructive',
+    } as const;
+    return (
+      <Badge variant={variants[status as keyof typeof variants]}>
+        {status}
+      </Badge>
+    );
+  };
 
   return (
     <div className="space-y-6">
@@ -105,7 +130,9 @@ export default function UsersSection() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Total Usuarios</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Usuarios
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{users.length}</div>
@@ -113,10 +140,14 @@ export default function UsersSection() {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Usuarios Activos</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Usuarios Activos
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{users.filter((u) => u.status === "active").length}</div>
+            <div className="text-2xl font-bold">
+              {users.filter((u) => u.status === 'active').length}
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -124,15 +155,21 @@ export default function UsersSection() {
             <CardTitle className="text-sm font-medium">Panaderías</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{users.filter((u) => u.role === "baker").length}</div>
+            <div className="text-2xl font-bold">
+              {users.filter((u) => u.role === 'baker').length}
+            </div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Administradores</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Administradores
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{users.filter((u) => u.role === "admin").length}</div>
+            <div className="text-2xl font-bold">
+              {users.filter((u) => u.role === 'admin').length}
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -143,7 +180,9 @@ export default function UsersSection() {
           <div className="flex justify-between items-center">
             <div>
               <CardTitle>Gestión de Usuarios</CardTitle>
-              <CardDescription>Administra todos los usuarios del sistema</CardDescription>
+              <CardDescription>
+                Administra todos los usuarios del sistema
+              </CardDescription>
             </div>
             <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
               <DialogTrigger asChild>
@@ -155,7 +194,9 @@ export default function UsersSection() {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Añadir Nuevo Usuario</DialogTitle>
-                  <DialogDescription>Crea una nueva cuenta de usuario en el sistema</DialogDescription>
+                  <DialogDescription>
+                    Crea una nueva cuenta de usuario en el sistema
+                  </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <div className="grid gap-2">
@@ -164,7 +205,11 @@ export default function UsersSection() {
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="email@ejemplo.com" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="email@ejemplo.com"
+                    />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="role">Rol</Label>
@@ -181,10 +226,15 @@ export default function UsersSection() {
                   </div>
                 </div>
                 <div className="flex justify-end gap-2">
-                  <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsAddDialogOpen(false)}
+                  >
                     Cancelar
                   </Button>
-                  <Button onClick={() => setIsAddDialogOpen(false)}>Crear Usuario</Button>
+                  <Button onClick={() => setIsAddDialogOpen(false)}>
+                    Crear Usuario
+                  </Button>
                 </div>
               </DialogContent>
             </Dialog>
@@ -253,5 +303,5 @@ export default function UsersSection() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

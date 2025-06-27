@@ -1,66 +1,80 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import ProductCard from "./product-card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { Search, Filter } from "lucide-react"
-import type { ProductListProps } from "@/types/product-list"
+import { useState } from 'react';
+import ProductCard from './product-card';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Search, Filter } from 'lucide-react';
+import type { ProductListProps } from '@/types/product-list';
 
 export default function ProductList({
   products,
   onAddToCart,
   isLoading = false,
-  emptyMessage = "No hay productos disponibles",
+  emptyMessage = 'No hay productos disponibles',
   showFilters = true,
   showSearch = true,
-  className = "",
+  className = '',
   isLoggedIn = false,
 }: ProductListProps) {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState<string>("all")
-  const [sortBy, setSortBy] = useState<string>("name")
-  const [favorites, setFavorites] = useState<string[]>([])
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<string>('name');
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   // Filtrar y ordenar productos
   const filteredProducts = products
     .filter((product) => {
       const matchesSearch =
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesCategory = selectedCategory === "all" || product.category === selectedCategory
-      return matchesSearch && matchesCategory
+        product.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory =
+        selectedCategory === 'all' || product.category === selectedCategory;
+      return matchesSearch && matchesCategory;
     })
     .sort((a, b) => {
       switch (sortBy) {
-        case "price-low":
-          return a.price - b.price
-        case "price-high":
-          return b.price - a.price
-        case "name":
-          return a.name.localeCompare(b.name)
+        case 'price-low':
+          return a.price - b.price;
+        case 'price-high':
+          return b.price - a.price;
+        case 'name':
+          return a.name.localeCompare(b.name);
         default:
-          return 0
+          return 0;
       }
-    })
+    });
 
   // Obtener categorías únicas
-  const categories = Array.from(new Set(products.map((p) => p.category)))
+  const categories = Array.from(new Set(products.map((p) => p.category)));
 
   const handleToggleFavorite = (productId: string) => {
-    setFavorites((prev) => (prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]))
-  }
+    setFavorites((prev) =>
+      prev.includes(productId)
+        ? prev.filter((id) => id !== productId)
+        : [...prev, productId]
+    );
+  };
 
   if (isLoading) {
     return (
       <div className={`space-y-4 ${className}`}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="bg-gray-200 animate-pulse rounded-lg h-80" />
+            <div
+              key={i}
+              className="bg-gray-200 animate-pulse rounded-lg h-80"
+            />
           ))}
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -82,7 +96,10 @@ export default function ProductList({
 
           {showFilters && (
             <div className="flex gap-2">
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <Select
+                value={selectedCategory}
+                onValueChange={setSelectedCategory}
+              >
                 <SelectTrigger className="w-40">
                   <Filter className="h-4 w-4 mr-2" />
                   <SelectValue placeholder="Categoría" />
@@ -103,8 +120,12 @@ export default function ProductList({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="name">Nombre</SelectItem>
-                  <SelectItem value="price-low">Precio: Menor a Mayor</SelectItem>
-                  <SelectItem value="price-high">Precio: Mayor a Menor</SelectItem>
+                  <SelectItem value="price-low">
+                    Precio: Menor a Mayor
+                  </SelectItem>
+                  <SelectItem value="price-high">
+                    Precio: Mayor a Menor
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -137,5 +158,5 @@ export default function ProductList({
         Mostrando {filteredProducts.length} de {products.length} productos
       </div>
     </div>
-  )
+  );
 }

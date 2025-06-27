@@ -1,42 +1,42 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import { Tag, Check, X } from "lucide-react"
+import { useState } from 'react';
+import { Tag, Check, X } from 'lucide-react';
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import type { PromoCodeProps } from "@/types/shopping-cart"
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import type { PromoCodeProps } from '@/types/shopping-cart';
 
 export default function PromoCode({
   onApplyPromoCode,
   isLoading = false,
   appliedCode,
   discount = 0,
-  className = "",
+  className = '',
 }: PromoCodeProps) {
-  const [promoCode, setPromoCode] = useState("")
-  const [error, setError] = useState("")
+  const [promoCode, setPromoCode] = useState('');
+  const [error, setError] = useState('');
 
   const handleApplyCode = () => {
     if (!promoCode.trim()) {
-      setError("Ingresa un código promocional")
-      return
+      setError('Ingresa un código promocional');
+      return;
     }
 
-    setError("")
-    onApplyPromoCode(promoCode.trim().toUpperCase())
-  }
+    setError('');
+    onApplyPromoCode(promoCode.trim().toUpperCase());
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPromoCode(e.target.value)
-    if (error) setError("")
-  }
+    setPromoCode(e.target.value);
+    if (error) setError('');
+  };
 
-  const formatCurrency = (amount: number) => `${amount.toFixed(2)}€`
+  const formatCurrency = (amount: number) => `${amount.toFixed(2)}€`;
 
   return (
     <Card className={className}>
@@ -53,11 +53,18 @@ export default function PromoCode({
             <div className="flex items-center gap-2">
               <Check className="h-4 w-4 text-green-600" />
               <div>
-                <p className="text-sm font-medium text-green-800">Código aplicado: {appliedCode}</p>
-                <p className="text-xs text-green-600">Descuento: {formatCurrency(discount)}</p>
+                <p className="text-sm font-medium text-green-800">
+                  Código aplicado: {appliedCode}
+                </p>
+                <p className="text-xs text-green-600">
+                  Descuento: {formatCurrency(discount)}
+                </p>
               </div>
             </div>
-            <Badge variant="outline" className="bg-green-100 text-green-800 border-green-200">
+            <Badge
+              variant="outline"
+              className="bg-green-100 text-green-800 border-green-200"
+            >
               Aplicado
             </Badge>
           </div>
@@ -69,12 +76,16 @@ export default function PromoCode({
                 placeholder="Ingresa tu código"
                 value={promoCode}
                 onChange={handleInputChange}
-                className={error ? "border-red-500" : ""}
+                className={error ? 'border-red-500' : ''}
                 disabled={isLoading}
-                onKeyDown={(e) => e.key === "Enter" && handleApplyCode()}
+                onKeyDown={(e) => e.key === 'Enter' && handleApplyCode()}
               />
-              <Button onClick={handleApplyCode} disabled={isLoading || !promoCode.trim()} size="sm">
-                {isLoading ? "Aplicando..." : "Aplicar"}
+              <Button
+                onClick={handleApplyCode}
+                disabled={isLoading || !promoCode.trim()}
+                size="sm"
+              >
+                {isLoading ? 'Aplicando...' : 'Aplicar'}
               </Button>
             </div>
             {error && (
@@ -90,7 +101,7 @@ export default function PromoCode({
         <div className="space-y-2">
           <p className="text-xs text-muted-foreground">Códigos disponibles:</p>
           <div className="flex flex-wrap gap-1">
-            {["OCHÍO10", "PRIMERA", "ESTUDIANTE"].map((code) => (
+            {['OCHÍO10', 'PRIMERA', 'ESTUDIANTE'].map((code) => (
               <Button
                 key={code}
                 variant="outline"
@@ -106,5 +117,5 @@ export default function PromoCode({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

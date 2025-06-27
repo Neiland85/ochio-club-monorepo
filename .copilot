@@ -1,0 +1,68 @@
+{
+  "contextFiles": [
+    "README.md",
+    "docs/**/*.md",
+    "docs/adr/*.md",
+    "openapi.yaml"
+  ],
+  "fileIncludePatterns": [
+    "apps/frontend/**/*.tsx",
+    "packages/ui/**/*.tsx",
+    "apps/api/**/*.ts",
+    "packages/hooks/**/*.ts",
+    "infra/**/*.{ts,tf,yml}",
+    "prisma/schema.prisma"
+  ],
+  "autoImports": [
+    {
+      "module": "react",
+      "symbols": [
+        "useState",
+        "useEffect",
+        "FC",
+        "ReactNode"
+      ]
+    },
+    {
+      "module": "@prisma/client",
+      "symbols": [
+        "PrismaClient"
+      ]
+    },
+    {
+      "module": "zod",
+      "symbols": [
+        "z",
+        "ZodSchema"
+      ]
+    },
+    {
+      "module": "tailwind-merge",
+      "symbols": [
+        "twMerge"
+      ]
+    },
+    {
+      "module": "@opentelemetry/sdk-node",
+      "symbols": [
+        "NodeSDK"
+      ]
+    }
+  ],
+  "generationHints": [
+    "Usa hooks y functional components en React",
+    "Cuando detectes un modelo Prisma, genera validaciones Zod",
+    "Prefiere CSS-in-JS con className y tailwind-merge",
+    "Al generar nuevos endpoints, incluye validación de body con Zod",
+    "En infra-as-code, usa AWS CDK y patrones de Stack/Construct"
+  ],
+  "completion": {
+    "style": [
+      "className",
+      "tw",
+      "cn"
+    ],
+    "maxSuggestions": 5,
+    "includeSnippets": true
+  }
+}
