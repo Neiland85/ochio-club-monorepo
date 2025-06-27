@@ -52,7 +52,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+       feature/development-workflow
+          cache: npm
+        env:
+          SUPABASE_URL: "https://staging.supabase.co"
+          SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN0YWdpbmctc3VwYWJhc2UiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTYxNTYzMjAwMCwiZXhwIjoxOTMxMjg4MDAwfQ.abc123"
+          SUPABASE_SERVICE_ROLE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN0YWdpbmctc3VwYWJhc2UiLCJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjE1NjMyMDAwLCJleHAiOjE5MzEyODgwMDB9.def456"
+          DATABASE_URL: "postgresql://postgres:staging-password@staging-db.supabase.co:5432/postgres"
+          NEXT_PUBLIC_API_BASE_URL: "https://staging.api.ochioclub.com"
+
           cache: ${{ steps.detect-package-manager.outputs.manager }}
+         main
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:

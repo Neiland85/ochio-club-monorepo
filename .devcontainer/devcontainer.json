@@ -1,0 +1,28 @@
+// .devcontainer/devcontainer.json
+{
+  "name": "Ochio Club Dev",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:18",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers-contrib/features/azure-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "eamodio.gitlens",
+        "bradlc.vscode-tailwindcss",
+        "Prisma.prisma"
+      ],
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "forwardPorts": [3000, 4000],
+  "postCreateCommand": "pnpm install",
+  "remoteUser": "vscode"
+}
+
