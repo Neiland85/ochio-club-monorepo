@@ -1,5 +1,5 @@
 // Ajuste de tipos para el estado de toasts
-import { useState } from "react";
+import { useState } from 'react';
 
 interface Toast {
   id: string;

@@ -1,0 +1,53 @@
+copilot:
+  # 1) Contexto global: siempre indexar estos para poder referirse a tu documentación
+  contextFiles:
+    - "README.md"
+    - "docs/**/*.md"
+    - "docs/adr/*.md"
+    - "openapi.yaml"
+
+  # 2) Scope de trabajo: solo en archivos relevantes al stack activo
+  fileIncludePatterns:
+    - "apps/frontend/**/*.tsx"
+    - "packages/ui/**/*.tsx"
+    - "apps/api/**/*.ts"
+    - "packages/hooks/**/*.ts"
+    - "infra/**/*.{ts,tf,yml}"
+    - "prisma/schema.prisma"
+
+  # 3) Auto-imports: agiliza las referencias a librerías clave
+  autoImports:
+    - module: "react"
+      symbols: ["useState", "useEffect", "FC", "ReactNode"]
+    - module: "@prisma/client"
+      symbols: ["PrismaClient"]
+    - module: "zod"
+      symbols: ["z", "ZodSchema"]
+    - module: "tailwind-merge"
+      symbols: ["twMerge"]
+    - module: "@opentelemetry/sdk-node"
+      symbols: ["NodeSDK"]
+
+  # 4) Pistas de generación: orienta a Copilot sobre tu estilo y librerías
+  generationHints:
+    - "Usa hooks y functional components en React"
+    - "Cuando detectes un modelo Prisma, genera validaciones Zod"
+    - "Prefiere CSS-in-JS con className y tailwind-merge"
+    - "Al generar nuevos endpoints, incluye validación de body con Zod"
+    - "En infra-as-code, usa AWS CDK y patrones de Stack/Construct"
+
+  # 5) Estilo de completado: fuerza tu convención de clases y utilidades
+  completion:
+    style:
+      - "className"
+      - "tw"
+      - "cn"
+    maxSuggestions: 5
+    includeSnippets: true
+
+  # 6) Parámetros avanzados opcionales
+  advanced:
+    enableTelemetry: false # desactiva analytics si lo prefieres privado
+    debugLogging: false # activa solo si experimentas bugs
+    suggestionDelayMs: 100 # latencia de espera tras escritura
+    memoryWindow: 10 # cuántos archivos últimos recuerda en una sesión

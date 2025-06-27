@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import type React from "react";
-import { useState } from "react";
+import type React from 'react';
+import { useState } from 'react';
 import {
   AdminSettingsPanel,
   AdminSettingsSection,
@@ -55,7 +55,7 @@ import {
   AdminSettingsPromptDialog,
   AdminSettingsSnackbar,
   AdminSettingsToast,
-} from "../components/admin-settings";
+} from '../components/admin-settings';
 
 // Ajustar el tipo de settings para incluir todas las propiedades necesarias
 interface Settings {
@@ -153,7 +153,10 @@ const AdminSettingsExample = () => {
           <AdminSettingsSwitch
             checked={settings.notificationsEnabled}
             onChange={(e) =>
-              setSettings({ ...settings, notificationsEnabled: e.target.checked })
+              setSettings({
+                ...settings,
+                notificationsEnabled: e.target.checked,
+              })
             }
           />
         </AdminSettingsItem>
@@ -174,8 +177,8 @@ const AdminSettingsExample = () => {
         <AdminSettingsItem label="Terms Accepted">
           <AdminSettingsCheckboxGroup
             options={[
-              { label: "Terms of Service", value: "terms" },
-              { label: "Privacy Policy", value: "privacy" },
+              { label: 'Terms of Service', value: 'terms' },
+              { label: 'Privacy Policy', value: 'privacy' },
             ]}
             value={settings.termsAccepted}
             onChange={(values) =>
@@ -186,9 +189,9 @@ const AdminSettingsExample = () => {
         <AdminSettingsItem label="Security Level">
           <AdminSettingsRadioGroup
             options={[
-              { label: "Low", value: "low" },
-              { label: "Medium", value: "medium" },
-              { label: "High", value: "high" },
+              { label: 'Low', value: 'low' },
+              { label: 'Medium', value: 'medium' },
+              { label: 'High', value: 'high' },
             ]}
             value={settings.securityLevel}
             onChange={(e) =>
@@ -202,17 +205,13 @@ const AdminSettingsExample = () => {
         <AdminSettingsItem label="Birthdate">
           <AdminSettingsDatePicker
             selected={settings.birthdate}
-            onChange={(date) =>
-              setSettings({ ...settings, birthdate: date })
-            }
+            onChange={(date) => setSettings({ ...settings, birthdate: date })}
           />
         </AdminSettingsItem>
         <AdminSettingsItem label="Meeting Time">
           <AdminSettingsTimePicker
             selected={settings.meetingTime}
-            onChange={(date) =>
-              setSettings({ ...settings, meetingTime: date })
-            }
+            onChange={(date) => setSettings({ ...settings, meetingTime: date })}
           />
         </AdminSettingsItem>
       </AdminSettingsSection>
@@ -271,9 +270,7 @@ const AdminSettingsExample = () => {
       <AdminSettingsSection title="Alerts">
         <AdminSettingsItem label="Show Alert">
           <AdminSettingsButton
-            onClick={() =>
-              setSettings({ ...settings, showAlert: true })
-            }
+            onClick={() => setSettings({ ...settings, showAlert: true })}
           >
             Show Alert
           </AdminSettingsButton>
@@ -303,9 +300,9 @@ const AdminSettingsExample = () => {
       <AdminSettingsSection title="Table">
         <AdminSettingsTable
           columns={[
-            { title: "ID", dataIndex: "id", key: "id" },
-            { title: "Name", dataIndex: "name", key: "name" },
-            { title: "Value", dataIndex: "value", key: "value" },
+            { title: 'ID', dataIndex: 'id', key: 'id' },
+            { title: 'Name', dataIndex: 'name', key: 'name' },
+            { title: 'Value', dataIndex: 'value', key: 'value' },
           ]}
           dataSource={settings.tableData}
           onChange={(data) => setSettings({ ...settings, tableData: data })}
@@ -351,7 +348,10 @@ const AdminSettingsExample = () => {
         {settings.currentStep > 0 && (
           <AdminSettingsButton
             onClick={() =>
-              setSettings({ ...settings, currentStep: settings.currentStep - 1 })
+              setSettings({
+                ...settings,
+                currentStep: settings.currentStep - 1,
+              })
             }
           >
             Previous
@@ -360,7 +360,10 @@ const AdminSettingsExample = () => {
         {settings.currentStep < 2 && (
           <AdminSettingsButton
             onClick={() =>
-              setSettings({ ...settings, currentStep: settings.currentStep + 1 })
+              setSettings({
+                ...settings,
+                currentStep: settings.currentStep + 1,
+              })
             }
           >
             Next
@@ -410,16 +413,20 @@ const AdminSettingsExample = () => {
           <AdminSettingsCarouselItem>Slide 2</AdminSettingsCarouselItem>
           <AdminSettingsCarouselItem>Slide 3</AdminSettingsCarouselItem>
         </AdminSettingsCarousel>
-        <AdminSettingsButton onClick={() => {
-          const prevSlide = (settings.currentSlide - 1 + 3) % 3;
-          setSettings({ ...settings, currentSlide: prevSlide });
-        }}>
+        <AdminSettingsButton
+          onClick={() => {
+            const prevSlide = (settings.currentSlide - 1 + 3) % 3;
+            setSettings({ ...settings, currentSlide: prevSlide });
+          }}
+        >
           Previous
         </AdminSettingsButton>
-        <AdminSettingsButton onClick={() => {
-          const nextSlide = (settings.currentSlide + 1) % 3;
-          setSettings({ ...settings, currentSlide: nextSlide });
-        }}>
+        <AdminSettingsButton
+          onClick={() => {
+            const nextSlide = (settings.currentSlide + 1) % 3;
+            setSettings({ ...settings, currentSlide: nextSlide });
+          }}
+        >
           Next
         </AdminSettingsButton>
       </AdminSettingsSection>
@@ -427,7 +434,9 @@ const AdminSettingsExample = () => {
       <AdminSettingsSection title="Timeline">
         <AdminSettingsTimeline
           items={settings.timelineItems}
-          onChange={(items) => setSettings({ ...settings, timelineItems: items })}
+          onChange={(items) =>
+            setSettings({ ...settings, timelineItems: items })
+          }
         />
       </AdminSettingsSection>
 
@@ -439,7 +448,7 @@ const AdminSettingsExample = () => {
       </AdminSettingsSection>
 
       <AdminSettingsSection title="Breadcrumbs">
-        <AdminSettingsBreadcrumbs items={["Home", "Settings", "Admin"]} />
+        <AdminSettingsBreadcrumbs items={['Home', 'Settings', 'Admin']} />
       </AdminSettingsSection>
 
       <AdminSettingsSection title="Pagination">
@@ -467,7 +476,9 @@ const AdminSettingsExample = () => {
       <AdminSettingsSection title="Progress">
         <AdminSettingsProgress
           value={settings.progressValue}
-          onChange={(value) => setSettings({ ...settings, progressValue: value })}
+          onChange={(value) =>
+            setSettings({ ...settings, progressValue: value })
+          }
         />
       </AdminSettingsSection>
 
@@ -512,8 +523,8 @@ const AdminSettingsExample = () => {
       <AdminSettingsSection title="Dropdown">
         <AdminSettingsDropdown
           options={[
-            { label: "Option 1", value: "option1" },
-            { label: "Option 2", value: "option2" },
+            { label: 'Option 1', value: 'option1' },
+            { label: 'Option 2', value: 'option2' },
           ]}
           value={settings.selectedOption}
           onChange={(e) =>
@@ -539,7 +550,9 @@ const AdminSettingsExample = () => {
           Right-click here
           {settings.showContextMenu && (
             <AdminSettingsContextMenu
-              onClose={() => setSettings({ ...settings, showContextMenu: false })}
+              onClose={() =>
+                setSettings({ ...settings, showContextMenu: false })
+              }
             >
               <AdminSettingsMenuItem>Context Menu Item 1</AdminSettingsMenuItem>
               <AdminSettingsMenuItem>Context Menu Item 2</AdminSettingsMenuItem>
@@ -550,15 +563,15 @@ const AdminSettingsExample = () => {
 
       <AdminSettingsSection title="Command Palette">
         <AdminSettingsButton
-          onClick={() =>
-            setSettings({ ...settings, showCommandPalette: true })
-          }
+          onClick={() => setSettings({ ...settings, showCommandPalette: true })}
         >
           Open Command Palette
         </AdminSettingsButton>
         <AdminSettingsCommandPalette
           isOpen={settings.showCommandPalette}
-          onClose={() => setSettings({ ...settings, showCommandPalette: false })}
+          onClose={() =>
+            setSettings({ ...settings, showCommandPalette: false })
+          }
         />
       </AdminSettingsSection>
 

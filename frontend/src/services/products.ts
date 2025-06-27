@@ -1,5 +1,5 @@
 // Ejemplo de servicio para obtener productos (ochíos) desde el backend
-import api from "@/src/api"; // Mejor usar ruta absoluta si tienes el alias @ configurado
+import api from '@/src/api'; // Mejor usar ruta absoluta si tienes el alias @ configurado
 
 export async function getProducts() {
   const response = await api.get('/products');

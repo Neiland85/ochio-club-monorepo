@@ -1,8 +1,14 @@
-"use client"
+'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Plus, Package } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Plus, Package } from 'lucide-react';
 
 export default function ProductsSection() {
   return (
@@ -10,7 +16,9 @@ export default function ProductsSection() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Total Productos</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Productos
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">156</div>
@@ -47,7 +55,9 @@ export default function ProductsSection() {
           <div className="flex justify-between items-center">
             <div>
               <CardTitle>Gestión de Productos</CardTitle>
-              <CardDescription>Administra el catálogo de productos</CardDescription>
+              <CardDescription>
+                Administra el catálogo de productos
+              </CardDescription>
             </div>
             <Button>
               <Plus className="h-4 w-4 mr-2" />
@@ -65,5 +75,5 @@ export default function ProductsSection() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

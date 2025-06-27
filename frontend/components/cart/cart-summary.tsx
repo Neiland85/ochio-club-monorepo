@@ -1,20 +1,21 @@
-"use client"
+'use client';
 
-import { CreditCard, ShoppingBag } from "lucide-react"
+import { CreditCard, ShoppingBag } from 'lucide-react';
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import type { CartSummaryProps } from "@/types/shopping-cart"
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import type { CartSummaryProps } from '@/types/shopping-cart';
 
 export default function CartSummary({
   summary,
   onProceedToCheckout,
   isCheckoutDisabled = false,
   isLoading = false,
-  className = "",
+  className = '',
 }: CartSummaryProps) {
-  const formatCurrency = (amount: number) => `${amount.toFixed(2)}${summary.currency}`
+  const formatCurrency = (amount: number) =>
+    `${amount.toFixed(2)}${summary.currency}`;
 
   return (
     <Card className={className}>
@@ -59,14 +60,18 @@ export default function CartSummary({
         {/* Total */}
         <div className="flex justify-between items-center">
           <span className="text-lg font-semibold">Total</span>
-          <span className="text-xl font-bold text-primary">{formatCurrency(summary.total)}</span>
+          <span className="text-xl font-bold text-primary">
+            {formatCurrency(summary.total)}
+          </span>
         </div>
 
         {/* Información adicional */}
         <div className="space-y-2 text-xs text-muted-foreground">
           <p>• Los precios incluyen todos los impuestos</p>
           <p>• Tiempo estimado de preparación: 15-30 min</p>
-          {summary.deliveryFee === 0 && <p>• Envío gratuito en pedidos superiores a 20€</p>}
+          {summary.deliveryFee === 0 && (
+            <p>• Envío gratuito en pedidos superiores a 20€</p>
+          )}
         </div>
 
         {/* Botón de checkout */}
@@ -91,10 +96,15 @@ export default function CartSummary({
 
         {/* Métodos de pago aceptados */}
         <div className="text-center">
-          <p className="text-xs text-muted-foreground mb-2">Métodos de pago aceptados:</p>
+          <p className="text-xs text-muted-foreground mb-2">
+            Métodos de pago aceptados:
+          </p>
           <div className="flex justify-center gap-2">
-            {["VISA", "MASTERCARD", "PayPal"].map((method) => (
-              <div key={method} className="px-2 py-1 bg-muted rounded text-xs font-medium">
+            {['VISA', 'MASTERCARD', 'PayPal'].map((method) => (
+              <div
+                key={method}
+                className="px-2 py-1 bg-muted rounded text-xs font-medium"
+              >
                 {method}
               </div>
             ))}
@@ -102,5 +112,5 @@ export default function CartSummary({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

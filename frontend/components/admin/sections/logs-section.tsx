@@ -1,7 +1,13 @@
-"use client"
+'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { FileText } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { FileText } from 'lucide-react';
 
 export default function LogsSection() {
   return (
@@ -21,5 +27,5 @@ export default function LogsSection() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

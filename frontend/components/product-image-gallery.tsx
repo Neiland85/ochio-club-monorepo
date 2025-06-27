@@ -1,16 +1,16 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import Image from "next/image"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { useState } from 'react';
+import Image from 'next/image';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 interface ProductImageGalleryProps {
-  images: string[]
-  productName: string
-  discount?: number
-  inStock?: boolean
+  images: string[];
+  productName: string;
+  discount?: number;
+  inStock?: boolean;
 }
 
 export default function ProductImageGallery({
@@ -19,25 +19,27 @@ export default function ProductImageGallery({
   discount,
   inStock = true,
 }: ProductImageGalleryProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Asegurarse de que siempre haya al menos una imagen
-  const imageList = images && images.length > 0 ? images : ["/placeholder.svg"]
+  const imageList = images && images.length > 0 ? images : ['/placeholder.svg'];
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % imageList.length)
-  }
+    setCurrentImageIndex((prev) => (prev + 1) % imageList.length);
+  };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + imageList.length) % imageList.length)
-  }
+    setCurrentImageIndex(
+      (prev) => (prev - 1 + imageList.length) % imageList.length
+    );
+  };
 
   return (
     <div className="space-y-4">
       {/* Imagen principal */}
       <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
         <Image
-          src={imageList[currentImageIndex] || "/placeholder.svg"}
+          src={imageList[currentImageIndex] || '/placeholder.svg'}
           alt={`${productName} - Imagen ${currentImageIndex + 1}`}
           fill
           className="object-cover"
@@ -47,7 +49,9 @@ export default function ProductImageGallery({
 
         {/* Descuento */}
         {discount && discount > 0 && (
-          <Badge className="absolute top-4 left-4 bg-red-500 hover:bg-red-600">-{discount}%</Badge>
+          <Badge className="absolute top-4 left-4 bg-red-500 hover:bg-red-600">
+            -{discount}%
+          </Badge>
         )}
 
         {/* Agotado */}
@@ -86,7 +90,7 @@ export default function ProductImageGallery({
               {imageList.map((_, index) => (
                 <div
                   key={index}
-                  className={`w-2 h-2 rounded-full ${index === currentImageIndex ? "bg-white" : "bg-white/50"}`}
+                  className={`w-2 h-2 rounded-full ${index === currentImageIndex ? 'bg-white' : 'bg-white/50'}`}
                 />
               ))}
             </div>
@@ -102,11 +106,13 @@ export default function ProductImageGallery({
               key={index}
               onClick={() => setCurrentImageIndex(index)}
               className={`relative aspect-square overflow-hidden rounded-md border-2 transition-all ${
-                index === currentImageIndex ? "border-primary" : "border-transparent hover:border-gray-300"
+                index === currentImageIndex
+                  ? 'border-primary'
+                  : 'border-transparent hover:border-gray-300'
               }`}
             >
               <Image
-                src={image || "/placeholder.svg"}
+                src={image || '/placeholder.svg'}
                 alt={`${productName} - Miniatura ${index + 1}`}
                 fill
                 className="object-cover"
@@ -117,5 +123,5 @@ export default function ProductImageGallery({
         </div>
       )}
     </div>
-  )
+  );
 }

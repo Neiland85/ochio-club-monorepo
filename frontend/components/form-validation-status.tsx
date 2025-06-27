@@ -1,22 +1,27 @@
-"use client"
+'use client';
 
-import { CheckCircle, XCircle, AlertCircle } from "lucide-react"
+import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 
 interface ValidationRule {
-  label: string
-  isValid: boolean
-  isActive: boolean
+  label: string;
+  isValid: boolean;
+  isActive: boolean;
 }
 
 interface FormValidationStatusProps {
-  rules: ValidationRule[]
-  className?: string
+  rules: ValidationRule[];
+  className?: string;
 }
 
-export default function FormValidationStatus({ rules, className = "" }: FormValidationStatusProps) {
+export default function FormValidationStatus({
+  rules,
+  className = '',
+}: FormValidationStatusProps) {
   return (
     <div className={`space-y-2 ${className}`}>
-      <h4 className="text-sm font-medium text-muted-foreground">Requisitos de la contraseña:</h4>
+      <h4 className="text-sm font-medium text-muted-foreground">
+        Requisitos de la contraseña:
+      </h4>
       <div className="space-y-1">
         {rules.map((rule, index) => (
           <div key={index} className="flex items-center gap-2 text-sm">
@@ -28,7 +33,13 @@ export default function FormValidationStatus({ rules, className = "" }: FormVali
               <AlertCircle className="h-3 w-3 text-muted-foreground" />
             )}
             <span
-              className={rule.isValid ? "text-green-600" : rule.isActive ? "text-red-600" : "text-muted-foreground"}
+              className={
+                rule.isValid
+                  ? 'text-green-600'
+                  : rule.isActive
+                    ? 'text-red-600'
+                    : 'text-muted-foreground'
+              }
             >
               {rule.label}
             </span>
@@ -36,5 +47,5 @@ export default function FormValidationStatus({ rules, className = "" }: FormVali
         ))}
       </div>
     </div>
-  )
+  );
 }

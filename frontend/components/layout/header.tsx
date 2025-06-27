@@ -1,11 +1,11 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { Menu, User, LogOut, Settings, ShoppingCart } from "lucide-react"
+import { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Menu, User, LogOut, Settings, ShoppingCart } from 'lucide-react';
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,40 +13,56 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import type { HeaderProps, NavigationItem } from "@/types/layout"
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import type { HeaderProps, NavigationItem } from '@/types/layout';
 
 const defaultNavigationItems: NavigationItem[] = [
-  { label: "Inicio", href: "/" },
-  { label: "Productos", href: "/productos" },
-  { label: "Pedidos", href: "/pedidos" },
-  { label: "Contacto", href: "/contacto" },
-]
+  { label: 'Inicio', href: '/' },
+  { label: 'Productos', href: '/productos' },
+  { label: 'Pedidos', href: '/pedidos' },
+  { label: 'Contacto', href: '/contacto' },
+];
 
-export default function Header({ user, navigationItems = defaultNavigationItems, onLogin, onLogout }: HeaderProps) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+export default function Header({
+  user,
+  navigationItems = defaultNavigationItems,
+  onLogin,
+  onLogout,
+}: HeaderProps) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     if (onLogout) {
-      onLogout()
+      onLogout();
     }
-  }
+  };
 
   const handleLogin = () => {
     if (onLogin) {
-      onLogin()
+      onLogin();
     }
-  }
+  };
 
   const UserMenu = () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user?.avatar || "/placeholder.svg"} alt={user?.name} />
-            <AvatarFallback>{user?.name?.charAt(0).toUpperCase()}</AvatarFallback>
+            <AvatarImage
+              src={user?.avatar || '/placeholder.svg'}
+              alt={user?.name}
+            />
+            <AvatarFallback>
+              {user?.name?.charAt(0).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -54,7 +70,9 @@ export default function Header({ user, navigationItems = defaultNavigationItems,
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{user?.name}</p>
-            <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
+            <p className="text-xs leading-none text-muted-foreground">
+              {user?.email}
+            </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -73,17 +91,21 @@ export default function Header({ user, navigationItems = defaultNavigationItems,
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 
   const NavigationLinks = ({ mobile = false }: { mobile?: boolean }) => (
-    <nav className={mobile ? "flex flex-col space-y-4" : "hidden md:flex md:space-x-8"}>
+    <nav
+      className={
+        mobile ? 'flex flex-col space-y-4' : 'hidden md:flex md:space-x-8'
+      }
+    >
       {navigationItems.map((item) => (
         <Link
           key={item.href}
           href={item.href}
           className={`text-sm font-medium transition-colors hover:text-primary ${
-            item.isActive ? "text-primary" : "text-muted-foreground"
-          } ${mobile ? "text-base" : ""}`}
+            item.isActive ? 'text-primary' : 'text-muted-foreground'
+          } ${mobile ? 'text-base' : ''}`}
           onClick={() => mobile && setIsMobileMenuOpen(false)}
         >
           {item.icon && <item.icon className="mr-2 h-4 w-4 inline" />}
@@ -91,7 +113,7 @@ export default function Header({ user, navigationItems = defaultNavigationItems,
         </Link>
       ))}
     </nav>
-  )
+  );
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -160,5 +182,5 @@ export default function Header({ user, navigationItems = defaultNavigationItems,
         </div>
       </div>
     </header>
-  )
+  );
 }

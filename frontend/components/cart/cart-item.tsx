@@ -1,41 +1,44 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import Image from "next/image"
-import { Minus, Plus, Trash2, Heart } from "lucide-react"
+import { useState } from 'react';
+import Image from 'next/image';
+import { Minus, Plus, Trash2, Heart } from 'lucide-react';
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import type { CartItemProps } from "@/types/shopping-cart"
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import type { CartItemProps } from '@/types/shopping-cart';
 
 export default function CartItem({
   item,
   onUpdateQuantity,
   onRemove,
   isLoading = false,
-  className = "",
+  className = '',
 }: CartItemProps) {
-  const [quantity, setQuantity] = useState(item.quantity)
-  const [isFavorite, setIsFavorite] = useState(false)
+  const [quantity, setQuantity] = useState(item.quantity);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const handleQuantityChange = (newQuantity: number) => {
-    if (newQuantity < 1) return
-    if (item.product.maxQuantity && newQuantity > item.product.maxQuantity) return
+    if (newQuantity < 1) return;
+    if (item.product.maxQuantity && newQuantity > item.product.maxQuantity)
+      return;
 
-    setQuantity(newQuantity)
-    onUpdateQuantity(newQuantity)
-  }
+    setQuantity(newQuantity);
+    onUpdateQuantity(newQuantity);
+  };
 
-  const handleQuantityInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number.parseInt(e.target.value) || 1
-    handleQuantityChange(value)
-  }
+  const handleQuantityInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = Number.parseInt(e.target.value) || 1;
+    handleQuantityChange(value);
+  };
 
-  const formatCurrency = (amount: number) => `${amount.toFixed(2)}€`
+  const formatCurrency = (amount: number) => `${amount.toFixed(2)}€`;
 
   return (
     <Card className={`overflow-hidden ${className}`}>
@@ -44,7 +47,7 @@ export default function CartItem({
           {/* Imagen del producto */}
           <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md bg-muted">
             <Image
-              src={item.product.imageUrl || "/placeholder.svg"}
+              src={item.product.imageUrl || '/placeholder.svg'}
               alt={item.product.name}
               fill
               className="object-cover"
@@ -63,13 +66,18 @@ export default function CartItem({
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between">
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-base truncate">{item.product.name}</h3>
+                <h3 className="font-semibold text-base truncate">
+                  {item.product.name}
+                </h3>
                 {item.product.description && (
-                  <p className="text-sm text-muted-foreground line-clamp-2 mt-1">{item.product.description}</p>
+                  <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
+                    {item.product.description}
+                  </p>
                 )}
                 {item.product.bakeryName && (
                   <p className="text-xs text-muted-foreground mt-1">
-                    <span className="font-medium">Panadería:</span> {item.product.bakeryName}
+                    <span className="font-medium">Panadería:</span>{' '}
+                    {item.product.bakeryName}
                   </p>
                 )}
                 {item.product.category && (
@@ -88,7 +96,9 @@ export default function CartItem({
                   onClick={() => setIsFavorite(!isFavorite)}
                   disabled={isLoading}
                 >
-                  <Heart className={`h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : "text-muted-foreground"}`} />
+                  <Heart
+                    className={`h-4 w-4 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`}
+                  />
                   <span className="sr-only">Añadir a favoritos</span>
                 </Button>
                 <Button
@@ -107,8 +117,12 @@ export default function CartItem({
             {/* Precio y controles de cantidad */}
             <div className="flex items-center justify-between mt-3">
               <div className="flex items-center gap-3">
-                <span className="text-lg font-bold text-primary">{formatCurrency(item.product.price)}</span>
-                <span className="text-sm text-muted-foreground">por unidad</span>
+                <span className="text-lg font-bold text-primary">
+                  {formatCurrency(item.product.price)}
+                </span>
+                <span className="text-sm text-muted-foreground">
+                  por unidad
+                </span>
               </div>
 
               {/* Controles de cantidad */}
@@ -118,7 +132,9 @@ export default function CartItem({
                   size="icon"
                   className="h-8 w-8"
                   onClick={() => handleQuantityChange(quantity - 1)}
-                  disabled={quantity <= 1 || isLoading || !item.product.isAvailable}
+                  disabled={
+                    quantity <= 1 || isLoading || !item.product.isAvailable
+                  }
                 >
                   <Minus className="h-3 w-3" />
                   <span className="sr-only">Disminuir cantidad</span>
@@ -140,7 +156,8 @@ export default function CartItem({
                   className="h-8 w-8"
                   onClick={() => handleQuantityChange(quantity + 1)}
                   disabled={
-                    (item.product.maxQuantity && quantity >= item.product.maxQuantity) ||
+                    (item.product.maxQuantity &&
+                      quantity >= item.product.maxQuantity) ||
                     isLoading ||
                     !item.product.isAvailable
                   }
@@ -154,7 +171,9 @@ export default function CartItem({
             {/* Subtotal */}
             <div className="flex items-center justify-between mt-2 pt-2 border-t">
               <span className="text-sm text-muted-foreground">Subtotal:</span>
-              <span className="font-semibold text-lg">{formatCurrency(item.subtotal)}</span>
+              <span className="font-semibold text-lg">
+                {formatCurrency(item.subtotal)}
+              </span>
             </div>
 
             {/* Notas adicionales */}
@@ -169,11 +188,13 @@ export default function CartItem({
             {/* Información adicional */}
             <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground">
               <span>Añadido: {item.addedAt.toLocaleDateString()}</span>
-              {item.product.maxQuantity && <span>Máximo: {item.product.maxQuantity} unidades</span>}
+              {item.product.maxQuantity && (
+                <span>Máximo: {item.product.maxQuantity} unidades</span>
+              )}
             </div>
           </div>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

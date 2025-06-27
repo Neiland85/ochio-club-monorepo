@@ -1,11 +1,7 @@
 import React from 'react';
 
 const AppLayout = ({ children }) => {
-  return (
-    <div className="app-layout">
-      {children}
-    </div>
-  );
+  return <div className="app-layout">{children}</div>;
 };
 
 export default AppLayout;

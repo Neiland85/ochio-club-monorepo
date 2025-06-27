@@ -1,11 +1,9 @@
-import { supabaseClient } from '../config/supabaseClient';
-import { Product } from '../models/product';
+import { supabaseAdapter } from "../config/supabaseClient";
+import { Product } from "../models/product";
 
 export class ProductService {
   async getAllProducts(): Promise<Product[]> {
-    const { data, error } = await supabaseClient
-      .from('products')
-      .select('*');
+    const { data, error } = await supabaseAdapter.from("products").select("*");
 
     if (error) {
       throw new Error(error.message);
@@ -15,10 +13,10 @@ export class ProductService {
   }
 
   async getProductById(id: string): Promise<Product | undefined> {
-    const { data, error } = await supabaseClient
-      .from('products')
-      .select('*')
-      .eq('id', id)
+    const { data, error } = await supabaseAdapter
+      .from("products")
+      .select("*")
+      .eq("id", id)
       .single();
 
     if (error) {
@@ -28,9 +26,11 @@ export class ProductService {
     return data;
   }
 
-  async createProduct(data: Omit<Product, 'id' | 'createdAt'>): Promise<Product> {
-    const { data: newProduct, error } = await supabaseClient
-      .from('products')
+  async createProduct(
+    data: Omit<Product, "id" | "createdAt">,
+  ): Promise<Product> {
+    const { data: newProduct, error } = await supabaseAdapter
+      .from("products")
       .insert([{ ...data, createdAt: new Date() }])
       .single();
 

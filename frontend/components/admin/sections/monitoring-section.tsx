@@ -1,7 +1,13 @@
-"use client"
+'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import RealTimeMonitoring from "@/components/real-time-monitoring"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import RealTimeMonitoring from '@/components/real-time-monitoring';
 
 export default function MonitoringSection() {
   return (
@@ -16,5 +22,5 @@ export default function MonitoringSection() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

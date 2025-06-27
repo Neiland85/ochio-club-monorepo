@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Tabs = ({ children }) => <div>{children}</div>;
 const TabsList = ({ children }) => <div>{children}</div>;

@@ -1,15 +1,21 @@
-"use client"
+'use client';
 
-import { Euro, ShoppingBag, Package, TrendingUp, TrendingDown } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import type { DashboardStats } from "@/types/bakery-dashboard"
+import {
+  Euro,
+  ShoppingBag,
+  Package,
+  TrendingUp,
+  TrendingDown,
+} from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import type { DashboardStats } from '@/types/bakery-dashboard';
 
 interface StatsCardsProps {
-  stats: DashboardStats
-  className?: string
+  stats: DashboardStats;
+  className?: string;
 }
 
-export default function StatsCards({ stats, className = "" }: StatsCardsProps) {
+export default function StatsCards({ stats, className = '' }: StatsCardsProps) {
   // Asegurarse de que stats y sus propiedades existan
   if (!stats || !stats.sales || !stats.orders || !stats.products) {
     return (
@@ -25,22 +31,23 @@ export default function StatsCards({ stats, className = "" }: StatsCardsProps) {
           </Card>
         ))}
       </div>
-    )
+    );
   }
 
-  const formatCurrency = (amount: number) => `${amount.toFixed(2)}${stats.sales.currency}`
+  const formatCurrency = (amount: number) =>
+    `${amount.toFixed(2)}${stats.sales.currency}`;
 
   const getTrendIcon = (change: number) => {
-    if (change > 0) return <TrendingUp className="h-3 w-3 text-green-600" />
-    if (change < 0) return <TrendingDown className="h-3 w-3 text-red-600" />
-    return null
-  }
+    if (change > 0) return <TrendingUp className="h-3 w-3 text-green-600" />;
+    if (change < 0) return <TrendingDown className="h-3 w-3 text-red-600" />;
+    return null;
+  };
 
   const getTrendColor = (change: number) => {
-    if (change > 0) return "text-green-600"
-    if (change < 0) return "text-red-600"
-    return "text-muted-foreground"
-  }
+    if (change > 0) return 'text-green-600';
+    if (change < 0) return 'text-red-600';
+    return 'text-muted-foreground';
+  };
 
   return (
     <div className={`grid gap-4 md:grid-cols-2 lg:grid-cols-4 ${className}`}>
@@ -51,10 +58,14 @@ export default function StatsCards({ stats, className = "" }: StatsCardsProps) {
           <Euro className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{formatCurrency(stats.sales.total)}</div>
+          <div className="text-2xl font-bold">
+            {formatCurrency(stats.sales.total)}
+          </div>
           <div className="flex items-center text-xs text-muted-foreground">
             {getTrendIcon(stats.sales.percentageChange)}
-            <span className={`ml-1 ${getTrendColor(stats.sales.percentageChange)}`}>
+            <span
+              className={`ml-1 ${getTrendColor(stats.sales.percentageChange)}`}
+            >
               {Math.abs(stats.sales.percentageChange)}% desde el mes pasado
             </span>
           </div>
@@ -70,7 +81,8 @@ export default function StatsCards({ stats, className = "" }: StatsCardsProps) {
         <CardContent>
           <div className="text-2xl font-bold">{stats.orders.total}</div>
           <p className="text-xs text-muted-foreground">
-            {stats.orders.pending} pendientes, {stats.orders.completed} completados
+            {stats.orders.pending} pendientes, {stats.orders.completed}{' '}
+            completados
           </p>
         </CardContent>
       </Card>
@@ -84,7 +96,8 @@ export default function StatsCards({ stats, className = "" }: StatsCardsProps) {
         <CardContent>
           <div className="text-2xl font-bold">{stats.products.total}</div>
           <p className="text-xs text-muted-foreground">
-            {stats.products.active} activos, {stats.products.outOfStock} agotados
+            {stats.products.active} activos, {stats.products.outOfStock}{' '}
+            agotados
           </p>
         </CardContent>
       </Card>
@@ -96,10 +109,14 @@ export default function StatsCards({ stats, className = "" }: StatsCardsProps) {
           <TrendingUp className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{formatCurrency(stats.sales.today)}</div>
-          <p className="text-xs text-muted-foreground">Esta semana: {formatCurrency(stats.sales.thisWeek)}</p>
+          <div className="text-2xl font-bold">
+            {formatCurrency(stats.sales.today)}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Esta semana: {formatCurrency(stats.sales.thisWeek)}
+          </p>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
