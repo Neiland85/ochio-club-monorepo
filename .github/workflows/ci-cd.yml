@@ -30,7 +30,6 @@ jobs:
           DATABASE_URL: "postgresql://postgres:staging-password@staging-db.supabase.co:5432/postgres"
           NEXT_PUBLIC_API_BASE_URL: "https://staging.api.ochioclub.com"
 main
-
       - name: Install dependencies
         run: npm ci
 
