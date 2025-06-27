@@ -4,13 +4,10 @@
   "description": "Monorepo que agrupa un backend en Node.js/TypeScript (Express + MongoDB) y un frontend en Next.js/React/TypeScript + Tailwind CSS. Configuración de workspaces, linting, CI/CD y despliegue Docker.",
   "private": true,
   "workspaces": [
-    "backend",
-    "frontend",
-    "common"
+    "frontend"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:backend": "npm --workspace backend run dev",
+    "dev": "concurrently \"npm run dev:frontend\"",
     "dev:frontend": "npm --workspace frontend run dev",
     "lint": "eslint . --ext .ts,.tsx,.js"
   },
@@ -29,7 +26,8 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.2",
-    "dotenv": "^16.5.0"
+    "dotenv": "^16.5.0",
+    "vercel": "^44.2.6"
   },
   "husky": {
     "hooks": {
@@ -42,5 +40,7 @@
       "eslint --fix"
     ]
   },
-  "type": "module"
+  "type": "module",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@10.12.4+sha512.5ea8b0deed94ed68691c9bad4c955492705c5eeb8a87ef86bc62c74a26b037b08ff9570f108b2e4dbd1dd1a9186fea925e527f141c648e85af45631074680184"
 }

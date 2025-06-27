@@ -1,82 +1,15 @@
 {
-    feature/development-workflow
   "typescript.tsdk": "node_modules/typescript/lib",
-  "editor.formatOnSave": true,
-  "eslint.validate": [
-    "javascript",
-    "typescript",
-    "typescriptreact"
-
-  // Contexto
-  "copilot.contextFiles": [
-    "README.md",
-    "docs/**/*.md",
-    "docs/adr/*.md",
-    "openapi.yaml"
-  ],
-  // Scope
-  "copilot.fileIncludePatterns": [
-    "apps/frontend/**/*.tsx",
-    "packages/ui/**/*.tsx",
-    "apps/api/**/*.ts",
-    "packages/hooks/**/*.ts",
-    "infra/**/*.{ts,tf,yml}",
-    "prisma/schema.prisma"
-  ],
-  // Auto-imports
-  "copilot.autoImports": [
-    {
-      "module": "react",
-      "symbols": ["useState", "useEffect", "FC", "ReactNode"]
-    },
-    {
-      "module": "@prisma/client",
-      "symbols": ["PrismaClient"]
-    },
-    {
-      "module": "zod",
-      "symbols": ["z", "ZodSchema"]
-    },
-    {
-      "module": "tailwind-merge",
-      "symbols": ["twMerge"]
-    },
-    {
-      "module": "@opentelemetry/sdk-node",
-      "symbols": ["NodeSDK"]
-    }
-     main
-  ],
-  // Hints
-  "copilot.generationHints": [
-    "Usa hooks y functional components en React",
-    "Cuando detectes un modelo Prisma, genera validaciones Zod",
-    "Prefiere CSS-in-JS con className y tailwind-merge",
-    "Al generar nuevos endpoints, incluye validación de body con Zod",
-    "En infra-as-code, usa AWS CDK y patrones de Stack/Construct"
-  ],
-  // Completions
-  "copilot.completion.style": ["className", "tw", "cn"],
-  "copilot.completion.maxSuggestions": 5,
-  "copilot.completion.includeSnippets": true,
-  // Configuración existente
   "editor.formatOnSave": true,
   "eslint.validate": ["javascript", "typescript", "typescriptreact"],
   "editor.codeActionsOnSave": {
-    feature/development-workflow
     "source.fixAll.eslint": "always"
   },
   "github.copilot.enable": true,
-  "cSpell.words": [
-    "Archivo"
-  ]
-}
-    "source.fixAll.eslint": "explicit"
-  },
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "cSpell.words": ["Archivo"],
   "nextjs.projectDetection": true,
   "swaggerViewer.enable": true,
   "openapi.editor.enable": true,
-  "redocly.openapi.enable": true
+  "redocly.openapi.enable": true,
+  "editor.codeActions.triggerOnFocusChange": true
 }
-    main

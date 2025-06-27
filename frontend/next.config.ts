@@ -2,6 +2,7 @@ import type { NextConfig } from 'next';
 import path from 'path';
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ['local-origin.dev', '*.local-origin.dev'],
   webpack: (config) => {
     config.resolve.extensions.push('.js', '.jsx', '.ts', '.tsx');
     config.resolve.alias = {
@@ -11,7 +12,6 @@ const nextConfig: NextConfig = {
     return config;
   },
   reactStrictMode: true,
-  swcMinify: true,
 };
 
 export default nextConfig;

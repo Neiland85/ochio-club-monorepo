@@ -14,5 +14,6 @@
   "schemes": [
     "https"
   ],
-  "paths": {}
+  "paths": {},
+  "name": "backend"
 }
